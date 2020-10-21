@@ -1,6 +1,6 @@
 .cache
 config
-docs
+docs/
 lib
 node_modules
 src/gen
