@@ -11,12 +11,10 @@ stages:
 
 .publish:
   stage: Publish
-  variables:
-    REGISTRY_URL: https://repo.tools.anonyome.com/repository/npm-hosted
   script:
-    - 'npm config set _auth $(if [[ -v AUTH_TOKEN ]]; then echo -n "${AUTH_TOKEN}"; else echo -n "${NEXUS_PUBLISHER_USERNAME}:${NEXUS_PUBLISHER_PASSWORD}" | base64; fi)'
-    - 'npm config set @sudoplatform:registry "${REGISTRY_URL}"'
-    - yarn publish --verbose --tag ${DIST_TAG} --new-version $(git describe --tags | sed -e 's/^v//') --no-git-tag-version --non-interactive --access public
+    - npm config set _auth $(echo -n $NEXUS_PUBLISHER_USERNAME:$NEXUS_PUBLISHER_PASSWORD | base64)
+    - npm config set @sudoplatform:registry https://repo.tools.anonyome.com/repository/npm-hosted
+    - yarn publish --verbose --tag ${DIST_TAG} --new-version $(git describe --tags | sed -e 's/^v//') --no-git-tag-version --non-interactive
   tags:
     - docker
   dependencies:
@@ -24,16 +22,14 @@ stages:
 
 .push:
   extends: .publish
-  variables:
-    REGISTRY_URL: https://registry.npmjs.org/
-    AUTH_TOKEN: ${NPM_AUTH_TOKEN}
-  before_script:
+  script:
     - npm config set @sudoplatform:registry https://repo.tools.anonyome.com/repository/npm-hosted
     - yarn global add @sudoplatform/sdk-publisher
     - npm config delete @sudoplatform:registry
-    - git config --global user.email "sudoplatform-engineering@anonyome.com"
-    - git config --global user.name "Sudo Platform Engineering"
     - sdk-publisher -t $(git describe --tags | sed -e 's/^v//') --githubAccessToken ${GITHUB_ACCESS_TOKEN} --gitlabAccessToken ${API_ACCESS_TOKEN}
+    - npm config set @sudoplatform:registry https://registry.npmjs.org/
+    - npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
+    - yarn publish --verbose --tag ${DIST_TAG} --new-version $(git describe --tags | sed -e 's/^v//') --no-git-tag-version --non-interactive --access public
 
 Build:
   stage: Build
