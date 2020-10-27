@@ -6,7 +6,7 @@ import {
   ConfigurationNotSetError,
   DecodeError,
   ConfigurationSetNotFoundError,
-} from './error'
+} from '../global/error'
 
 /**
  * Interface that encapsulates the APIs common to all configuration manager implementations.

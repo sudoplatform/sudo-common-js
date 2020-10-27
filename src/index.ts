@@ -2,4 +2,4 @@ export {
   ConfigurationManager,
   DefaultConfigurationManager,
 } from './configurationManager/defaultConfigurationManager'
-export * from './configurationManager/error'
+export * from './global/error'

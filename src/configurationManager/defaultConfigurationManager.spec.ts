@@ -1,6 +1,6 @@
 import { DefaultConfigurationManager } from './defaultConfigurationManager'
 import * as t from 'io-ts'
-import { DecodeError, ConfigurationSetNotFoundError } from './error'
+import { DecodeError, ConfigurationSetNotFoundError } from '../global/error'
 
 describe('configuration manager', () => {
   const config = {
