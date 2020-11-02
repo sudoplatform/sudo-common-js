@@ -1,3 +1,19 @@
+import { GraphQLError } from 'graphql'
+
+export type AppSyncError = GraphQLError & {
+  errorType?: string | null
+}
+
+/**
+ * Indicates the GraphQL API returned an error that's not recognized by the client.
+ */
+export class UnknownGraphQLError extends Error {
+  constructor(cause: AppSyncError) {
+    super(`type: ${cause.errorType}, message: ${cause.message}`)
+    this.name = 'GraphQLError'
+  }
+}
+
 /**
  * The configuration set was not found by the given key
  */
@@ -79,8 +95,8 @@ export class NotRegisteredError extends Error {
  * due to specifying the wrong key deriving key or password.
  */
 export class NotAuthorizedError extends Error {
-  constructor() {
-    super('User is not authorized perform the requested operation.')
+  constructor(message?: string) {
+    super(message ?? 'User is not authorized perform the requested operation.')
     this.name = 'NotAuthorizedError'
   }
 }
@@ -93,6 +109,17 @@ export class NotSignedInError extends Error {
   constructor() {
     super('Not signed in.')
     this.name = 'NotSignedInError'
+  }
+}
+
+/**
+ * Indicates that the user was registered but is not confirmed due to not
+ * passing all the required validation.
+ */
+export class UserNotConfirmedError extends Error {
+  constructor() {
+    super('User not confirmed.')
+    this.name = 'UserNotConfirmedError'
   }
 }
 
