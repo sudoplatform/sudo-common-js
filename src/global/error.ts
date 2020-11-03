@@ -124,6 +124,30 @@ export class UserNotConfirmedError extends Error {
 }
 
 /**
+ * Indicates that the ownership proof was invalid.
+ */
+export class InvalidOwnershipProofError extends Error {
+  constructor() {
+    super('Ownership proof was invalid.')
+    this.name = 'InvalidOwnershipProofError'
+  }
+}
+
+/**
+ * Indicates that the user does not have sufficient entitlements to perform
+ * the requested operation. This error may also be thrown if the request
+ * has violated a service specific policy, e.g rate limit.
+ */
+export class PolicyError extends Error {
+  constructor() {
+    super(
+      'Service policy prevented the requested operation from completing. This may be due to the user having insufficient entitlements or service specific limits.',
+    )
+    this.name = 'PolicyError'
+  }
+}
+
+/**
  * Indicates that an internal server error caused the operation to fail. The error
  * is possibly transient and retrying at a later time may cause the operation to
  * complete successfully.

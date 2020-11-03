@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ConfigurationSetNotFoundError | @sudoplatform/sudo-common</title>
+	<title>InvalidOwnershipProofError | @sudoplatform/sudo-common</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="configurationsetnotfounderror.html">ConfigurationSetNotFoundError</a>
+					<a href="invalidownershipprooferror.html">InvalidOwnershipProofError</a>
 				</li>
 			</ul>
-			<h1>Class ConfigurationSetNotFoundError</h1>
+			<h1>Class InvalidOwnershipProofError</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The configuration set was not found by the given key</p>
+						<p>Indicates that the ownership proof was invalid.</p>
 					</div>
 				</div>
 			</section>
@@ -80,7 +80,7 @@
 						<a href="unknowngraphqlerror.html#error" class="tsd-signature-type">Error</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ConfigurationSetNotFoundError</span>
+								<span class="target">InvalidOwnershipProofError</span>
 							</li>
 						</ul>
 					</li>
@@ -93,16 +93,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="configurationsetnotfounderror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="invalidownershipprooferror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="configurationsetnotfounderror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="configurationsetnotfounderror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="configurationsetnotfounderror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="configurationsetnotfounderror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidownershipprooferror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidownershipprooferror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidownershipprooferror.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="invalidownershipprooferror.html#error" class="tsd-kind-icon">Error</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,22 +114,16 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Configuration<wbr>Set<wbr>Not<wbr>Found<wbr>Error<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="configurationsetnotfounderror.html" class="tsd-signature-type">ConfigurationSetNotFoundError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Invalid<wbr>Ownership<wbr>Proof<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="invalidownershipprooferror.html" class="tsd-signature-type">InvalidOwnershipProofError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/global/error.ts:20</li>
+									<li>Defined in src/global/error.ts:129</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> key: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="configurationsetnotfounderror.html" class="tsd-signature-type">ConfigurationSetNotFoundError</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="invalidownershipprooferror.html" class="tsd-signature-type">InvalidOwnershipProofError</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -197,30 +191,9 @@
 					<li class=" tsd-kind-class">
 						<a href="configurationnotseterror.html" class="tsd-kind-icon">Configuration<wbr>Not<wbr>Set<wbr>Error</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="configurationsetnotfounderror.html" class="tsd-kind-icon">Configuration<wbr>Set<wbr>Not<wbr>Found<wbr>Error</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="configurationsetnotfounderror.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="configurationsetnotfounderror.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="configurationsetnotfounderror.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="configurationsetnotfounderror.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="configurationsetnotfounderror.html#error" class="tsd-kind-icon">Error</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="decodeerror.html" class="tsd-kind-icon">Decode<wbr>Error</a>
 					</li>
@@ -230,9 +203,30 @@
 					<li class=" tsd-kind-class">
 						<a href="fatalerror.html" class="tsd-kind-icon">Fatal<wbr>Error</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="invalidownershipprooferror.html" class="tsd-kind-icon">Invalid<wbr>Ownership<wbr>Proof<wbr>Error</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="invalidownershipprooferror.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="invalidownershipprooferror.html#message" class="tsd-kind-icon">message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="invalidownershipprooferror.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="invalidownershipprooferror.html#stack" class="tsd-kind-icon">stack</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="invalidownershipprooferror.html#error" class="tsd-kind-icon">Error</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="notauthorizederror.html" class="tsd-kind-icon">Not<wbr>Authorized<wbr>Error</a>
 					</li>
