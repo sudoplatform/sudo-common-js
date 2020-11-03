@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RegisterError | @sudoplatform/sudo-common</title>
+	<title>VersionMismatchError | @sudoplatform/sudo-common</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="registererror.html">RegisterError</a>
+					<a href="versionmismatcherror.html">VersionMismatchError</a>
 				</li>
 			</ul>
-			<h1>Class RegisterError</h1>
+			<h1>Class VersionMismatchError</h1>
 		</div>
 	</div>
 </header>
@@ -69,8 +69,10 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An error occurred during the registration process.
-						This may be due to the client already being registered.</p>
+						<p>The version of the vault that&#39;s being updated does not match the version
+							stored in the backed. It is likely that another client updated the vault
+							first so the caller should reconcile the changes before attempting to
+						update the vault.</p>
 					</div>
 				</div>
 			</section>
@@ -81,7 +83,7 @@
 						<a href="unknowngraphqlerror.html#error" class="tsd-signature-type">Error</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">RegisterError</span>
+								<span class="target">VersionMismatchError</span>
 							</li>
 						</ul>
 					</li>
@@ -94,16 +96,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="registererror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="versionmismatcherror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="registererror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="registererror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="registererror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="registererror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="versionmismatcherror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="versionmismatcherror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="versionmismatcherror.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="versionmismatcherror.html#error" class="tsd-kind-icon">Error</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,22 +117,16 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Register<wbr>Error<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="registererror.html" class="tsd-signature-type">RegisterError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Version<wbr>Mismatch<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="versionmismatcherror.html" class="tsd-signature-type">VersionMismatchError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/global/error.ts:76</li>
+									<li>Defined in src/global/error.ts:132</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="registererror.html" class="tsd-signature-type">RegisterError</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="versionmismatcherror.html" class="tsd-signature-type">VersionMismatchError</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -225,30 +221,9 @@
 					<li class=" tsd-kind-class">
 						<a href="policyerror.html" class="tsd-kind-icon">Policy<wbr>Error</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="registererror.html" class="tsd-kind-icon">Register<wbr>Error</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="registererror.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="registererror.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="registererror.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="registererror.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="registererror.html#error" class="tsd-kind-icon">Error</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="serviceerror.html" class="tsd-kind-icon">Service<wbr>Error</a>
 					</li>
@@ -261,9 +236,30 @@
 					<li class=" tsd-kind-class">
 						<a href="usernotconfirmederror.html" class="tsd-kind-icon">User<wbr>Not<wbr>Confirmed<wbr>Error</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="versionmismatcherror.html" class="tsd-kind-icon">Version<wbr>Mismatch<wbr>Error</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="versionmismatcherror.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="versionmismatcherror.html#message" class="tsd-kind-icon">message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="versionmismatcherror.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="versionmismatcherror.html#stack" class="tsd-kind-icon">stack</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="versionmismatcherror.html#error" class="tsd-kind-icon">Error</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a>
 					</li>

@@ -84,8 +84,8 @@ export class RegisterError extends Error {
  * An error occurred indicating that the user is not registered.
  */
 export class NotRegisteredError extends Error {
-  constructor(message: string) {
-    super(message)
+  constructor(message?: string) {
+    super(message ?? 'User is not registered.')
     this.name = 'NotRegisteredError'
   }
 }
@@ -120,6 +120,19 @@ export class UserNotConfirmedError extends Error {
   constructor() {
     super('User not confirmed.')
     this.name = 'UserNotConfirmedError'
+  }
+}
+
+/**
+ * The version of the vault that's being updated does not match the version
+ * stored in the backed. It is likely that another client updated the vault
+ * first so the caller should reconcile the changes before attempting to
+ * update the vault.
+ */
+export class VersionMismatchError extends Error {
+  constructor() {
+    super('Expected object version does not match the actual object version.')
+    this.name = 'VersionMismatchError'
   }
 }
 
