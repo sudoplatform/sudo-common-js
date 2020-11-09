@@ -173,6 +173,27 @@ export class ServiceError extends Error {
 }
 
 /**
+ * Error when expected arguments are missing
+ */
+export class IllegalArgumentError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'IllegalArgumentError'
+  }
+}
+
+/**
+ * Error when the state of the program is expecting a value to
+ * be set or available and it is not.
+ */
+export class IllegalStateError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'IllegalStateError'
+  }
+}
+
+/**
  * An unexpected error was encountered. This may result from programmatic error
  * and is unlikley to be user recoverable.
  */
