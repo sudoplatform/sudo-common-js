@@ -50,6 +50,7 @@
     "newtype-ts": "^0.3.2",
     "prettier": "^2.0.5",
     "typedoc": "0.17.0-3",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "browser-bunyan": "^1.6.3"
   }
 }
