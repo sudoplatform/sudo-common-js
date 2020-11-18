@@ -1,6 +1,3 @@
-export {
-  ConfigurationManager,
-  DefaultConfigurationManager,
-} from './configurationManager/defaultConfigurationManager'
-export * from './global/error'
-export * from './util/logging'
+export * from './configurationManager/defaultConfigurationManager'
+export * from './errors/error'
+export * from './logging/logging'

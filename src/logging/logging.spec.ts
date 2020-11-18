@@ -1,4 +1,4 @@
-import { getLogger } from '../util/logging'
+import { getLogger } from './logging'
 
 describe('Logging utility test suite', () => {
   it('should log with custom logger name at custom level', async () => {
