@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VersionMismatchError | @sudoplatform/sudo-common</title>
+	<title>InsufficientEntitlementsError | @sudoplatform/sudo-common</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="versionmismatcherror.html">VersionMismatchError</a>
+					<a href="insufficiententitlementserror.html">InsufficientEntitlementsError</a>
 				</li>
 			</ul>
-			<h1>Class VersionMismatchError</h1>
+			<h1>Class InsufficientEntitlementsError</h1>
 		</div>
 	</div>
 </header>
@@ -69,10 +69,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The version of the vault that&#39;s being updated does not match the version
-							stored in the backed. It is likely that another client updated the vault
-							first so the caller should reconcile the changes before attempting to
-						update the vault.</p>
+						<p>Indicates that the user does not have sufficient entitlements to perform
+						the requested operation.</p>
 					</div>
 				</div>
 			</section>
@@ -83,7 +81,7 @@
 						<a href="unknowngraphqlerror.html#error" class="tsd-signature-type">Error</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">VersionMismatchError</span>
+								<span class="target">InsufficientEntitlementsError</span>
 							</li>
 						</ul>
 					</li>
@@ -96,16 +94,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="versionmismatcherror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="insufficiententitlementserror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="versionmismatcherror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="versionmismatcherror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="versionmismatcherror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="versionmismatcherror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="insufficiententitlementserror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="insufficiententitlementserror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="insufficiententitlementserror.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="insufficiententitlementserror.html#error" class="tsd-kind-icon">Error</a></li>
 							</ul>
 						</section>
 					</div>
@@ -117,16 +115,16 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Version<wbr>Mismatch<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="versionmismatcherror.html" class="tsd-signature-type">VersionMismatchError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Insufficient<wbr>Entitlements<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="insufficiententitlementserror.html" class="tsd-signature-type">InsufficientEntitlementsError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/global/error.ts:132</li>
+									<li>Defined in src/global/error.ts:153</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="versionmismatcherror.html" class="tsd-signature-type">VersionMismatchError</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="insufficiententitlementserror.html" class="tsd-signature-type">InsufficientEntitlementsError</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -212,9 +210,30 @@
 					<li class=" tsd-kind-class">
 						<a href="illegalstateerror.html" class="tsd-kind-icon">Illegal<wbr>State<wbr>Error</a>
 					</li>
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="insufficiententitlementserror.html" class="tsd-kind-icon">Insufficient<wbr>Entitlements<wbr>Error</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="insufficiententitlementserror.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="insufficiententitlementserror.html#message" class="tsd-kind-icon">message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="insufficiententitlementserror.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="insufficiententitlementserror.html#stack" class="tsd-kind-icon">stack</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="insufficiententitlementserror.html#error" class="tsd-kind-icon">Error</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="invalidownershipprooferror.html" class="tsd-kind-icon">Invalid<wbr>Ownership<wbr>Proof<wbr>Error</a>
 					</li>
@@ -242,30 +261,9 @@
 					<li class=" tsd-kind-class">
 						<a href="usernotconfirmederror.html" class="tsd-kind-icon">User<wbr>Not<wbr>Confirmed<wbr>Error</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="versionmismatcherror.html" class="tsd-kind-icon">Version<wbr>Mismatch<wbr>Error</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="versionmismatcherror.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="versionmismatcherror.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="versionmismatcherror.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="versionmismatcherror.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="versionmismatcherror.html#error" class="tsd-kind-icon">Error</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a>
 					</li>

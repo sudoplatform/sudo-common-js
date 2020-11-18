@@ -148,15 +148,14 @@ export class InvalidOwnershipProofError extends Error {
 
 /**
  * Indicates that the user does not have sufficient entitlements to perform
- * the requested operation. This error may also be thrown if the request
- * has violated a service specific policy, e.g rate limit.
+ * the requested operation.
  */
-export class PolicyError extends Error {
+export class InsufficientEntitlementsError extends Error {
   constructor() {
     super(
-      'Service policy prevented the requested operation from completing. This may be due to the user having insufficient entitlements or service specific limits.',
+      'The user does not have sufficient entitlements to perform the requested operation.',
     )
-    this.name = 'PolicyError'
+    this.name = 'InsufficientEntitlementsError'
   }
 }
 
