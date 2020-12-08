@@ -24,11 +24,11 @@
   "files": [
     "lib"
   ],
-  "peerDependencies": {
-    "io-ts": "^2.2.10"
-  },
   "dependencies": {
     "browser-bunyan": "^1.6.3"
+  },
+  "peerDependencies": {
+    "io-ts": "^2.2.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

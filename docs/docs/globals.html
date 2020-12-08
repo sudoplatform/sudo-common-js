@@ -75,6 +75,7 @@
 								<li class="tsd-kind-class"><a href="classes/configurationsetnotfounderror.html" class="tsd-kind-icon">Configuration<wbr>Set<wbr>Not<wbr>Found<wbr>Error</a></li>
 								<li class="tsd-kind-class"><a href="classes/decodeerror.html" class="tsd-kind-icon">Decode<wbr>Error</a></li>
 								<li class="tsd-kind-class"><a href="classes/defaultconfigurationmanager.html" class="tsd-kind-icon">Default<wbr>Configuration<wbr>Manager</a></li>
+								<li class="tsd-kind-class"><a href="classes/defaultlogger.html" class="tsd-kind-icon">Default<wbr>Logger</a></li>
 								<li class="tsd-kind-class"><a href="classes/fatalerror.html" class="tsd-kind-icon">Fatal<wbr>Error</a></li>
 								<li class="tsd-kind-class"><a href="classes/illegalargumenterror.html" class="tsd-kind-icon">Illegal<wbr>Argument<wbr>Error</a></li>
 								<li class="tsd-kind-class"><a href="classes/illegalstateerror.html" class="tsd-kind-icon">Illegal<wbr>State<wbr>Error</a></li>
@@ -95,20 +96,13 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface"><a href="interfaces/configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/logger.html" class="tsd-kind-icon">Logger</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias"><a href="globals.html#appsyncerror" class="tsd-kind-icon">App<wbr>Sync<wbr>Error</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#logger" class="tsd-kind-icon">Logger</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Functions</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-function"><a href="globals.html#getloglevel" class="tsd-kind-icon">get<wbr>Log<wbr>Level</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#getlogger" class="tsd-kind-icon">get<wbr>Logger</a></li>
 							</ul>
 						</section>
 					</div>
@@ -125,59 +119,6 @@
 							<li>Defined in src/errors/error.ts:3</li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="logger" class="tsd-anchor"></a>
-					<h3>Logger</h3>
-					<div class="tsd-signature tsd-kind-icon">Logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReturnType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">createLogger</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in src/logging/logging.ts:46</li>
-						</ul>
-					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="getloglevel" class="tsd-anchor"></a>
-					<h3>get<wbr>Log<wbr>Level</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Log<wbr>Level<span class="tsd-signature-symbol">(</span>level<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Level</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/logging/logging.ts:18</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>level: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Level</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="getlogger" class="tsd-anchor"></a>
-					<h3>get<wbr>Logger</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Logger<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Logger</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/logging/logging.ts:33</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Logger</span></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -205,6 +146,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/defaultconfigurationmanager.html" class="tsd-kind-icon">Default<wbr>Configuration<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/defaultlogger.html" class="tsd-kind-icon">Default<wbr>Logger</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/fatalerror.html" class="tsd-kind-icon">Fatal<wbr>Error</a>
@@ -251,17 +195,11 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/logger.html" class="tsd-kind-icon">Logger</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#appsyncerror" class="tsd-kind-icon">App<wbr>Sync<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#logger" class="tsd-kind-icon">Logger</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#getloglevel" class="tsd-kind-icon">get<wbr>Log<wbr>Level</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#getlogger" class="tsd-kind-icon">get<wbr>Logger</a>
 					</li>
 				</ul>
 			</nav>

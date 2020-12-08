@@ -29,18 +29,19 @@ export function getLogLevel(level: string | undefined): Level | undefined {
   )
 }
 
-let log: Logger | undefined
-export function getLogger(): Logger {
-  const level = getLogLevel(process.env.LOG_LEVEL) || 'info'
-  log =
-    log ||
-    createLogger({
-      name: process.env.PROJECT_NAME || 'rootLogger',
-      level,
-      serializers: stdSerializers,
-      stream: new ConsolePlainStream(),
-    })
+export function createBunyanLogger(
+  identifier?: string,
+  logLevel?: string,
+): BunyanLogger {
+  const level =
+    getLogLevel(process.env.LOG_LEVEL) || getLogLevel(logLevel) || 'info'
+  const log = createLogger({
+    name: process.env.PROJECT_NAME || identifier || 'rootLogger',
+    level,
+    serializers: stdSerializers,
+    stream: new ConsolePlainStream(),
+  })
   return log
 }
 
-export type Logger = ReturnType<typeof createLogger>
+export type BunyanLogger = ReturnType<typeof createLogger>
