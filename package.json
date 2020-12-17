@@ -7,10 +7,6 @@
     "url": "https://github.com/sudoplatform/sudo-common-js.git"
   },
   "license": "Apache-2.0",
-  "bin": {
-    "audit-with-suppressions": "bin/yarn-audit-with-suppression.sh",
-    "suppress-audit": "bin/suppress-audit.sh"
-  },
   "scripts": {
     "clean": "rm -rf ./lib",
     "lint": "yarn lint:eslint && yarn lint:prettier",
