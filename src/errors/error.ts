@@ -202,3 +202,46 @@ export class FatalError extends Error {
     this.name = 'FatalError'
   }
 }
+
+/**
+ * No entitlements assigned to user.
+ */
+export class NoEntitlementsError extends Error {
+  constructor() {
+    super('No entitlements assigned to user.')
+    this.name = 'NoEntitlementsError'
+  }
+}
+
+/**
+ * Token presented was not valid for the purpose.
+ */
+export class InvalidTokenError extends Error {
+  constructor() {
+    super('Invalid token.')
+    this.name = 'InvalidTokenError'
+  }
+}
+
+/**
+ * Helper method for mapping an App Sync error to common errors.
+ *
+ * For consumption by other Sudo Platform SDKs
+ *
+ * @param error The App Sync error to map
+ * @returns The mapped error
+ */
+export function mapGraphQLToClientError(error: AppSyncError): Error {
+  switch (error.errorType) {
+    case 'sudoplatform.InsufficientEntitlementsError':
+      return new InsufficientEntitlementsError()
+    case 'sudoplatform.InvalidTokenError':
+      return new InvalidTokenError()
+    case 'sudoplatform.NoEntitlementsError':
+      return new NoEntitlementsError()
+    case 'sudoplatform.ServiceError':
+      return new ServiceError(error.message)
+    default:
+      return new UnknownGraphQLError(error)
+  }
+}
