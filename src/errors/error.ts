@@ -224,6 +224,16 @@ export class InvalidTokenError extends Error {
 }
 
 /**
+ * Key not found from store when using cryptoProvider
+ */
+export class KeyNotFoundError extends Error {
+  constructor() {
+    super('Key not found.')
+    this.name = 'KeyNotFoundError'
+  }
+}
+
+/**
  * Helper method for mapping an App Sync error to common errors.
  *
  * For consumption by other Sudo Platform SDKs
