@@ -227,8 +227,8 @@ export class InvalidTokenError extends Error {
  * Key not found from store when using cryptoProvider
  */
 export class KeyNotFoundError extends Error {
-  constructor() {
-    super('Key not found.')
+  constructor(message?: string) {
+    super(message ?? 'Key not found.')
     this.name = 'KeyNotFoundError'
   }
 }

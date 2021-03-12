@@ -1,5 +1,7 @@
 export * from './configurationManager/defaultConfigurationManager'
 export * from './sudoKeyManager/sudoKeyManager'
 export * from './sudoKeyManager/sudoCryptoProvider'
+export * from './utils/base64'
+export * from './utils/buffer'
 export * from './errors/error'
 export * from './logging/logger'
