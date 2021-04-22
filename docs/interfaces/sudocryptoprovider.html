@@ -66,18 +66,19 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>CryptoProvider instance interface</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">SudoCryptoProvider</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/defaultsudocryptoprovider.html" class="tsd-signature-type">DefaultSudoCryptoProvider</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -91,7 +92,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#addprivatekey" class="tsd-kind-icon">add<wbr>Private<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#addpublickey" class="tsd-kind-icon">add<wbr>Public<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#addsymmetrickey" class="tsd-kind-icon">add<wbr>Symmetric<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#createrandomdata" class="tsd-kind-icon">create<wbr>Random<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#decryptwithprivatekey" class="tsd-kind-icon">decrypt<wbr>With<wbr>Private<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#decryptwithsymmetrickey" class="tsd-kind-icon">decrypt<wbr>With<wbr>Symmetric<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#decryptwithsymmetrickeyname" class="tsd-kind-icon">decrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name</a></li>
@@ -100,12 +100,15 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#deletesymmetrickey" class="tsd-kind-icon">delete<wbr>Symmetric<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#encryptwithpublickey" class="tsd-kind-icon">encrypt<wbr>With<wbr>Public<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#encryptwithsymmetrickey" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#encryptwithsymmetrickeyname" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#generatehash" class="tsd-kind-icon">generate<wbr>Hash</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#generatekeypair" class="tsd-kind-icon">generate<wbr>Key<wbr>Pair</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#generatesymmetrickey" class="tsd-kind-icon">generate<wbr>Symmetric<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#getnamespace" class="tsd-kind-icon">get<wbr>Namespace</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#getpassword" class="tsd-kind-icon">get<wbr>Password</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#getprivatekey" class="tsd-kind-icon">get<wbr>Private<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#getpublickey" class="tsd-kind-icon">get<wbr>Public<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#getservicename" class="tsd-kind-icon">get<wbr>Service<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#getsymmetrickey" class="tsd-kind-icon">get<wbr>Symmetric<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#removeallkeys" class="tsd-kind-icon">remove<wbr>All<wbr>Keys</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="sudocryptoprovider.html#updatepassword" class="tsd-kind-icon">update<wbr>Password</a></li>
@@ -126,7 +129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:36</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:13</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -163,7 +166,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:106</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:74</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,7 +203,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:123</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:89</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -237,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:68</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:41</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -265,48 +268,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="createrandomdata" class="tsd-anchor"></a>
-					<h3>create<wbr>Random<wbr>Data</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Random<wbr>Data<span class="tsd-signature-symbol">(</span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:146</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates random data used mainly for generating symmetric keys.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>size: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The size (in bytes) of the random data to create.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ArrayBuffer</span></h4>
-							<p>Random data</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="decryptwithprivatekey" class="tsd-anchor"></a>
 					<h3>decrypt<wbr>With<wbr>Private<wbr>Key</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">decrypt<wbr>With<wbr>Private<wbr>Key<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">decrypt<wbr>With<wbr>Private<wbr>Key<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:210</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:177</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -329,7 +300,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Decrypted data or undefined if the private key is not found.</p>
 						</li>
 					</ul>
@@ -344,23 +315,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:184</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:153</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Decrypt the given data with the specified symmetric key stored in the secure store.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">ArrayBuffer</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The symmetric key to decrypt data with.</p>
-									</div>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">ArrayBuffer</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The encrypted data to decrypt.</p>
+										<p>The data to decrypt.</p>
 									</div>
 								</li>
 								<li>
@@ -371,6 +342,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Decrypted data</p>
 						</li>
 					</ul>
 				</section>
@@ -384,7 +356,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:172</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:125</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -428,7 +400,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:98</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:67</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -459,7 +431,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:52</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:27</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -490,7 +462,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:84</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:55</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -521,7 +493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:199</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:167</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -553,18 +525,59 @@
 					<a name="encryptwithsymmetrickey" class="tsd-anchor"></a>
 					<h3>encrypt<wbr>With<wbr>Symmetric<wbr>Key</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, iv<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, iv<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:157</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:139</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Encrypts the given data with the specified key</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">ArrayBuffer</span></h5>
+								</li>
+								<li>
+									<h5>data: <span class="tsd-signature-type">ArrayBuffer</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Data to encrypt.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> iv: <span class="tsd-signature-type">ArrayBuffer</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional Initialization Vector.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Encrypted data and IV</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="encryptwithsymmetrickeyname" class="tsd-anchor"></a>
+					<h3>encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, iv<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:111</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Encrypts the given data with the specified symmetric key stored in the secure store.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -603,7 +616,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:220</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:189</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -634,7 +647,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:227</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:183</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -665,7 +678,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:91</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:61</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -687,6 +700,23 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getnamespace" class="tsd-anchor"></a>
+					<h3>get<wbr>Namespace</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Namespace<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:5</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="getpassword" class="tsd-anchor"></a>
 					<h3>get<wbr>Password</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -696,7 +726,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:45</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:21</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -728,7 +758,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:115</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:82</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -760,7 +790,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:132</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:97</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -783,6 +813,23 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getservicename" class="tsd-anchor"></a>
+					<h3>get<wbr>Service<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Service<wbr>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:6</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="getsymmetrickey" class="tsd-anchor"></a>
 					<h3>get<wbr>Symmetric<wbr>Key</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -792,7 +839,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:77</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:49</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -824,7 +871,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:137</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:101</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -846,7 +893,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:60</li>
+									<li>Defined in src/sudoKeyManager/sudoCryptoProvider.ts:34</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -885,15 +932,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="../enums/keyformat.html" class="tsd-kind-icon">Key<wbr>Format</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="../enums/keytype.html" class="tsd-kind-icon">Key<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="../enums/secrettype.html" class="tsd-kind-icon">Secret<wbr>Type</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/authenticationerror.html" class="tsd-kind-icon">Authentication<wbr>Error</a>
 					</li>
@@ -917,9 +955,6 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/defaultlogger.html" class="tsd-kind-icon">Default<wbr>Logger</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/defaultsudocryptoprovider.html" class="tsd-kind-icon">Default<wbr>Sudo<wbr>Crypto<wbr>Provider</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/defaultsudokeymanager.html" class="tsd-kind-icon">Default<wbr>Sudo<wbr>Key<wbr>Manager</a>
@@ -979,13 +1014,7 @@
 						<a href="configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="keypair.html" class="tsd-kind-icon">Key<wbr>Pair</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="logger.html" class="tsd-kind-icon">Logger</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="publickey.html" class="tsd-kind-icon">Public<wbr>Key</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -1003,9 +1032,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="sudocryptoprovider.html#addsymmetrickey" class="tsd-kind-icon">add<wbr>Symmetric<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="sudocryptoprovider.html#createrandomdata" class="tsd-kind-icon">create<wbr>Random<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="sudocryptoprovider.html#decryptwithprivatekey" class="tsd-kind-icon">decrypt<wbr>With<wbr>Private<wbr>Key</a>
@@ -1032,6 +1058,9 @@
 								<a href="sudocryptoprovider.html#encryptwithsymmetrickey" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="sudocryptoprovider.html#encryptwithsymmetrickeyname" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="sudocryptoprovider.html#generatehash" class="tsd-kind-icon">generate<wbr>Hash</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
@@ -1041,6 +1070,9 @@
 								<a href="sudocryptoprovider.html#generatesymmetrickey" class="tsd-kind-icon">generate<wbr>Symmetric<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="sudocryptoprovider.html#getnamespace" class="tsd-kind-icon">get<wbr>Namespace</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="sudocryptoprovider.html#getpassword" class="tsd-kind-icon">get<wbr>Password</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
@@ -1048,6 +1080,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="sudocryptoprovider.html#getpublickey" class="tsd-kind-icon">get<wbr>Public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="sudocryptoprovider.html#getservicename" class="tsd-kind-icon">get<wbr>Service<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="sudocryptoprovider.html#getsymmetrickey" class="tsd-kind-icon">get<wbr>Symmetric<wbr>Key</a>

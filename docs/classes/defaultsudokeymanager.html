@@ -94,6 +94,7 @@
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="defaultsudokeymanager.html#namespace" class="tsd-kind-icon">namespace</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="defaultsudokeymanager.html#servicename" class="tsd-kind-icon">service<wbr>Name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -111,6 +112,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="defaultsudokeymanager.html#deletesymmetrickey" class="tsd-kind-icon">delete<wbr>Symmetric<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="defaultsudokeymanager.html#encryptwithpublickey" class="tsd-kind-icon">encrypt<wbr>With<wbr>Public<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="defaultsudokeymanager.html#encryptwithsymmetrickey" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="defaultsudokeymanager.html#encryptwithsymmetrickeyname" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="defaultsudokeymanager.html#generatehash" class="tsd-kind-icon">generate<wbr>Hash</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="defaultsudokeymanager.html#generatekeypair" class="tsd-kind-icon">generate<wbr>Key<wbr>Pair</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="defaultsudokeymanager.html#generatesymmetrickey" class="tsd-kind-icon">generate<wbr>Symmetric<wbr>Key</a></li>
@@ -131,13 +133,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Default<wbr>Sudo<wbr>Key<wbr>Manager<span class="tsd-signature-symbol">(</span>_namespace<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, sudoCryptoProvider<span class="tsd-signature-symbol">?: </span><a href="../interfaces/sudocryptoprovider.html" class="tsd-signature-type">SudoCryptoProvider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="defaultsudokeymanager.html" class="tsd-signature-type">DefaultSudoKeyManager</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Default<wbr>Sudo<wbr>Key<wbr>Manager<span class="tsd-signature-symbol">(</span>sudoCryptoProvider<span class="tsd-signature-symbol">: </span><a href="../interfaces/sudocryptoprovider.html" class="tsd-signature-type">SudoCryptoProvider</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="defaultsudokeymanager.html" class="tsd-signature-type">DefaultSudoKeyManager</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:219</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:224</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -145,10 +147,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> _namespace: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> sudoCryptoProvider: <a href="../interfaces/sudocryptoprovider.html" class="tsd-signature-type">SudoCryptoProvider</a><span class="tsd-signature-symbol"> = new DefaultSudoCryptoProvider()</span></h5>
+									<h5>sudoCryptoProvider: <a href="../interfaces/sudocryptoprovider.html" class="tsd-signature-type">SudoCryptoProvider</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 										</div>
@@ -172,7 +171,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:235</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:236</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="servicename" class="tsd-anchor"></a>
+					<h3>service<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> serviceName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:232</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -193,7 +209,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#addpassword">addPassword</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:239</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:240</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -220,7 +236,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#addprivatekey">addPrivateKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:293</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:275</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -247,7 +263,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#addpublickey">addPublicKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:306</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:283</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -274,7 +290,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#addsymmetrickey">addSymmetricKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:268</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:259</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -301,7 +317,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#decryptwithprivatekey">decryptWithPrivateKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:367</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:342</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -328,7 +344,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#decryptwithsymmetrickey">decryptWithSymmetricKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:337</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:303</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -358,7 +374,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#decryptwithsymmetrickeyname">decryptWithSymmetricKeyName</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:345</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:323</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -388,7 +404,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#deletekeypair">deleteKeyPair</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:319</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:291</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -412,7 +428,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#deletepassword">deletePassword</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:252</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:248</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -436,7 +452,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#deletesymmetrickey">deleteSymmetricKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:281</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:267</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -460,7 +476,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#encryptwithpublickey">encryptWithPublicKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:357</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:335</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -480,14 +496,44 @@
 					<a name="encryptwithsymmetrickey" class="tsd-anchor"></a>
 					<h3>encrypt<wbr>With<wbr>Symmetric<wbr>Key</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, iv<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, iv<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#encryptwithsymmetrickey">encryptWithSymmetricKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:325</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:295</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">ArrayBuffer</span></h5>
+								</li>
+								<li>
+									<h5>data: <span class="tsd-signature-type">ArrayBuffer</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> iv: <span class="tsd-signature-type">ArrayBuffer</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="encryptwithsymmetrickeyname" class="tsd-anchor"></a>
+					<h3>encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, iv<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#encryptwithsymmetrickeyname">encryptWithSymmetricKeyName</a></p>
+								<ul>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:311</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -517,7 +563,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#generatehash">generateHash</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:387</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:357</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -541,7 +587,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#generatekeypair">generateKeyPair</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:287</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:271</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -565,7 +611,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#generatesymmetrickey">generateSymmetricKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:381</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:353</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -589,7 +635,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#getpassword">getPassword</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:246</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:244</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -613,7 +659,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#getprivatekey">getPrivateKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:300</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:279</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -637,7 +683,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#getpublickey">getPublicKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:313</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:287</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -661,7 +707,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#getsymmetrickey">getSymmetricKey</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:275</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:263</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -685,7 +731,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#removeallkeys">removeAllKeys</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:377</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:349</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -703,7 +749,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/sudokeymanager.html">SudoKeyManager</a>.<a href="../interfaces/sudokeymanager.html#updatepassword">updatePassword</a></p>
 								<ul>
-									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:258</li>
+									<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:252</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -731,15 +777,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="../enums/keyformat.html" class="tsd-kind-icon">Key<wbr>Format</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="../enums/keytype.html" class="tsd-kind-icon">Key<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-enum">
-						<a href="../enums/secrettype.html" class="tsd-kind-icon">Secret<wbr>Type</a>
-					</li>
 					<li class=" tsd-kind-class">
 						<a href="authenticationerror.html" class="tsd-kind-icon">Authentication<wbr>Error</a>
 					</li>
@@ -764,9 +801,6 @@
 					<li class=" tsd-kind-class">
 						<a href="defaultlogger.html" class="tsd-kind-icon">Default<wbr>Logger</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="defaultsudocryptoprovider.html" class="tsd-kind-icon">Default<wbr>Sudo<wbr>Crypto<wbr>Provider</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -777,6 +811,9 @@
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="defaultsudokeymanager.html#namespace" class="tsd-kind-icon">namespace</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="defaultsudokeymanager.html#servicename" class="tsd-kind-icon">service<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="defaultsudokeymanager.html#addpassword" class="tsd-kind-icon">add<wbr>Password</a>
@@ -813,6 +850,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="defaultsudokeymanager.html#encryptwithsymmetrickey" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="defaultsudokeymanager.html#encryptwithsymmetrickeyname" class="tsd-kind-icon">encrypt<wbr>With<wbr>Symmetric<wbr>Key<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="defaultsudokeymanager.html#generatehash" class="tsd-kind-icon">generate<wbr>Hash</a>
@@ -900,13 +940,7 @@
 						<a href="../interfaces/configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/keypair.html" class="tsd-kind-icon">Key<wbr>Pair</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="../interfaces/logger.html" class="tsd-kind-icon">Logger</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/publickey.html" class="tsd-kind-icon">Public<wbr>Key</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/sudocryptoprovider.html" class="tsd-kind-icon">Sudo<wbr>Crypto<wbr>Provider</a>
