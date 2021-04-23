@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FatalError | @sudoplatform/sudo-common</title>
+	<title>ListOutput | @sudoplatform/sudo-common</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="fatalerror.html">FatalError</a>
+					<a href="listoutput.html">ListOutput</a>
 				</li>
 			</ul>
-			<h1>Class FatalError</h1>
+			<h1>Interface ListOutput&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -69,21 +69,23 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An unexpected error was encountered. This may result from programmatic error
-						and is unlikley to be user recoverable.</p>
+						<p>Generic type for paginated results from list queries</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="unknowngraphqlerror.html#error" class="tsd-signature-type">Error</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">FatalError</span>
-							</li>
-						</ul>
+						<span class="target">ListOutput</span>
 					</li>
 				</ul>
 			</section>
@@ -92,91 +94,34 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="fatalerror.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fatalerror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fatalerror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="fatalerror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="fatalerror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="listoutput.html#items" class="tsd-kind-icon">items</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="listoutput.html#nexttoken" class="tsd-kind-icon">next<wbr>Token</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Fatal<wbr>Error<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fatalerror.html" class="tsd-signature-type">FatalError</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/errors/error.ts:199</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="fatalerror.html" class="tsd-signature-type">FatalError</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="items" class="tsd-anchor"></a>
+					<h3>items</h3>
+					<div class="tsd-signature tsd-kind-icon">items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="unknowngraphqlerror.html">UnknownGraphQLError</a>.<a href="unknowngraphqlerror.html#message">message</a></p>
 						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:974</li>
+							<li>Defined in src/types/types.ts:5</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="unknowngraphqlerror.html">UnknownGraphQLError</a>.<a href="unknowngraphqlerror.html#name">name</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:973</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="unknowngraphqlerror.html">UnknownGraphQLError</a>.<a href="unknowngraphqlerror.html#stack">stack</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:975</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="error" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Error</h3>
-					<div class="tsd-signature tsd-kind-icon">Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ErrorConstructor</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nexttoken" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> next<wbr>Token</h3>
+					<div class="tsd-signature tsd-kind-icon">next<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:984</li>
+							<li>Defined in src/types/types.ts:6</li>
 						</ul>
 					</aside>
 				</section>
@@ -196,127 +141,118 @@
 						<a href="../enums/cachepolicy.html" class="tsd-kind-icon">Cache<wbr>Policy</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="authenticationerror.html" class="tsd-kind-icon">Authentication<wbr>Error</a>
+						<a href="../classes/authenticationerror.html" class="tsd-kind-icon">Authentication<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="base64.html" class="tsd-kind-icon">Base64</a>
+						<a href="../classes/base64.html" class="tsd-kind-icon">Base64</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="buffer.html" class="tsd-kind-icon">Buffer</a>
+						<a href="../classes/buffer.html" class="tsd-kind-icon">Buffer</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="configurationnotseterror.html" class="tsd-kind-icon">Configuration<wbr>Not<wbr>Set<wbr>Error</a>
+						<a href="../classes/configurationnotseterror.html" class="tsd-kind-icon">Configuration<wbr>Not<wbr>Set<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="configurationsetnotfounderror.html" class="tsd-kind-icon">Configuration<wbr>Set<wbr>Not<wbr>Found<wbr>Error</a>
+						<a href="../classes/configurationsetnotfounderror.html" class="tsd-kind-icon">Configuration<wbr>Set<wbr>Not<wbr>Found<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="decodeerror.html" class="tsd-kind-icon">Decode<wbr>Error</a>
+						<a href="../classes/decodeerror.html" class="tsd-kind-icon">Decode<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="defaultconfigurationmanager.html" class="tsd-kind-icon">Default<wbr>Configuration<wbr>Manager</a>
+						<a href="../classes/defaultconfigurationmanager.html" class="tsd-kind-icon">Default<wbr>Configuration<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="defaultlogger.html" class="tsd-kind-icon">Default<wbr>Logger</a>
+						<a href="../classes/defaultlogger.html" class="tsd-kind-icon">Default<wbr>Logger</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="defaultsudokeymanager.html" class="tsd-kind-icon">Default<wbr>Sudo<wbr>Key<wbr>Manager</a>
+						<a href="../classes/defaultsudokeymanager.html" class="tsd-kind-icon">Default<wbr>Sudo<wbr>Key<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/fatalerror.html" class="tsd-kind-icon">Fatal<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/illegalargumenterror.html" class="tsd-kind-icon">Illegal<wbr>Argument<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/illegalstateerror.html" class="tsd-kind-icon">Illegal<wbr>State<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/insufficiententitlementserror.html" class="tsd-kind-icon">Insufficient<wbr>Entitlements<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/invalidownershipprooferror.html" class="tsd-kind-icon">Invalid<wbr>Ownership<wbr>Proof<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/invalidtokenerror.html" class="tsd-kind-icon">Invalid<wbr>Token<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/keynotfounderror.html" class="tsd-kind-icon">Key<wbr>Not<wbr>Found<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/noentitlementserror.html" class="tsd-kind-icon">No<wbr>Entitlements<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/notauthorizederror.html" class="tsd-kind-icon">Not<wbr>Authorized<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/notregisterederror.html" class="tsd-kind-icon">Not<wbr>Registered<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/notsignedinerror.html" class="tsd-kind-icon">Not<wbr>Signed<wbr>InError</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/registererror.html" class="tsd-kind-icon">Register<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/serviceerror.html" class="tsd-kind-icon">Service<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/signouterror.html" class="tsd-kind-icon">Sign<wbr>Out<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/unknowngraphqlerror.html" class="tsd-kind-icon">Unknown<wbr>GraphQLError</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/usernotconfirmederror.html" class="tsd-kind-icon">User<wbr>Not<wbr>Confirmed<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/versionmismatcherror.html" class="tsd-kind-icon">Version<wbr>Mismatch<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="booleanfilter.html" class="tsd-kind-icon">Boolean<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="fatalerror.html" class="tsd-kind-icon">Fatal<wbr>Error</a>
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="listoutput.html" class="tsd-kind-icon">List<wbr>Output</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="fatalerror.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="listoutput.html#items" class="tsd-kind-icon">items</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="fatalerror.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="fatalerror.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="fatalerror.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="fatalerror.html#error" class="tsd-kind-icon">Error</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="listoutput.html#nexttoken" class="tsd-kind-icon">next<wbr>Token</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="illegalargumenterror.html" class="tsd-kind-icon">Illegal<wbr>Argument<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="illegalstateerror.html" class="tsd-kind-icon">Illegal<wbr>State<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="insufficiententitlementserror.html" class="tsd-kind-icon">Insufficient<wbr>Entitlements<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="invalidownershipprooferror.html" class="tsd-kind-icon">Invalid<wbr>Ownership<wbr>Proof<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="invalidtokenerror.html" class="tsd-kind-icon">Invalid<wbr>Token<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="keynotfounderror.html" class="tsd-kind-icon">Key<wbr>Not<wbr>Found<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="noentitlementserror.html" class="tsd-kind-icon">No<wbr>Entitlements<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="notauthorizederror.html" class="tsd-kind-icon">Not<wbr>Authorized<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="notregisterederror.html" class="tsd-kind-icon">Not<wbr>Registered<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="notsignedinerror.html" class="tsd-kind-icon">Not<wbr>Signed<wbr>InError</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="registererror.html" class="tsd-kind-icon">Register<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="serviceerror.html" class="tsd-kind-icon">Service<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="signouterror.html" class="tsd-kind-icon">Sign<wbr>Out<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="unknowngraphqlerror.html" class="tsd-kind-icon">Unknown<wbr>GraphQLError</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="usernotconfirmederror.html" class="tsd-kind-icon">User<wbr>Not<wbr>Confirmed<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="versionmismatcherror.html" class="tsd-kind-icon">Version<wbr>Mismatch<wbr>Error</a>
+					<li class=" tsd-kind-interface">
+						<a href="logger.html" class="tsd-kind-icon">Logger</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/booleanfilter.html" class="tsd-kind-icon">Boolean<wbr>Filter</a>
+						<a href="owner.html" class="tsd-kind-icon">Owner</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/configurationmanager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="../interfaces/listoutput.html" class="tsd-kind-icon">List<wbr>Output</a>
+						<a href="stringfilter.html" class="tsd-kind-icon">String<wbr>Filter</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/logger.html" class="tsd-kind-icon">Logger</a>
+						<a href="sudocryptoprovider.html" class="tsd-kind-icon">Sudo<wbr>Crypto<wbr>Provider</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/owner.html" class="tsd-kind-icon">Owner</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/stringfilter.html" class="tsd-kind-icon">String<wbr>Filter</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/sudocryptoprovider.html" class="tsd-kind-icon">Sudo<wbr>Crypto<wbr>Provider</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/sudokeymanager.html" class="tsd-kind-icon">Sudo<wbr>Key<wbr>Manager</a>
+						<a href="sudokeymanager.html" class="tsd-kind-icon">Sudo<wbr>Key<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#appsyncerror" class="tsd-kind-icon">App<wbr>Sync<wbr>Error</a>
