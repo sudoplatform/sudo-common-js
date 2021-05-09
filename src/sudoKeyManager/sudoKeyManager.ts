@@ -1,3 +1,4 @@
+import { PublicKey } from './publicKey'
 import { SudoCryptoProvider } from './sudoCryptoProvider'
 
 /**
@@ -99,7 +100,7 @@ export interface SudoKeyManager {
    *
    * @returns The public key or undefined if the key was not found.
    */
-  getPublicKey(name: string): Promise<ArrayBuffer | undefined>
+  getPublicKey(name: string): Promise<PublicKey | undefined>
 
   /**
    * Deletes a key pair from the secure store.
@@ -284,7 +285,7 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     return await this.sudoCryptoProvider.addPublicKey(key, name)
   }
 
-  public async getPublicKey(name: string): Promise<ArrayBuffer | undefined> {
+  public async getPublicKey(name: string): Promise<PublicKey | undefined> {
     return await this.sudoCryptoProvider.getPublicKey(name)
   }
 

@@ -1,3 +1,5 @@
+import { PublicKey } from './publicKey'
+
 /**
  * CryptoProvider instance interface
  */
@@ -94,7 +96,7 @@ export interface SudoCryptoProvider {
    *
    * @returns The public key or undefined if the key was not found.
    */
-  getPublicKey(name: string): Promise<ArrayBuffer | undefined>
+  getPublicKey(name: string): Promise<PublicKey | undefined>
   /**
    * Clear all types of keys
    */
