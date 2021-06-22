@@ -25,10 +25,7 @@
     "lib"
   ],
   "resolutions": {
-    "handlebars": "^4.7.7",
-    "hosted-git-info": "^3.0.8",
-    "lodash": "^4.17.21",
-    "underscore": "^1.12.1"
+    "browserslist": "^4.16.5"
   },
   "dependencies": {
     "browser-bunyan": "^1.6.3"
@@ -37,30 +34,30 @@
     "io-ts": "^2.2.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.4",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-private-methods": "^7.10.4",
-    "@babel/preset-env": "^7.11.0",
-    "@babel/preset-typescript": "^7.10.4",
-    "@types/jest": "^26.0.13",
-    "@typescript-eslint/eslint-plugin": "^3.7.1",
-    "@typescript-eslint/parser": "^3.7.1",
-    "eslint": "^7.5.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "fp-ts": "^2.8.2",
-    "graphql": "^15.4.0",
-    "io-ts": "^2.2.10",
-    "io-ts-types": "^0.5.10",
-    "isomorphic-webcrypto": "^2.3.6",
-    "jest": "^26.4.2",
-    "monocle-ts": "^2.0.0",
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-private-methods": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/jest": "^26.0.23",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "fp-ts": "^2.10.5",
+    "graphql": "^15.5.1",
+    "io-ts": "^2.2.16",
+    "io-ts-types": "^0.5.16",
+    "isomorphic-webcrypto": "^2.3.8",
+    "jest": "^27.0.5",
+    "monocle-ts": "^2.3.10",
     "newtype-ts": "^0.3.2",
-    "prettier": "^2.0.5",
+    "prettier": "^2.3.1",
     "ts-mockito": "^2.6.1",
     "typedoc": "0.17.0-3",
-    "typescript": "^3.9.7"
+    "typescript": "^4.3.4"
   }
 }

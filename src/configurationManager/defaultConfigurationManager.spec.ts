@@ -50,20 +50,11 @@ describe('configuration manager', () => {
     region: t.string,
   })
 
-  const FederatedSignInConfig = t.type({
-    appClientId: t.string,
-    signInRedirectUri: t.string,
-    signOutRedirectUri: t.string,
-    webDomain: t.string,
-    identityProvider: t.string,
-  })
-
   const SdkConfig = t.type({
     identityService: IdentityServiceConfig,
     apiService: ApiServiceConfig,
   })
 
-  type FederatedSignInConfig = t.TypeOf<typeof FederatedSignInConfig>
   type IdentityServiceConfig = t.TypeOf<typeof IdentityServiceConfig>
   type ApiServiceConfig = t.TypeOf<typeof ApiServiceConfig>
   type SdkConfig = t.TypeOf<typeof SdkConfig>
@@ -162,9 +153,11 @@ describe('configuration manager', () => {
 
       expect(configSet).toStrictEqual(expected)
 
-      const result = DefaultConfigurationManager.getInstance().bind<
-        IdentityServiceConfig
-      >(configSet, IdentityServiceConfig)
+      const result =
+        DefaultConfigurationManager.getInstance().bind<IdentityServiceConfig>(
+          configSet,
+          IdentityServiceConfig,
+        )
 
       expect(result).toBeTruthy()
     })
