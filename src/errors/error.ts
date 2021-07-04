@@ -193,6 +193,39 @@ export class IllegalStateError extends Error {
 }
 
 /**
+ * Operation failed due to it exceeding some limits imposed for the API. For example,
+ * this error can occur if the resource size exceeds the database record size limit.
+ */
+export class LimitExceededError extends Error {
+  constructor() {
+    super('API limit exceeded.')
+    this.name = 'LimitExceededError'
+  }
+}
+
+/**
+ * API request failed due to network error or unexpected server error.
+ */
+export class RequestFailedError extends Error {
+  /**
+   * Underlying error that cause the request to fail.
+   */
+  public cause?: Error
+  /**
+   * HTTP status code if a valid response was received with unexpected
+   * status code.
+   */
+  public statusCode?: number
+
+  constructor(cause?: Error, statusCode?: number) {
+    super(`API request failed. cause: ${cause}, statusCode: ${statusCode}`)
+    this.name = 'RequestFailedError'
+    this.cause = cause
+    this.statusCode = statusCode
+  }
+}
+
+/**
  * An unexpected error was encountered. This may result from programmatic error
  * and is unlikley to be user recoverable.
  */

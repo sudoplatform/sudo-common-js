@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ServiceError | @sudoplatform/sudo-common</title>
+	<title>RequestFailedError | @sudoplatform/sudo-common</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="serviceerror.html">ServiceError</a>
+					<a href="requestfailederror.html">RequestFailedError</a>
 				</li>
 			</ul>
-			<h1>Class ServiceError</h1>
+			<h1>Class RequestFailedError</h1>
 		</div>
 	</div>
 </header>
@@ -69,9 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Indicates that an internal server error caused the operation to fail. The error
-							is possibly transient and retrying at a later time may cause the operation to
-						complete successfully.</p>
+						<p>API request failed due to network error or unexpected server error.</p>
 					</div>
 				</div>
 			</section>
@@ -82,7 +80,7 @@
 						<a href="unknowngraphqlerror.html#error" class="tsd-signature-type">Error</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ServiceError</span>
+								<span class="target">RequestFailedError</span>
 							</li>
 						</ul>
 					</li>
@@ -95,16 +93,18 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="serviceerror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="requestfailederror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="serviceerror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="serviceerror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="serviceerror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="serviceerror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="requestfailederror.html#cause" class="tsd-kind-icon">cause</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="requestfailederror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="requestfailederror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="requestfailederror.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="requestfailederror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="requestfailederror.html#error" class="tsd-kind-icon">Error</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,28 +116,46 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Service<wbr>Error<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="serviceerror.html" class="tsd-signature-type">ServiceError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Request<wbr>Failed<wbr>Error<span class="tsd-signature-symbol">(</span>cause<span class="tsd-signature-symbol">?: </span><a href="requestfailederror.html#error" class="tsd-signature-type">Error</a>, statusCode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="requestfailederror.html" class="tsd-signature-type">RequestFailedError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/errors/error.ts:167</li>
+									<li>Defined in src/errors/error.ts:218</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> cause: <a href="requestfailederror.html#error" class="tsd-signature-type">Error</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> statusCode: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="serviceerror.html" class="tsd-signature-type">ServiceError</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="requestfailederror.html" class="tsd-signature-type">RequestFailedError</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="cause" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> cause</h3>
+					<div class="tsd-signature tsd-kind-icon">cause<span class="tsd-signature-symbol">:</span> <a href="requestfailederror.html#error" class="tsd-signature-type">Error</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/errors/error.ts:213</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Underlying error that cause the request to fail.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
@@ -171,6 +189,22 @@
 						</ul>
 					</aside>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="statuscode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> status<wbr>Code</h3>
+					<div class="tsd-signature tsd-kind-icon">status<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/errors/error.ts:218</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>HTTP status code if a valid response was received with unexpected
+							status code.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
 					<a name="error" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Error</h3>
@@ -196,22 +230,28 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="serviceerror.html" class="tsd-kind-icon">Service<wbr>Error</a>
+						<a href="requestfailederror.html" class="tsd-kind-icon">Request<wbr>Failed<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="serviceerror.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="requestfailederror.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="requestfailederror.html#cause" class="tsd-kind-icon">cause</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="serviceerror.html#message" class="tsd-kind-icon">message</a>
+								<a href="requestfailederror.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="serviceerror.html#name" class="tsd-kind-icon">name</a>
+								<a href="requestfailederror.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="serviceerror.html#stack" class="tsd-kind-icon">stack</a>
+								<a href="requestfailederror.html#stack" class="tsd-kind-icon">stack</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="requestfailederror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="serviceerror.html#error" class="tsd-kind-icon">Error</a>
+								<a href="requestfailederror.html#error" class="tsd-kind-icon">Error</a>
 							</li>
 						</ul>
 					</li>
