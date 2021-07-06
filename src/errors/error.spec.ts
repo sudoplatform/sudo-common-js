@@ -117,7 +117,7 @@ describe('error', () => {
         },
       }
       if (error === 'default') {
-        error = new RequestFailedError(networkError)
+        error = new RequestFailedError(networkError, statusCode)
       }
 
       expect(mapNetworkErrorToClientError(networkError)).toEqual(error)

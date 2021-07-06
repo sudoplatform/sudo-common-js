@@ -310,10 +310,11 @@ export function mapGraphQLToClientError(error: AppSyncError): Error {
 export function mapNetworkErrorToClientError(
   error: AppSyncNetworkError,
 ): Error {
-  switch (error.networkError.statusCode) {
+  const networkError = error.networkError
+  switch (networkError.statusCode) {
     case 401:
       return new NotAuthorizedError()
+    default:
+      return new RequestFailedError(networkError, networkError.statusCode)
   }
-
-  return new RequestFailedError(error)
 }
