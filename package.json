@@ -1,6 +1,6 @@
 {
   "name": "@sudoplatform/sudo-common",
-  "version": "0.0.5",
+  "version": "5.2.0",
   "author": "Anonyome Labs, Inc.",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "build:verify": "yarn audit && yarn lint && yarn test --coverage",
     "build:transpile": "babel src --out-dir lib --extensions '.ts'",
     "build:declarations": "yarn tsc --emitDeclarationOnly",
-    "build:doc": "typedoc --mode library --excludePrivate --out docs src/index.ts"
+    "build:doc": "typedoc --mode file --excludePrivate --out docs src/index.ts"
   },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -25,7 +25,8 @@
     "lib"
   ],
   "resolutions": {
-    "browserslist": "^4.16.5"
+    "browserslist": "^4.16.5",
+    "marked":"^2.1.3"
   },
   "dependencies": {
     "browser-bunyan": "^1.6.3"
@@ -41,9 +42,9 @@
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-typescript": "^7.14.5",
     "@types/jest": "^26.0.23",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
-    "eslint": "^7.29.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.4.0",
@@ -52,12 +53,12 @@
     "io-ts": "^2.2.16",
     "io-ts-types": "^0.5.16",
     "isomorphic-webcrypto": "^2.3.8",
-    "jest": "^27.0.5",
+    "jest": "^27.0.6",
     "monocle-ts": "^2.3.10",
     "newtype-ts": "^0.3.2",
-    "prettier": "^2.3.1",
+    "prettier": "^2.3.2",
     "ts-mockito": "^2.6.1",
-    "typedoc": "0.17.0-3",
-    "typescript": "^4.3.4"
+    "typedoc": "0.19.2",
+    "typescript": "^4.3.5"
   }
 }

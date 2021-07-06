@@ -3,6 +3,16 @@ import { GraphQLError } from 'graphql'
 export type AppSyncError = GraphQLError & {
   errorType?: string | null
 }
+export type AppSyncNetworkError = Error & {
+  networkError: Error & {
+    statusCode?: number
+  }
+}
+
+export function isAppSyncNetworkError(u: Error): u is AppSyncNetworkError {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return !!(u as any).networkError
+}
 
 /**
  * Indicates the GraphQL API returned an error that's not recognized by the client.
@@ -287,4 +297,23 @@ export function mapGraphQLToClientError(error: AppSyncError): Error {
     default:
       return new UnknownGraphQLError(error)
   }
+}
+
+/**
+ * Call this in error handling when testing with isAppSyncNetworkError on
+ * a caught error from an AppSync operation returns true.
+ *
+ * @param error AppSyncNetworkError to map
+ *
+ * @returns Mapped error
+ */
+export function mapNetworkErrorToClientError(
+  error: AppSyncNetworkError,
+): Error {
+  switch (error.networkError.statusCode) {
+    case 401:
+      return new NotAuthorizedError()
+  }
+
+  return new RequestFailedError(error)
 }
