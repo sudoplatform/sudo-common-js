@@ -1,6 +1,7 @@
 import {
   AppSyncError,
   AppSyncNetworkError,
+  IllegalArgumentError,
   InsufficientEntitlementsError,
   InvalidTokenError,
   isAppSyncNetworkError,
@@ -20,6 +21,7 @@ describe('error', () => {
       code                                            | error
       ${'sudoplatform.InsufficientEntitlementsError'} | ${new InsufficientEntitlementsError()}
       ${'sudoplatform.InvalidTokenError'}             | ${new InvalidTokenError()}
+      ${'sudoplatform.InvalidArgumentError'}          | ${new IllegalArgumentError()}
       ${'sudoplatform.NoEntitlementsError'}           | ${new NoEntitlementsError()}
       ${'sudoplatform.ServiceError'}                  | ${new ServiceError(message)}
     `('should map common error $code properly', ({ code, error }) => {

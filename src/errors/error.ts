@@ -182,11 +182,11 @@ export class ServiceError extends Error {
 }
 
 /**
- * Error when expected arguments are missing
+ * Error when expected arguments are missing or invalid
  */
 export class IllegalArgumentError extends Error {
-  constructor(message: string) {
-    super(message)
+  constructor(message?: string) {
+    super(message ?? 'Invalid arguments were specified')
     this.name = 'IllegalArgumentError'
   }
 }
@@ -290,6 +290,8 @@ export function mapGraphQLToClientError(error: AppSyncError): Error {
       return new InsufficientEntitlementsError()
     case 'sudoplatform.InvalidTokenError':
       return new InvalidTokenError()
+    case 'sudoplatform.InvalidArgumentError':
+      return new IllegalArgumentError()
     case 'sudoplatform.NoEntitlementsError':
       return new NoEntitlementsError()
     case 'sudoplatform.ServiceError':
