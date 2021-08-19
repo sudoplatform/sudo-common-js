@@ -1,4 +1,5 @@
 import {
+  AccountLockedError,
   AppSyncError,
   AppSyncNetworkError,
   IllegalArgumentError,
@@ -20,6 +21,7 @@ describe('error', () => {
     it.each`
       code                                            | error
       ${'sudoplatform.InsufficientEntitlementsError'} | ${new InsufficientEntitlementsError()}
+      ${'sudoplatform.AccountLockedError'}            | ${new AccountLockedError()}
       ${'sudoplatform.InvalidTokenError'}             | ${new InvalidTokenError()}
       ${'sudoplatform.InvalidArgumentError'}          | ${new IllegalArgumentError()}
       ${'sudoplatform.NoEntitlementsError'}           | ${new NoEntitlementsError()}

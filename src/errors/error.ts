@@ -170,6 +170,18 @@ export class InsufficientEntitlementsError extends Error {
 }
 
 /**
+ * Indicates the requested operation failed because the user account is locked.
+ */
+ export class AccountLockedError extends Error {
+  constructor() {
+    super(
+      'The requested operation failed because the user account is locked.',
+    )
+    this.name = 'AccountLockedError'
+  }
+}
+
+/**
  * Indicates that an internal server error caused the operation to fail. The error
  * is possibly transient and retrying at a later time may cause the operation to
  * complete successfully.
@@ -286,6 +298,8 @@ export class KeyNotFoundError extends Error {
  */
 export function mapGraphQLToClientError(error: AppSyncError): Error {
   switch (error.errorType) {
+    case 'sudoplatform.AccountLockedError':
+      return new AccountLockedError()
     case 'sudoplatform.InsufficientEntitlementsError':
       return new InsufficientEntitlementsError()
     case 'sudoplatform.InvalidTokenError':
