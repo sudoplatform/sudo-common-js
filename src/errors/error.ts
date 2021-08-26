@@ -1,4 +1,5 @@
 import { GraphQLError } from 'graphql'
+import { ApolloError } from 'apollo-client'
 
 export type AppSyncError = GraphQLError & {
   errorType?: string | null
@@ -11,7 +12,7 @@ export type AppSyncNetworkError = Error & {
 
 export function isAppSyncNetworkError(u: Error): u is AppSyncNetworkError {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return !!(u as any).networkError
+  return !!(u as ApolloError).networkError
 }
 
 /**
@@ -19,7 +20,11 @@ export function isAppSyncNetworkError(u: Error): u is AppSyncNetworkError {
  */
 export class UnknownGraphQLError extends Error {
   constructor(cause: AppSyncError) {
-    super(`type: ${cause.errorType}, message: ${cause.message}`)
+    super(
+      `type: ${cause.errorType ?? '<cause type not specified>'}, message: ${
+        cause.message
+      }`,
+    )
     this.name = 'GraphQLError'
   }
 }
@@ -172,11 +177,9 @@ export class InsufficientEntitlementsError extends Error {
 /**
  * Indicates the requested operation failed because the user account is locked.
  */
- export class AccountLockedError extends Error {
+export class AccountLockedError extends Error {
   constructor() {
-    super(
-      'The requested operation failed because the user account is locked.',
-    )
+    super('The requested operation failed because the user account is locked.')
     this.name = 'AccountLockedError'
   }
 }
@@ -240,7 +243,11 @@ export class RequestFailedError extends Error {
   public statusCode?: number
 
   constructor(cause?: Error, statusCode?: number) {
-    super(`API request failed. cause: ${cause}, statusCode: ${statusCode}`)
+    super(
+      `API request failed. cause: ${cause?.message ?? '<none>'}, statusCode: ${
+        statusCode ?? '<none>'
+      }`,
+    )
     this.name = 'RequestFailedError'
     this.cause = cause
     this.statusCode = statusCode
@@ -285,6 +292,109 @@ export class KeyNotFoundError extends Error {
   constructor(message?: string) {
     super(message ?? 'Key not found.')
     this.name = 'KeyNotFoundError'
+  }
+}
+
+/**
+ * Underlying secure key store does not support key export
+ */
+export class KeyStoreNotExportableError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'Key store not exportable.')
+    this.name = 'KeyStoreNotExportableError'
+  }
+}
+
+/**
+ * No key archive provided prior to unarchiving
+ */
+export class KeyArchiveMissingError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'No key archive provided prior to unarchiving')
+    this.name = 'KeyArchiveMissingError'
+  }
+}
+
+/**
+ * No password provided to unarchive secure archive
+ */
+export class KeyArchivePasswordRequiredError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'No password provided to unarchive secure archive')
+    this.name = 'KeyArchivePasswordRequiredError'
+  }
+}
+
+/**
+ * No password required to unarchive insecure archive
+ */
+export class KeyArchiveNoPasswordRequiredError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'No password required to unarchive insecure archive')
+    this.name = 'KeyArchiveNoPasswordRequiredError'
+  }
+}
+
+/**
+ * Key archive data could not be decoded as expected
+ */
+export class KeyArchiveDecodingError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'Key archive data could not be decoded as expected')
+    this.name = 'KeyArchiveDecodingError'
+  }
+}
+
+/**
+ * Key archive was unable to be decrypted using the provided password
+ */
+export class KeyArchiveIncorrectPasswordError extends Error {
+  constructor(message?: string) {
+    super(
+      message ??
+        'Key archive was unable to be decrypted using the provided password',
+    )
+    this.name = 'KeyArchiveIncorrectPasswordError'
+  }
+}
+
+/**
+ * Key archive type is not supported
+ */
+export class KeyArchiveTypeError extends Error {
+  constructor(keyArchiveType: string) {
+    super(`Key archive type ${keyArchiveType} is not supported`)
+    this.name = 'KeyArchiveTypeError'
+  }
+}
+
+/**
+ * Key archive version is not supported
+ */
+export class KeyArchiveVersionError extends Error {
+  constructor(version: number) {
+    super(`Key archive version ${version} is not supported`)
+    this.name = 'KeyArchiveVersionError'
+  }
+}
+
+/**
+ * Key archive key type is not recognized
+ */
+export class KeyArchiveUnknownKeyTypeError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'Key type is not recognized')
+    this.name = 'KeyArchiveUnknownKeyTypeError'
+  }
+}
+
+/**
+ * Operation not implemented
+ */
+export class OperationNotImplementedError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'Operation is not implemented')
+    this.name = 'OperationNotImplementedError'
   }
 }
 

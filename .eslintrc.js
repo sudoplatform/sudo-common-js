@@ -9,10 +9,14 @@ module.exports = {
     },
     {
       files: ['**/*.ts'],
-      plugins: ['@typescript-eslint', 'import'],
+      plugins: ['@typescript-eslint', 'import', 'prettier'],
       parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: './tsconfig.test.json'
+      },
       extends: [
         'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'prettier',
       ],
       rules: {
@@ -41,6 +45,14 @@ module.exports = {
             allowTypedFunctionExpressions: true,
           },
         ],
+
+        // Allow use of unbound static methods
+        '@typescript-eslint/unbound-method': [
+          'error',
+          {
+            'ignoreStatic': true
+          }
+        ]
       },
     },
     {
@@ -56,9 +68,25 @@ module.exports = {
         'integration-tests/**/*.ts',
         'src/utils/testing/**/*.ts',
       ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: './tsconfig.test.json'
+      },
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'prettier',
+      ],
       rules: {
+        '@typescript-eslint/no-namespace': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/restrict-plus-operands': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off',
+        '@typescript-eslint/unbound-method': 'off'
       },
     },
   ],

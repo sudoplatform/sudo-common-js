@@ -1,3 +1,5 @@
+import { Buffer as BufferUtil } from '../utils/buffer'
+import { KeyData } from './keyData'
 import { PublicKey } from './publicKey'
 import { SudoCryptoProvider } from './sudoCryptoProvider'
 
@@ -205,6 +207,31 @@ export interface SudoKeyManager {
   generateSymmetricKey(name: string): Promise<void>
 
   /**
+   * Generates a symmetric key, derived from a password using PBKDF2.
+   *
+   * @param name The name to store the symmetric key as
+   * @param password The password from which to generate the symmetric key
+   * @param salt Salt to use in generation of the key
+   * @param rounds The number of rounds of PBKDF2 to perform. Default: per getDefaultPBKDF2Rounds
+   *
+   * @returns The generated symmetric key.
+   */
+  generateSymmetricKeyFromPassword(
+    password: string,
+    salt: ArrayBuffer,
+    options?: { rounds?: number },
+  ): Promise<ArrayBuffer>
+
+  /**
+   * Generate random bytes using a secure random number generator.
+   *
+   * @param size Number of random bytes to generate
+   *
+   * @returns ArrayBuffer containing the random bytes.
+   */
+  generateRandomData(size: number): Promise<ArrayBuffer>
+
+  /**
    * Creates a SHA256 hash of the specified data.
    *
    * @param data Data to hash.
@@ -220,6 +247,12 @@ export interface SudoKeyManager {
    * @param name The name of the key pair to be generated.
    */
   generateKeyPair(name: string): Promise<void>
+
+  /**
+   * Export all contents of the key manager as an array of KeyArchiveKeyInfo
+   * ready for archive.
+   */
+  exportKeys(): Promise<KeyData[]>
 }
 
 export class DefaultSudoKeyManager implements SudoKeyManager {
@@ -228,7 +261,7 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
    * a unique identifier for each key will be `<namespace>.<keyName>`. Namespace cannot be an empty string.
    * @param sudoCryptoProvider
    */
-  constructor(private sudoCryptoProvider: SudoCryptoProvider) {}
+  constructor(private readonly sudoCryptoProvider: SudoCryptoProvider) {}
 
   public get serviceName(): string {
     return this.sudoCryptoProvider.getServiceName()
@@ -238,124 +271,133 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     return this.sudoCryptoProvider.getNamespace()
   }
 
-  public async addPassword(password: ArrayBuffer, name: string): Promise<void> {
-    await this.sudoCryptoProvider.addPassword(password, name)
+  public addPassword(password: ArrayBuffer, name: string): Promise<void> {
+    return this.sudoCryptoProvider.addPassword(password, name)
   }
 
-  public async getPassword(name: string): Promise<ArrayBuffer | undefined> {
-    return await this.sudoCryptoProvider.getPassword(name)
+  public getPassword(name: string): Promise<ArrayBuffer | undefined> {
+    return this.sudoCryptoProvider.getPassword(name)
   }
 
-  public async deletePassword(name: string): Promise<void> {
-    await this.sudoCryptoProvider.deletePassword(name)
+  public deletePassword(name: string): Promise<void> {
+    return this.sudoCryptoProvider.deletePassword(name)
   }
 
-  public async updatePassword(
-    password: ArrayBuffer,
-    name: string,
-  ): Promise<void> {
-    await this.sudoCryptoProvider.updatePassword(password, name)
+  public updatePassword(password: ArrayBuffer, name: string): Promise<void> {
+    return this.sudoCryptoProvider.updatePassword(password, name)
   }
 
-  public async addSymmetricKey(key: ArrayBuffer, name: string): Promise<void> {
-    await this.sudoCryptoProvider.addSymmetricKey(key, name)
+  public addSymmetricKey(key: ArrayBuffer, name: string): Promise<void> {
+    return this.sudoCryptoProvider.addSymmetricKey(key, name)
   }
 
-  public async getSymmetricKey(name: string): Promise<ArrayBuffer | undefined> {
-    return await this.sudoCryptoProvider.getSymmetricKey(name)
+  public getSymmetricKey(name: string): Promise<ArrayBuffer | undefined> {
+    return this.sudoCryptoProvider.getSymmetricKey(name)
   }
 
-  public async deleteSymmetricKey(name: string): Promise<void> {
-    await this.sudoCryptoProvider.deleteSymmetricKey(name)
+  public deleteSymmetricKey(name: string): Promise<void> {
+    return this.sudoCryptoProvider.deleteSymmetricKey(name)
   }
 
-  public async generateKeyPair(name: string): Promise<void> {
-    await this.sudoCryptoProvider.generateKeyPair(name)
+  public generateKeyPair(name: string): Promise<void> {
+    return this.sudoCryptoProvider.generateKeyPair(name)
   }
 
-  public async addPrivateKey(key: ArrayBuffer, name: string): Promise<void> {
-    return await this.sudoCryptoProvider.addPrivateKey(key, name)
+  public addPrivateKey(key: ArrayBuffer, name: string): Promise<void> {
+    return this.sudoCryptoProvider.addPrivateKey(key, name)
   }
 
-  public async getPrivateKey(name: string): Promise<ArrayBuffer | undefined> {
-    return await this.sudoCryptoProvider.getPrivateKey(name)
+  public getPrivateKey(name: string): Promise<ArrayBuffer | undefined> {
+    return this.sudoCryptoProvider.getPrivateKey(name)
   }
 
-  public async addPublicKey(key: ArrayBuffer, name: string): Promise<void> {
-    return await this.sudoCryptoProvider.addPublicKey(key, name)
+  public addPublicKey(key: ArrayBuffer, name: string): Promise<void> {
+    return this.sudoCryptoProvider.addPublicKey(key, name)
   }
 
-  public async getPublicKey(name: string): Promise<PublicKey | undefined> {
-    return await this.sudoCryptoProvider.getPublicKey(name)
+  public getPublicKey(name: string): Promise<PublicKey | undefined> {
+    return this.sudoCryptoProvider.getPublicKey(name)
   }
 
-  public async deleteKeyPair(name: string): Promise<void> {
-    return await this.sudoCryptoProvider.deleteKeyPair(name)
+  public deleteKeyPair(name: string): Promise<void> {
+    return this.sudoCryptoProvider.deleteKeyPair(name)
   }
 
-  public async encryptWithSymmetricKey(
+  public encryptWithSymmetricKey(
     key: ArrayBuffer,
     data: ArrayBuffer,
     iv?: ArrayBuffer,
   ): Promise<ArrayBuffer> {
-    return await this.sudoCryptoProvider.encryptWithSymmetricKey(key, data, iv)
+    return this.sudoCryptoProvider.encryptWithSymmetricKey(key, data, iv)
   }
 
-  public async decryptWithSymmetricKey(
+  public decryptWithSymmetricKey(
     key: ArrayBuffer,
     data: ArrayBuffer,
     iv?: ArrayBuffer,
   ): Promise<ArrayBuffer> {
-    return await this.sudoCryptoProvider.decryptWithSymmetricKey(key, data, iv)
+    return this.sudoCryptoProvider.decryptWithSymmetricKey(key, data, iv)
   }
 
-  public async encryptWithSymmetricKeyName(
+  public encryptWithSymmetricKeyName(
     name: string,
     data: ArrayBuffer,
     iv?: ArrayBuffer,
   ): Promise<ArrayBuffer> {
-    return await this.sudoCryptoProvider.encryptWithSymmetricKeyName(
-      name,
-      data,
-      iv,
-    )
+    return this.sudoCryptoProvider.encryptWithSymmetricKeyName(name, data, iv)
   }
 
-  public async decryptWithSymmetricKeyName(
+  public decryptWithSymmetricKeyName(
     name: string,
     data: ArrayBuffer,
     iv?: ArrayBuffer,
   ): Promise<ArrayBuffer> {
-    return await this.sudoCryptoProvider.decryptWithSymmetricKeyName(
-      name,
-      data,
-      iv,
-    )
+    return this.sudoCryptoProvider.decryptWithSymmetricKeyName(name, data, iv)
   }
 
-  public async encryptWithPublicKey(
+  public encryptWithPublicKey(
     name: string,
     data: ArrayBuffer,
   ): Promise<ArrayBuffer> {
-    return await this.sudoCryptoProvider.encryptWithPublicKey(name, data)
+    return this.sudoCryptoProvider.encryptWithPublicKey(name, data)
   }
 
-  public async decryptWithPrivateKey(
+  public decryptWithPrivateKey(
     name: string,
     data: ArrayBuffer,
   ): Promise<ArrayBuffer | undefined> {
-    return await this.sudoCryptoProvider.decryptWithPrivateKey(name, data)
+    return this.sudoCryptoProvider.decryptWithPrivateKey(name, data)
   }
 
-  public async removeAllKeys(): Promise<void> {
-    return await this.sudoCryptoProvider.removeAllKeys()
+  public removeAllKeys(): Promise<void> {
+    return this.sudoCryptoProvider.removeAllKeys()
   }
 
-  public async generateSymmetricKey(name: string): Promise<void> {
-    return await this.sudoCryptoProvider.generateSymmetricKey(name)
+  public generateSymmetricKey(name: string): Promise<void> {
+    return this.sudoCryptoProvider.generateSymmetricKey(name)
   }
 
-  public async generateHash(data: ArrayBuffer): Promise<ArrayBuffer> {
-    return await this.sudoCryptoProvider.generateHash(data)
+  public generateSymmetricKeyFromPassword(
+    password: string,
+    salt: ArrayBuffer,
+    options?: { rounds?: number },
+  ): Promise<ArrayBuffer> {
+    return this.sudoCryptoProvider.generateSymmetricKeyFromPassword(
+      BufferUtil.fromString(password),
+      salt,
+      options,
+    )
+  }
+
+  public generateRandomData(size: number): Promise<ArrayBuffer> {
+    return this.sudoCryptoProvider.generateRandomData(size)
+  }
+
+  public generateHash(data: ArrayBuffer): Promise<ArrayBuffer> {
+    return this.sudoCryptoProvider.generateHash(data)
+  }
+
+  public exportKeys(): Promise<KeyData[]> {
+    return this.sudoCryptoProvider.exportKeys()
   }
 }

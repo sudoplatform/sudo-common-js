@@ -1,9 +1,14 @@
 {
-  "testEnvironment": "node",
-  "testMatch": ["<rootDir>/**/*.spec.ts"],
+  "testEnvironment": "jsdom",
+  "testMatch": ["<rootDir>/test/**/*.spec.ts"],
   "testPathIgnorePatterns": ["/node_modules/", "/lib/"],
   "clearMocks": true,
   "collectCoverageFrom": ["src/**/*.ts", "!**/*.d.ts", "!node_modules/**"],
   "coverageReporters": ["text", "json-summary"],
-  "coverageDirectory": "<rootDir>/build/coverage"
+  "coverageDirectory": "<rootDir>/build/coverage",
+  "globals": {
+    "ts-jest": {
+      "tsConfig": "tsconfig.test.json"
+    }
+  }
 }

@@ -2,8 +2,11 @@
 config
 docs/
 lib
+test-lib
 node_modules
 src/gen
 scratch
 yarn-error.log
 coverage
+.yalc/
+yalc.lock

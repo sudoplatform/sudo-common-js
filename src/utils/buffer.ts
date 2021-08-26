@@ -18,4 +18,18 @@ export class Buffer {
     const rhs = array.slice(lhsLength, array.length)
     return { lhs, rhs }
   }
+
+  static toString(buffer: ArrayBuffer): string {
+    let s = ''
+    const bytes = new Uint8Array(buffer)
+    const len = bytes.byteLength
+    for (let i = 0; i < len; i++) {
+      s += String.fromCharCode(bytes[i])
+    }
+    return s
+  }
+
+  static fromString(s: string): Uint8Array {
+    return Uint8Array.from(s, (c) => c.charCodeAt(0))
+  }
 }

@@ -95,10 +95,15 @@ export class DefaultConfigurationManager implements ConfigurationManager {
       throw new ConfigurationNotSetError()
     }
 
-    const configSet = !namespace
-      ? JSON.parse(this._config)
-      : JSON.parse(this._config)[namespace]
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const parsed = JSON.parse(this._config)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const configSet = namespace
+      ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        parsed[namespace]
+      : parsed
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return configSet
   }
 
