@@ -52,7 +52,7 @@ export interface SudoKeyArchive {
    *
    * @returns Binary archive data.
    */
-  archive(password: string | undefined): Promise<ArrayBuffer>
+  archive(password: ArrayBuffer | undefined): Promise<ArrayBuffer>
 
   /**
    * Decrypts and unarchives the keys in this archive.
@@ -75,7 +75,7 @@ export interface SudoKeyArchive {
    * @throws {@link KeyArchiveNoPasswordRequiredError}
    *    If the archive is an insecure archive but a password is provided.
    */
-  unarchive(password: string | undefined): Promise<void>
+  unarchive(password: ArrayBuffer | undefined): Promise<void>
 
   /**
    * Resets the archive by clearing loaded keys and archive data.
@@ -367,7 +367,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     }
   }
 
-  async archive(password: string | undefined): Promise<ArrayBuffer> {
+  async archive(password: ArrayBuffer | undefined): Promise<ArrayBuffer> {
     const keys: KeyArchiveKeyInfo[] = []
     for (const key of this.keys.values()) {
       keys.push({
@@ -451,7 +451,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     return Promise.resolve(archiveGzipped)
   }
 
-  async unarchive(password: string | undefined): Promise<void> {
+  async unarchive(password: ArrayBuffer | undefined): Promise<void> {
     if (!this.keyArchive) {
       throw new KeyArchiveMissingError()
     }

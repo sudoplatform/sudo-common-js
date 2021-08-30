@@ -1,4 +1,3 @@
-import { Buffer as BufferUtil } from '../utils/buffer'
 import { KeyData } from './keyData'
 import { PublicKey } from './publicKey'
 import { SudoCryptoProvider } from './sudoCryptoProvider'
@@ -217,7 +216,7 @@ export interface SudoKeyManager {
    * @returns The generated symmetric key.
    */
   generateSymmetricKeyFromPassword(
-    password: string,
+    password: ArrayBuffer,
     salt: ArrayBuffer,
     options?: { rounds?: number },
   ): Promise<ArrayBuffer>
@@ -378,12 +377,12 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
   }
 
   public generateSymmetricKeyFromPassword(
-    password: string,
+    password: ArrayBuffer,
     salt: ArrayBuffer,
     options?: { rounds?: number },
   ): Promise<ArrayBuffer> {
     return this.sudoCryptoProvider.generateSymmetricKeyFromPassword(
-      BufferUtil.fromString(password),
+      password,
       salt,
       options,
     )

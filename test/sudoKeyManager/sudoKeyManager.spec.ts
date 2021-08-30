@@ -619,10 +619,7 @@ describe('DefaultSudoKeyManager', () => {
       ).thenResolve(symmetricKey)
 
       await expect(
-        sudoKeyManager.generateSymmetricKeyFromPassword(
-          BufferUtil.toString(password),
-          salt,
-        ),
+        sudoKeyManager.generateSymmetricKeyFromPassword(password, salt),
       ).resolves.toEqual(symmetricKey)
 
       const [actualPassword, actualSalt, actualOptions] = capture(

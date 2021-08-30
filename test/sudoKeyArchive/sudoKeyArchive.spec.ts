@@ -52,6 +52,7 @@ describe('DefaultSudoKeyArchive tests', () => {
   const mockKeyManager2 = mock<SudoKeyManager>()
   const keyManager1Namespace = 'key-manager-1'
   const keyManager2Namespace = 'key-manager-2'
+  const password = BufferUtil.fromString('password')
 
   beforeEach(() => {
     reset(mockKeyManager1)
@@ -327,7 +328,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           },
         )
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveNoPasswordRequiredError(),
         )
       })
@@ -483,7 +484,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           },
         )
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveDecodingError(),
         )
 
@@ -523,7 +524,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           },
         )
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveDecodingError(),
         )
 
@@ -563,7 +564,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           },
         )
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveDecodingError(),
         )
 
@@ -611,7 +612,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           ),
         ).thenReject(new Error('symmetric key generation failed'))
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveDecodingError(),
         )
 
@@ -625,7 +626,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualPassword, actualSalt, actualOptions] = capture(
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
-        expect(actualPassword).toEqual('password')
+        expect(actualPassword).toEqual(password)
         expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
@@ -666,7 +667,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           ),
         ).thenReject(new Error('decryption failed'))
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveIncorrectPasswordError(),
         )
 
@@ -680,7 +681,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualPassword, actualSalt, actualOptions] = capture(
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
-        expect(actualPassword).toEqual('password')
+        expect(actualPassword).toEqual(password)
         expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
@@ -727,7 +728,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           ),
         ).thenResolve(BufferUtil.fromString('not compressed'))
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveDecodingError(),
         )
 
@@ -741,7 +742,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualPassword, actualSalt, actualOptions] = capture(
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
-        expect(actualPassword).toEqual('password')
+        expect(actualPassword).toEqual(password)
         expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
@@ -788,7 +789,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           ),
         ).thenResolve(gzipSync(BufferUtil.fromString('not JSON')))
 
-        await expect(keyArchive.unarchive('password')).rejects.toMatchError(
+        await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveDecodingError(),
         )
 
@@ -802,7 +803,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualPassword, actualSalt, actualOptions] = capture(
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
-        expect(actualPassword).toEqual('password')
+        expect(actualPassword).toEqual(password)
         expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
@@ -841,7 +842,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           },
         )
 
-        await expect(keyArchive.unarchive('password')).resolves.toBeUndefined()
+        await expect(keyArchive.unarchive(password)).resolves.toBeUndefined()
 
         verify(
           mockKeyManager1.generateSymmetricKeyFromPassword(
@@ -853,7 +854,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualPassword, actualSalt, actualOptions] = capture(
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
-        expect(actualPassword).toEqual('password')
+        expect(actualPassword).toEqual(password)
         expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
@@ -892,7 +893,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           },
         )
 
-        await expect(keyArchive.unarchive('password')).resolves.toBeUndefined()
+        await expect(keyArchive.unarchive(password)).resolves.toBeUndefined()
 
         verify(
           mockKeyManager1.generateSymmetricKeyFromPassword(
@@ -904,7 +905,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualPassword, actualSalt, actualOptions] = capture(
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
-        expect(actualPassword).toEqual('password')
+        expect(actualPassword).toEqual(password)
         expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
@@ -948,7 +949,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           },
         )
 
-        await expect(keyArchive.unarchive('password')).resolves.toBeUndefined()
+        await expect(keyArchive.unarchive(password)).resolves.toBeUndefined()
 
         verify(
           mockKeyManager1.generateSymmetricKeyFromPassword(
@@ -960,7 +961,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualPassword, actualSalt, actualOptions] = capture(
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
-        expect(actualPassword).toEqual('password')
+        expect(actualPassword).toEqual(password)
         expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
@@ -1442,7 +1443,7 @@ describe('DefaultSudoKeyArchive tests', () => {
             ),
           ).thenResolve(encryptedKeys)
 
-          const archive = await keyArchive.archive('password')
+          const archive = await keyArchive.archive(password)
 
           const unzipped = gunzipSync(new Uint8Array(archive))
           const string = BufferUtil.toString(unzipped)
@@ -1486,7 +1487,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           const [actualPassword, actualSalt, actualOptions] = capture(
             mockKeyManager1.generateSymmetricKeyFromPassword,
           ).first()
-          expect(actualPassword).toEqual('password')
+          expect(actualPassword).toEqual(password)
           expect(actualSalt).toEqual(salt)
           expect(actualOptions).toEqual({
             rounds: SudoCryptoProviderDefaults.pbkdfRounds,
