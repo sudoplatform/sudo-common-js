@@ -12,9 +12,9 @@ export interface ListOutput<T> {
  */
 export enum CachePolicy {
   // Use the device cached data.
-  CacheOnly,
+  CacheOnly = 'cache-only',
   // Query and use the data on the server.
-  RemoteOnly,
+  RemoteOnly = 'network-only',
 }
 
 export interface Owner {
