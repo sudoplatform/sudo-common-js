@@ -418,7 +418,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         await this.defaultKeyManager.encryptWithSymmetricKey(
           key,
           compressedSerializedKeys,
-          iv,
+          { iv },
         )
       const secureKeyArchive: SecureKeyArchive = {
         Type: 'Secure',
@@ -485,7 +485,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
           await this.defaultKeyManager.decryptWithSymmetricKey(
             key,
             encryptedKeys,
-            iv,
+            { iv },
           )
       } catch (err) {
         throw new KeyArchiveIncorrectPasswordError()

@@ -1,3 +1,4 @@
+import { EncryptionAlgorithm } from '../types/types'
 import { KeyData } from './keyData'
 import { PublicKey } from './publicKey'
 
@@ -6,6 +7,26 @@ export class SudoCryptoProviderDefaults {
   public static readonly aesKeySize = 256
   public static readonly pbkdfRounds = 10000
   public static readonly pbkdfSaltSize = 16
+}
+
+/**
+ * Optional arguments for symmetric encryption..
+ */
+export interface SymmetricEncryptionOptions {
+  // Initialization Vector
+  iv?: ArrayBuffer
+  // Algorithm to use to encrypt data.
+  // Defaulted to `AES/CBC/PKCS7Padding`
+  algorithm?: EncryptionAlgorithm
+}
+
+/**
+ * Optional arguments for public key encryption.
+ */
+export interface AsymmetricEncryptionOptions {
+  // Algorithm used to encrypt data.
+  // Defaulted to RSA/OAEPSHA-1
+  algorithm?: EncryptionAlgorithm
 }
 
 /**
@@ -149,6 +170,8 @@ export interface SudoCryptoProvider {
   removeAllKeys(): Promise<void>
 
   /**
+   * @deprecated Use version with `options` param.
+   *
    * Encrypts the given data with the specified symmetric key stored in the secure store.
    *
    * @param name The name of the symmetric key to use to encrypt.
@@ -164,6 +187,23 @@ export interface SudoCryptoProvider {
   ): Promise<ArrayBuffer>
 
   /**
+   * Encrypts the given data with the specified symmetric key stored in the secure store.
+   *
+   * @param name The name of the symmetric key to use to encrypt.
+   * @param data Data to encrypt.
+   *
+   *
+   * @returns Encrypted data and IV
+   */
+  encryptWithSymmetricKeyName(
+    name: string,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * @deprecated Use version with `options` param.
+   *
    * Decrypt the given data with the specified symmetric key stored in the secure store.
    *
    * @param name The name of the symmetric key to use to decrypt.
@@ -179,6 +219,22 @@ export interface SudoCryptoProvider {
   ): Promise<ArrayBuffer>
 
   /**
+   * Decrypt the given data with the specified symmetric key stored in the secure store.
+   *
+   * @param name The name of the symmetric key to use to decrypt.
+   * @param data The data to decrypt.
+   *
+   * @returns Decrypted data
+   */
+  decryptWithSymmetricKeyName(
+    name: string,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * @deprecated Use version with `options` param.
+   *
    * Encrypts the given data with the specified key
    *
    * @param name The name of the symmetric key to use to encrypt.
@@ -194,6 +250,22 @@ export interface SudoCryptoProvider {
   ): Promise<ArrayBuffer>
 
   /**
+   * Encrypts the given data with the specified key
+   *
+   * @param name The name of the symmetric key to use to encrypt.
+   * @param data Data to encrypt.
+   *
+   * @returns Encrypted data and IV
+   */
+  encryptWithSymmetricKey(
+    key: ArrayBuffer,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * @deprecated Use version with `options` param.
+   *
    * Decrypt the given data with the specified symmetric key stored in the secure store.
    *
    * @param name The name of the symmetric key to use to decrypt.
@@ -209,26 +281,46 @@ export interface SudoCryptoProvider {
   ): Promise<ArrayBuffer>
 
   /**
+   * Decrypt the given data with the specified symmetric key stored in the secure store.
+   *
+   * @param name The name of the symmetric key to use to decrypt.
+   * @param data The data to decrypt.
+   *
+   * @returns Decrypted data
+   */
+  decryptWithSymmetricKey(
+    key: ArrayBuffer,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
    * Encrypts the given data with the specified public key.
    *
    * @param name The name of the public key to use for encryption.
    * @param data The data to encrypt.
-   * @param algorithm The encryption algorithm to use.
    *
    * @returns Encrypted data
    */
-  encryptWithPublicKey(name: string, data: ArrayBuffer): Promise<ArrayBuffer>
+  encryptWithPublicKey(
+    name: string,
+    data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
 
   /**
    * Decrypts the given data with the specified private key.
    *
    * @param name The name of the private key to use for decryption.
    * @param data The data to decrypt.
-   * @param algorithm The algorithm used for decryption.
    *
    * @returns Decrypted data or undefined if the private key is not found.
    */
-  decryptWithPrivateKey(name: string, data: ArrayBuffer): Promise<ArrayBuffer>
+  decryptWithPrivateKey(
+    name: string,
+    data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
 
   /**
    * Generates and securely stores a key pair for public key cryptography.

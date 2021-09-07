@@ -1,6 +1,11 @@
+import { Buffer as BufferUtil } from '../utils/buffer'
 import { KeyData } from './keyData'
 import { PublicKey } from './publicKey'
-import { SudoCryptoProvider } from './sudoCryptoProvider'
+import {
+  AsymmetricEncryptionOptions,
+  SudoCryptoProvider,
+  SymmetricEncryptionOptions,
+} from './sudoCryptoProvider'
 
 /**
  * Interface for a set of methods for securely storing keys and performing
@@ -111,6 +116,8 @@ export interface SudoKeyManager {
   deleteKeyPair(name: string): Promise<void>
 
   /**
+   * @deprecated Use version with `options` param.
+   *
    * Encrypts the given data with the specified key
    *
    * @param name The name of the symmetric key to use to encrypt.
@@ -126,6 +133,22 @@ export interface SudoKeyManager {
   ): Promise<ArrayBuffer>
 
   /**
+   * Encrypts the given data with the specified key
+   *
+   * @param name The name of the symmetric key to use to encrypt.
+   * @param data Data to encrypt.
+   *
+   * @returns Encrypted data and IV
+   */
+  encryptWithSymmetricKey(
+    key: ArrayBuffer,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * @deprecated Use version with `options` param.
+   *
    * Decrypt the given data with the given symmetric key
    *
    * @param key The symmetric key to use to decrypt the data.
@@ -141,6 +164,22 @@ export interface SudoKeyManager {
   ): Promise<ArrayBuffer>
 
   /**
+   * Decrypt the given data with the given symmetric key
+   *
+   * @param key The symmetric key to use to decrypt the data.
+   * @param encryptedData The encrypted data.
+   *
+   * @returns Decrypted data
+   */
+  decryptWithSymmetricKey(
+    key: ArrayBuffer,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * @deprecated Use version with `options` param.
+   *
    * Decrypt the given data with the specified symmetric key stored in the secure store.
    *
    * @param name The name of the symmetric key to use to decrypt.
@@ -160,6 +199,21 @@ export interface SudoKeyManager {
    *
    * @param name The name of the symmetric key to use to decrypt.
    * @param data The data to decrypt.
+   *
+   * @returns Decrypted data
+   */
+  encryptWithSymmetricKeyName(
+    name: string,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * @deprecated Use version with `options` param.
+   * Decrypt the given data with the specified symmetric key stored in the secure store.
+   *
+   * @param name The name of the symmetric key to use to decrypt.
+   * @param data The data to decrypt.
    * @param iv Optional Initialization Vector.
    *
    * @returns Decrypted data
@@ -171,6 +225,20 @@ export interface SudoKeyManager {
   ): Promise<ArrayBuffer>
 
   /**
+   * Decrypt the given data with the specified symmetric key stored in the secure store.
+   *
+   * @param name The name of the symmetric key to use to decrypt.
+   * @param data The data to decrypt.
+   *
+   * @returns Decrypted data
+   */
+  decryptWithSymmetricKeyName(
+    name: string,
+    data: ArrayBuffer,
+    options?: SymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
    * Encrypts the given data with the specified public key.
    *
    * @param name The name of the public key to use for encryption.
@@ -178,7 +246,11 @@ export interface SudoKeyManager {
    *
    * @returns Encrypted data
    */
-  encryptWithPublicKey(name: string, data: ArrayBuffer): Promise<ArrayBuffer>
+  encryptWithPublicKey(
+    name: string,
+    data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
 
   /**
    * Decrypts the given data with the specified private key.
@@ -191,6 +263,7 @@ export interface SudoKeyManager {
   decryptWithPrivateKey(
     name: string,
     data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
   ): Promise<ArrayBuffer | undefined>
 
   /**
@@ -325,47 +398,97 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
   public encryptWithSymmetricKey(
     key: ArrayBuffer,
     data: ArrayBuffer,
-    iv?: ArrayBuffer,
+    ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
-    return this.sudoCryptoProvider.encryptWithSymmetricKey(key, data, iv)
+    if (BufferUtil.isArrayBuffer(ivOrOptions)) {
+      return this.sudoCryptoProvider.encryptWithSymmetricKey(
+        key,
+        data,
+        ivOrOptions,
+      )
+    } else {
+      return this.sudoCryptoProvider.encryptWithSymmetricKey(
+        key,
+        data,
+        ivOrOptions,
+      )
+    }
   }
 
   public decryptWithSymmetricKey(
     key: ArrayBuffer,
     data: ArrayBuffer,
-    iv?: ArrayBuffer,
+    ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
-    return this.sudoCryptoProvider.decryptWithSymmetricKey(key, data, iv)
+    if (BufferUtil.isArrayBuffer(ivOrOptions)) {
+      return this.sudoCryptoProvider.decryptWithSymmetricKey(
+        key,
+        data,
+        ivOrOptions,
+      )
+    } else {
+      return this.sudoCryptoProvider.decryptWithSymmetricKey(
+        key,
+        data,
+        ivOrOptions,
+      )
+    }
   }
 
   public encryptWithSymmetricKeyName(
     name: string,
     data: ArrayBuffer,
-    iv?: ArrayBuffer,
+    ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
-    return this.sudoCryptoProvider.encryptWithSymmetricKeyName(name, data, iv)
+    if (BufferUtil.isArrayBuffer(ivOrOptions)) {
+      return this.sudoCryptoProvider.encryptWithSymmetricKeyName(
+        name,
+        data,
+        ivOrOptions,
+      )
+    } else {
+      return this.sudoCryptoProvider.encryptWithSymmetricKeyName(
+        name,
+        data,
+        ivOrOptions,
+      )
+    }
   }
 
   public decryptWithSymmetricKeyName(
     name: string,
     data: ArrayBuffer,
-    iv?: ArrayBuffer,
+    ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
-    return this.sudoCryptoProvider.decryptWithSymmetricKeyName(name, data, iv)
+    if (BufferUtil.isArrayBuffer(ivOrOptions)) {
+      return this.sudoCryptoProvider.decryptWithSymmetricKeyName(
+        name,
+        data,
+        ivOrOptions,
+      )
+    } else {
+      return this.sudoCryptoProvider.decryptWithSymmetricKeyName(
+        name,
+        data,
+        ivOrOptions,
+      )
+    }
   }
 
   public encryptWithPublicKey(
     name: string,
     data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
-    return this.sudoCryptoProvider.encryptWithPublicKey(name, data)
+    return this.sudoCryptoProvider.encryptWithPublicKey(name, data, options)
   }
 
   public decryptWithPrivateKey(
     name: string,
     data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
   ): Promise<ArrayBuffer | undefined> {
-    return this.sudoCryptoProvider.decryptWithPrivateKey(name, data)
+    return this.sudoCryptoProvider.decryptWithPrivateKey(name, data, options)
   }
 
   public removeAllKeys(): Promise<void> {

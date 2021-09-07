@@ -38,3 +38,13 @@ export interface BooleanFilter {
   eq?: boolean
   ne?: boolean
 }
+
+/**
+ * Encryption algorithm names that are
+ * supported by the Sudo Platform and can be used
+ * between devices.
+ */
+export enum EncryptionAlgorithm {
+  AesCbcPkcs7Padding = 'AES/CBC/PKCS7Padding',
+  RsaOaepSha1 = 'RSA/OAEPWithSHA-1',
+}

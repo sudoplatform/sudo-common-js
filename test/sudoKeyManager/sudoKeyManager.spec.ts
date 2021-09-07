@@ -7,7 +7,6 @@ import {
   verify,
   when,
 } from 'ts-mockito'
-
 import {
   KeyData,
   KeyDataKeyFormat,
@@ -16,6 +15,7 @@ import {
 import { PublicKey, PublicKeyFormat } from '../../src/sudoKeyManager/publicKey'
 import { SudoCryptoProvider } from '../../src/sudoKeyManager/sudoCryptoProvider'
 import { DefaultSudoKeyManager } from '../../src/sudoKeyManager/sudoKeyManager'
+import { EncryptionAlgorithm } from '../../src/types/types'
 import { Buffer as BufferUtil } from '../../src/utils/buffer'
 
 const sudoCryptoProviderMock: SudoCryptoProvider = mock()
@@ -310,7 +310,7 @@ describe('DefaultSudoKeyManager', () => {
   })
 
   describe('encryptWithSymmetricKeyName', () => {
-    it('should call crypto provider encryptWithSymmetricKeyName without iv', async () => {
+    it('should call crypto provider encryptWithSymmetricKeyName without iv or algorithm', async () => {
       when(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName(
           anything(),
@@ -321,12 +321,12 @@ describe('DefaultSudoKeyManager', () => {
 
       await sudoKeyManager.encryptWithSymmetricKeyName('VpnKey', decrypted)
 
-      const [actualKeyName, actualData, actualIV] = capture(
+      const [actualKeyName, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName,
       ).first()
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(decrypted)
-      expect(actualIV).toBeUndefined()
+      expect(actualOptions).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName(
@@ -337,7 +337,7 @@ describe('DefaultSudoKeyManager', () => {
       ).once()
     })
 
-    it('should call crypto provider encryptWithSymmetricKeyName with iv', async () => {
+    it('should call crypto provider encryptWithSymmetricKeyName with iv and no algorithm', async () => {
       when(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName(
           anything(),
@@ -346,14 +346,55 @@ describe('DefaultSudoKeyManager', () => {
         ),
       ).thenResolve(encrypted)
 
-      await sudoKeyManager.encryptWithSymmetricKeyName('VpnKey', decrypted, iv)
+      await sudoKeyManager.encryptWithSymmetricKeyName('VpnKey', decrypted, {
+        iv,
+      })
 
-      const [actualKeyName, actualData, actualIV] = capture(
+      const [actualKeyName, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName,
       ).first()
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(decrypted)
-      expect(actualIV).toStrictEqual(iv)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toStrictEqual(iv)
+      expect(actualOptions.algorithm).toBeUndefined()
+
+      verify(
+        sudoCryptoProviderMock.encryptWithSymmetricKeyName(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider encryptWithSymmetricKeyName with iv and algorithm', async () => {
+      when(
+        sudoCryptoProviderMock.encryptWithSymmetricKeyName(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(encrypted)
+
+      const options = {
+        iv,
+        algorithm: EncryptionAlgorithm.AesCbcPkcs7Padding,
+      }
+      await sudoKeyManager.encryptWithSymmetricKeyName(
+        'VpnKey',
+        decrypted,
+        options,
+      )
+
+      const [actualKeyName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.encryptWithSymmetricKeyName,
+      ).first()
+      expect(actualKeyName).toStrictEqual('VpnKey')
+      expect(actualData).toStrictEqual(decrypted)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toStrictEqual(options.iv)
+      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName(
@@ -366,7 +407,7 @@ describe('DefaultSudoKeyManager', () => {
   })
 
   describe('encryptWithSymmetricKey', () => {
-    it('should call crypto provider encryptWithSymmetricKey without iv', async () => {
+    it('should call crypto provider encryptWithSymmetricKey without iv or algorithm', async () => {
       when(
         sudoCryptoProviderMock.encryptWithSymmetricKey(
           anything(),
@@ -379,12 +420,12 @@ describe('DefaultSudoKeyManager', () => {
         sudoKeyManager.encryptWithSymmetricKey(symmetricKey, encrypted),
       ).resolves.toEqual(decrypted)
 
-      const [actualKey, actualData, actualIV] = capture(
+      const [actualKey, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.encryptWithSymmetricKey,
       ).first()
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
-      expect(actualIV).toBeUndefined()
+      expect(actualOptions).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKey(
@@ -395,7 +436,7 @@ describe('DefaultSudoKeyManager', () => {
       ).once()
     })
 
-    it('should call crypto provider encryptWithSymmetricKey with iv', async () => {
+    it('should call crypto provider encryptWithSymmetricKey with iv and no algorithm', async () => {
       when(
         sudoCryptoProviderMock.encryptWithSymmetricKey(
           anything(),
@@ -405,15 +446,55 @@ describe('DefaultSudoKeyManager', () => {
       ).thenResolve(decrypted)
 
       await expect(
-        sudoKeyManager.encryptWithSymmetricKey(symmetricKey, encrypted, iv),
+        sudoKeyManager.encryptWithSymmetricKey(symmetricKey, encrypted, { iv }),
       ).resolves.toEqual(decrypted)
 
-      const [actualKey, actualData, actualIV] = capture(
+      const [actualKey, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.encryptWithSymmetricKey,
       ).first()
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
-      expect(actualIV).toStrictEqual(iv)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toStrictEqual(iv)
+      expect(actualOptions.algorithm).toBeUndefined()
+
+      verify(
+        sudoCryptoProviderMock.encryptWithSymmetricKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider encryptWithSymmetricKey with algorithm and no iv', async () => {
+      when(
+        sudoCryptoProviderMock.encryptWithSymmetricKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(decrypted)
+
+      const options = {
+        algorithm: EncryptionAlgorithm.AesCbcPkcs7Padding,
+      }
+      await expect(
+        sudoKeyManager.encryptWithSymmetricKey(
+          symmetricKey,
+          encrypted,
+          options,
+        ),
+      ).resolves.toEqual(decrypted)
+
+      const [actualKey, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.encryptWithSymmetricKey,
+      ).first()
+      expect(actualKey).toStrictEqual(symmetricKey)
+      expect(actualData).toStrictEqual(encrypted)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toBeUndefined()
+      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKey(
@@ -426,7 +507,7 @@ describe('DefaultSudoKeyManager', () => {
   })
 
   describe('decryptWithSymmetricKeyName', () => {
-    it('should call crypto provider decryptWithSymmetricKeyName without iv', async () => {
+    it('should call crypto provider decryptWithSymmetricKeyName without iv and algorithm', async () => {
       when(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName(
           anything(),
@@ -439,12 +520,12 @@ describe('DefaultSudoKeyManager', () => {
         sudoKeyManager.decryptWithSymmetricKeyName('VpnKey', encrypted),
       ).resolves.toEqual(decrypted)
 
-      const [actualKeyName, actualData, actualIV] = capture(
+      const [actualKeyName, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName,
       ).first()
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(encrypted)
-      expect(actualIV).toBeUndefined()
+      expect(actualOptions).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName(
@@ -455,7 +536,7 @@ describe('DefaultSudoKeyManager', () => {
       ).once()
     })
 
-    it('should call crypto provider decryptWithSymmetricKeyName with iv', async () => {
+    it('should call crypto provider decryptWithSymmetricKeyName with iv and no algorithm', async () => {
       when(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName(
           anything(),
@@ -464,16 +545,64 @@ describe('DefaultSudoKeyManager', () => {
         ),
       ).thenResolve(decrypted)
 
+      const options = {
+        iv,
+      }
       await expect(
-        sudoKeyManager.decryptWithSymmetricKeyName('VpnKey', encrypted, iv),
+        sudoKeyManager.decryptWithSymmetricKeyName(
+          'VpnKey',
+          encrypted,
+          options,
+        ),
       ).resolves.toEqual(decrypted)
 
-      const [actualKeyName, actualData, actualIV] = capture(
+      const [actualKeyName, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName,
       ).first()
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(encrypted)
-      expect(actualIV).toStrictEqual(iv)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toStrictEqual(options.iv)
+      expect(actualOptions.algorithm).toBeUndefined()
+
+      verify(
+        sudoCryptoProviderMock.decryptWithSymmetricKeyName(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider decryptWithSymmetricKeyName with iv and algorithm', async () => {
+      when(
+        sudoCryptoProviderMock.decryptWithSymmetricKeyName(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(decrypted)
+
+      const options = {
+        iv,
+        algorithm: EncryptionAlgorithm.AesCbcPkcs7Padding,
+      }
+      await expect(
+        sudoKeyManager.decryptWithSymmetricKeyName(
+          'VpnKey',
+          encrypted,
+          options,
+        ),
+      ).resolves.toEqual(decrypted)
+
+      const [actualKeyName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.decryptWithSymmetricKeyName,
+      ).first()
+      expect(actualKeyName).toStrictEqual('VpnKey')
+      expect(actualData).toStrictEqual(encrypted)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toStrictEqual(options.iv)
+      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName(
@@ -486,7 +615,7 @@ describe('DefaultSudoKeyManager', () => {
   })
 
   describe('decryptWithSymmetricKey', () => {
-    it('should call crypto provider decryptWithSymmetricKey without iv', async () => {
+    it('should call crypto provider decryptWithSymmetricKey without iv or algorithm', async () => {
       when(
         sudoCryptoProviderMock.decryptWithSymmetricKey(
           anything(),
@@ -499,12 +628,12 @@ describe('DefaultSudoKeyManager', () => {
         sudoKeyManager.decryptWithSymmetricKey(symmetricKey, encrypted),
       ).resolves.toEqual(decrypted)
 
-      const [actualKey, actualData, actualIV] = capture(
+      const [actualKey, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.decryptWithSymmetricKey,
       ).first()
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
-      expect(actualIV).toBeUndefined()
+      expect(actualOptions).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKey(
@@ -515,7 +644,7 @@ describe('DefaultSudoKeyManager', () => {
       ).once()
     })
 
-    it('should call crypto provider decryptWithSymmetricKey with iv', async () => {
+    it('should call crypto provider decryptWithSymmetricKey with iv and no algorithm', async () => {
       when(
         sudoCryptoProviderMock.decryptWithSymmetricKey(
           anything(),
@@ -524,16 +653,64 @@ describe('DefaultSudoKeyManager', () => {
         ),
       ).thenResolve(decrypted)
 
+      const options = {
+        iv,
+      }
       await expect(
-        sudoKeyManager.decryptWithSymmetricKey(symmetricKey, encrypted, iv),
+        sudoKeyManager.decryptWithSymmetricKey(
+          symmetricKey,
+          encrypted,
+          options,
+        ),
       ).resolves.toEqual(decrypted)
 
-      const [actualKey, actualData, actualIV] = capture(
+      const [actualKey, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.decryptWithSymmetricKey,
       ).first()
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
-      expect(actualIV).toStrictEqual(iv)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toStrictEqual(iv)
+      expect(actualOptions.algorithm).toBeUndefined()
+
+      verify(
+        sudoCryptoProviderMock.decryptWithSymmetricKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider decryptWithSymmetricKey with iv and algorithm', async () => {
+      when(
+        sudoCryptoProviderMock.decryptWithSymmetricKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(decrypted)
+
+      const options = {
+        iv,
+        algorithm: EncryptionAlgorithm.AesCbcPkcs7Padding,
+      }
+      await expect(
+        sudoKeyManager.decryptWithSymmetricKey(
+          symmetricKey,
+          encrypted,
+          options,
+        ),
+      ).resolves.toEqual(decrypted)
+
+      const [actualKey, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.decryptWithSymmetricKey,
+      ).first()
+      expect(actualKey).toStrictEqual(symmetricKey)
+      expect(actualData).toStrictEqual(encrypted)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.iv).toStrictEqual(iv)
+      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKey(
@@ -548,21 +725,63 @@ describe('DefaultSudoKeyManager', () => {
   describe('encryptWithPublicKey', () => {
     it('should call crypto provider encryptWithPublicKey', async () => {
       when(
-        sudoCryptoProviderMock.encryptWithPublicKey(anything(), anything()),
+        sudoCryptoProviderMock.encryptWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
       ).thenResolve(encrypted)
 
       await expect(
         sudoKeyManager.encryptWithPublicKey('VpnKey', decrypted),
       ).resolves.toEqual(encrypted)
 
-      const [actualKeyName, actualData] = capture(
+      const [actualKeyName, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.encryptWithPublicKey,
       ).first()
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(decrypted)
+      expect(actualOptions).toBeUndefined()
 
       verify(
-        sudoCryptoProviderMock.encryptWithPublicKey(anything(), anything()),
+        sudoCryptoProviderMock.encryptWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider encryptWithPublicKey with algorithm', async () => {
+      when(
+        sudoCryptoProviderMock.encryptWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(encrypted)
+
+      const options = {
+        algorithm: EncryptionAlgorithm.RsaOaepSha1,
+      }
+      await expect(
+        sudoKeyManager.encryptWithPublicKey('VpnKey', decrypted, options),
+      ).resolves.toEqual(encrypted)
+
+      const [actualKeyName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.encryptWithPublicKey,
+      ).first()
+      expect(actualKeyName).toStrictEqual('VpnKey')
+      expect(actualData).toStrictEqual(decrypted)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+
+      verify(
+        sudoCryptoProviderMock.encryptWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
       ).once()
     })
   })
@@ -570,21 +789,63 @@ describe('DefaultSudoKeyManager', () => {
   describe('decryptWithPrivateKey', () => {
     it('should call crypto provider decryptWithPrivateKey', async () => {
       when(
-        sudoCryptoProviderMock.decryptWithPrivateKey(anything(), anything()),
+        sudoCryptoProviderMock.decryptWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
       ).thenResolve(decrypted)
 
       await expect(
         sudoKeyManager.decryptWithPrivateKey('VpnKey', encrypted),
       ).resolves.toEqual(decrypted)
 
-      const [actualKeyName, actualData] = capture(
+      const [actualKeyName, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.decryptWithPrivateKey,
       ).first()
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(encrypted)
+      expect(actualOptions).toBeUndefined()
 
       verify(
-        sudoCryptoProviderMock.decryptWithPrivateKey(anything(), anything()),
+        sudoCryptoProviderMock.decryptWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider decryptWithPrivateKey with algorithm', async () => {
+      when(
+        sudoCryptoProviderMock.decryptWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(decrypted)
+
+      const options = {
+        algorithm: EncryptionAlgorithm.RsaOaepSha1,
+      }
+      await expect(
+        sudoKeyManager.decryptWithPrivateKey('VpnKey', encrypted, options),
+      ).resolves.toEqual(decrypted)
+
+      const [actualKeyName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.decryptWithPrivateKey,
+      ).first()
+      expect(actualKeyName).toStrictEqual('VpnKey')
+      expect(actualData).toStrictEqual(encrypted)
+      expect(actualOptions).toBeDefined()
+      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+
+      verify(
+        sudoCryptoProviderMock.decryptWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
       ).once()
     })
   })

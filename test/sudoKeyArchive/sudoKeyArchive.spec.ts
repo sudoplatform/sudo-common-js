@@ -692,12 +692,13 @@ describe('DefaultSudoKeyArchive tests', () => {
             anything(),
           ),
         ).once()
-        const [actualKey, actualData, actualIV] = capture(
+        const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
         expect(actualKey).toEqual(symmetricKey)
         expect(actualData).toEqual(encryptedEmptyKeys)
-        expect(actualIV).toEqual(iv)
+        expect(symmetricOptions).toBeDefined()
+        expect(symmetricOptions.iv).toEqual(iv)
       })
 
       it('throws KeyArchiveDecodingError if compressed serialized keys are unable to be uncompressed', async () => {
@@ -753,12 +754,13 @@ describe('DefaultSudoKeyArchive tests', () => {
             anything(),
           ),
         ).once()
-        const [actualKey, actualData, actualIV] = capture(
+        const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
         expect(actualKey).toEqual(symmetricKey)
         expect(actualData).toEqual(encryptedEmptyKeys)
-        expect(actualIV).toEqual(iv)
+        expect(symmetricOptions).toBeDefined()
+        expect(symmetricOptions.iv).toEqual(iv)
       })
 
       it('throws KeyArchiveDecodingError if serialized keys are unable to be deserialized', async () => {
@@ -814,12 +816,13 @@ describe('DefaultSudoKeyArchive tests', () => {
             anything(),
           ),
         ).once()
-        const [actualKey, actualData, actualIV] = capture(
+        const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
         expect(actualKey).toEqual(symmetricKey)
         expect(actualData).toEqual(encryptedEmptyKeys)
-        expect(actualIV).toEqual(iv)
+        expect(symmetricOptions).toBeDefined()
+        expect(symmetricOptions.iv).toEqual(iv)
       })
 
       it('succeeds with an empty key array', async () => {
@@ -865,12 +868,12 @@ describe('DefaultSudoKeyArchive tests', () => {
             anything(),
           ),
         ).once()
-        const [actualKey, actualData, actualIV] = capture(
+        const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
         expect(actualKey).toEqual(symmetricKey)
         expect(actualData).toEqual(encryptedEmptyKeys)
-        expect(actualIV).toEqual(iv)
+        expect(symmetricOptions.iv).toEqual(iv)
       })
 
       it('succeeds with an non-empty key array', async () => {
@@ -916,12 +919,12 @@ describe('DefaultSudoKeyArchive tests', () => {
             anything(),
           ),
         ).once()
-        const [actualKey, actualData, actualIV] = capture(
+        const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
         expect(actualKey).toEqual(symmetricKey)
         expect(actualData).toEqual(encryptedKeys)
-        expect(actualIV).toEqual(iv)
+        expect(symmetricOptions.iv).toEqual(iv)
 
         keys.forEach((key) =>
           expect(
@@ -972,12 +975,12 @@ describe('DefaultSudoKeyArchive tests', () => {
             anything(),
           ),
         ).once()
-        const [actualKey, actualData, actualIV] = capture(
+        const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
         expect(actualKey).toEqual(symmetricKey)
         expect(actualData).toEqual(encryptedKeys)
-        expect(actualIV).toEqual(iv)
+        expect(symmetricOptions.iv).toEqual(iv)
 
         keys.forEach((key) =>
           expect(
@@ -1500,11 +1503,11 @@ describe('DefaultSudoKeyArchive tests', () => {
               anything(),
             ),
           ).once()
-          const [actualKey, actualData, actualIV] = capture(
+          const [actualKey, actualData, symmetricOptions] = capture(
             mockKeyManager1.encryptWithSymmetricKey,
           ).first()
           expect(actualKey).toEqual(symmetricKey)
-          expect(actualIV).toEqual(iv)
+          expect(symmetricOptions.iv).toEqual(iv)
 
           const uncompressedData = gunzipSync(new Uint8Array(actualData))
           const deserializedData = JSON.parse(

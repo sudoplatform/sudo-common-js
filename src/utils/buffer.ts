@@ -32,4 +32,8 @@ export class Buffer {
   static fromString(s: string): Uint8Array {
     return Uint8Array.from(s, (c) => c.charCodeAt(0))
   }
+
+  static isArrayBuffer(u: unknown): u is ArrayBuffer {
+    return ArrayBuffer.isView(u)
+  }
 }
