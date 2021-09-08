@@ -139,6 +139,8 @@ export interface SudoKeyManager {
    * @param data Data to encrypt.
    *
    * @returns Encrypted data and IV
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
    */
   encryptWithSymmetricKey(
     key: ArrayBuffer,
@@ -170,6 +172,8 @@ export interface SudoKeyManager {
    * @param encryptedData The encrypted data.
    *
    * @returns Decrypted data
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
    */
   decryptWithSymmetricKey(
     key: ArrayBuffer,
@@ -201,6 +205,8 @@ export interface SudoKeyManager {
    * @param data The data to decrypt.
    *
    * @returns Decrypted data
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
    */
   encryptWithSymmetricKeyName(
     name: string,
@@ -231,6 +237,8 @@ export interface SudoKeyManager {
    * @param data The data to decrypt.
    *
    * @returns Decrypted data
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
    */
   decryptWithSymmetricKeyName(
     name: string,
@@ -245,6 +253,8 @@ export interface SudoKeyManager {
    * @param data The data to encrypt.
    *
    * @returns Encrypted data
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
    */
   encryptWithPublicKey(
     name: string,
@@ -259,6 +269,8 @@ export interface SudoKeyManager {
    * @param data The data to decrypt.
    *
    * @returns Decrypted data or undefined if the private key is not found.
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
    */
   decryptWithPrivateKey(
     name: string,

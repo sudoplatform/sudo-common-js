@@ -399,6 +399,16 @@ export class OperationNotImplementedError extends Error {
 }
 
 /**
+ * Encryption algorithm is not recognized
+ */
+export class UnrecognizedAlgorithmError extends Error {
+  constructor(message?: string) {
+    super(message ?? 'Unrecognized encryption algorithm name.')
+    this.name = 'UnrecognizedAlgorithmError'
+  }
+}
+
+/**
  * Helper method for mapping an App Sync error to common errors.
  *
  * For consumption by other Sudo Platform SDKs
