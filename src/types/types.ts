@@ -48,3 +48,81 @@ export enum EncryptionAlgorithm {
   AesCbcPkcs7Padding = 'AES/CBC/PKCS7Padding',
   RsaOaepSha1 = 'RSA/OAEPWithSHA-1',
 }
+
+export type Subset<T, S> = Pick<S, Extract<keyof T, keyof S>> &
+  Partial<Record<Exclude<keyof T, keyof S>, never>>
+
+/**
+ * Status of the list operation result.
+ */
+export enum ListOperationResultStatus {
+  /**
+   * The operation completed successfully.
+   */
+  Success = 'Success',
+  /**
+   * The operation completed but some items had errors during
+   * processing.
+   */
+  Partial = 'Partial',
+  /**
+   * The operation failed and no list item could be returned.
+   */
+  Failure = 'Failure',
+}
+
+export interface ListOperationSuccessResult<T> {
+  /**
+   * Operation status.
+   */
+  status: ListOperationResultStatus.Success
+  /**
+   * List of items that were successfully processed.
+   */
+  items: T[]
+  /**
+   * Pagination token.
+   */
+  nextToken?: string
+}
+
+export interface ListOperationFailureResult {
+  /**
+   * Operation status.
+   */
+  status: ListOperationResultStatus.Failure
+  /**
+   * The error that caused the failure.
+   */
+  cause: Error
+}
+
+export interface ListOperationPartialResult<T, S extends Subset<S, T>> {
+  /**
+   * Operation status.
+   */
+  status: ListOperationResultStatus.Partial
+  /**
+   * List of items that were successfully processed.
+   */
+  items: T[]
+  /**
+   * List of items that failed to be processed and the error
+   * that caused the failure.
+   */
+  failed: { item: Omit<T, keyof S>; cause: Error }[]
+  /**
+   * Pagination token.
+   */
+  nextToken?: string
+}
+
+/**
+ * Result of a list operation. T is the expected item type and
+ * S is a subset of T's properties that won't be present if the
+ * additional processing after the item has been fetched fails.
+ */
+export type ListOperationResult<T, S extends Subset<S, T>> =
+  | ListOperationSuccessResult<T>
+  | ListOperationFailureResult
+  | ListOperationPartialResult<T, S>

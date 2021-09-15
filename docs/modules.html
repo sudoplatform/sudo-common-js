@@ -69,6 +69,7 @@
 								<li class="tsd-kind-enum"><a href="enums/KeyArchiveKeyType.html" class="tsd-kind-icon">Key<wbr>Archive<wbr>Key<wbr>Type</a></li>
 								<li class="tsd-kind-enum"><a href="enums/KeyDataKeyFormat.html" class="tsd-kind-icon">Key<wbr>Data<wbr>Key<wbr>Format</a></li>
 								<li class="tsd-kind-enum"><a href="enums/KeyDataKeyType.html" class="tsd-kind-icon">Key<wbr>Data<wbr>Key<wbr>Type</a></li>
+								<li class="tsd-kind-enum"><a href="enums/ListOperationResultStatus.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Result<wbr>Status</a></li>
 								<li class="tsd-kind-enum"><a href="enums/PublicKeyFormat.html" class="tsd-kind-icon">Public<wbr>Key<wbr>Format</a></li>
 							</ul>
 						</section>
@@ -126,6 +127,9 @@
 								<li class="tsd-kind-interface"><a href="interfaces/BooleanFilter.html" class="tsd-kind-icon">Boolean<wbr>Filter</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/ConfigurationManager.html" class="tsd-kind-icon">Configuration<wbr>Manager</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/KeyData.html" class="tsd-kind-icon">Key<wbr>Data</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/ListOperationFailureResult.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Failure<wbr>Result</a></li>
+								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/ListOperationPartialResult.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Partial<wbr>Result</a></li>
+								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/ListOperationSuccessResult.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Success<wbr>Result</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/ListOutput.html" class="tsd-kind-icon">List<wbr>Output</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/Logger.html" class="tsd-kind-icon">Logger</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/Owner.html" class="tsd-kind-icon">Owner</a></li>
@@ -145,7 +149,9 @@
 								<li class="tsd-kind-type-alias"><a href="modules.html#InsecureKeyArchive" class="tsd-kind-icon">Insecure<wbr>Key<wbr>Archive</a></li>
 								<li class="tsd-kind-type-alias"><a href="modules.html#KeyArchive" class="tsd-kind-icon">Key<wbr>Archive</a></li>
 								<li class="tsd-kind-type-alias"><a href="modules.html#KeyArchiveKeyInfo" class="tsd-kind-icon">Key<wbr>Archive<wbr>Key<wbr>Info</a></li>
+								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#ListOperationResult" class="tsd-kind-icon">List<wbr>Operation<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias"><a href="modules.html#SecureKeyArchive" class="tsd-kind-icon">Secure<wbr>Key<wbr>Archive</a></li>
+								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#Subset" class="tsd-kind-icon">Subset</a></li>
 								<li class="tsd-kind-type-alias"><a href="modules.html#UnrecognizedKeyArchive" class="tsd-kind-icon">Unrecognized<wbr>Key<wbr>Archive</a></li>
 							</ul>
 						</section>
@@ -265,6 +271,32 @@
 						</dl>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
+					<a name="ListOperationResult" class="tsd-anchor"></a>
+					<h3>List<wbr>Operation<wbr>Result</h3>
+					<div class="tsd-signature tsd-kind-icon">List<wbr>Operation<wbr>Result&lt;T, S&gt;<span class="tsd-signature-symbol">:</span> <a href="interfaces/ListOperationSuccessResult.html" class="tsd-signature-type" data-tsd-kind="Interface">ListOperationSuccessResult</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/ListOperationFailureResult.html" class="tsd-signature-type" data-tsd-kind="Interface">ListOperationFailureResult</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/ListOperationPartialResult.html" class="tsd-signature-type" data-tsd-kind="Interface">ListOperationPartialResult</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/types/types.ts:125</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Result of a list operation. T is the expected item type and
+								S is a subset of T&#39;s properties that won&#39;t be present if the
+							additional processing after the item has been fetched fails.</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+						<li>
+							<h4>S<span class="tsd-signature-symbol">: </span><a href="modules.html#Subset" class="tsd-signature-type" data-tsd-kind="Type alias">Subset</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="SecureKeyArchive" class="tsd-anchor"></a>
 					<h3>Secure<wbr>Key<wbr>Archive</h3>
@@ -274,6 +306,25 @@
 							<li>Defined in src/sudoKeyArchive/keyArchive.ts:90</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
+					<a name="Subset" class="tsd-anchor"></a>
+					<h3>Subset</h3>
+					<div class="tsd-signature tsd-kind-icon">Subset&lt;T, S&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/types/types.ts:52</li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+						<li>
+							<h4>S</h4>
+						</li>
+					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="UnrecognizedKeyArchive" class="tsd-anchor"></a>
@@ -623,6 +674,9 @@
 						<a href="enums/KeyDataKeyType.html" class="tsd-kind-icon">Key<wbr>Data<wbr>Key<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-enum">
+						<a href="enums/ListOperationResultStatus.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Result<wbr>Status</a>
+					</li>
+					<li class=" tsd-kind-enum">
 						<a href="enums/PublicKeyFormat.html" class="tsd-kind-icon">Public<wbr>Key<wbr>Format</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -763,6 +817,15 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/KeyData.html" class="tsd-kind-icon">Key<wbr>Data</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ListOperationFailureResult.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Failure<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ListOperationPartialResult.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Partial<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ListOperationSuccessResult.html" class="tsd-kind-icon">List<wbr>Operation<wbr>Success<wbr>Result</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/ListOutput.html" class="tsd-kind-icon">List<wbr>Output</a>
 					</li>
@@ -805,8 +868,14 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#KeyArchiveKeyInfo" class="tsd-kind-icon">Key<wbr>Archive<wbr>Key<wbr>Info</a>
 					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#ListOperationResult" class="tsd-kind-icon">List<wbr>Operation<wbr>Result</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#SecureKeyArchive" class="tsd-kind-icon">Secure<wbr>Key<wbr>Archive</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#Subset" class="tsd-kind-icon">Subset</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="modules.html#UnrecognizedKeyArchive" class="tsd-kind-icon">Unrecognized<wbr>Key<wbr>Archive</a>
