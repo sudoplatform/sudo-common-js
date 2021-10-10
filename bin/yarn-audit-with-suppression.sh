@@ -1,6 +1,6 @@
 #!/bin/sh
 
-yarn audit --json --groups dependencies | jq -s -c 'map(select(.type == "auditAdvisory").data.advisory) | unique_by(.id) | .[] | {id, title, module_name, vulnerable_versions, patched_versions, severity}' | (new=""; while read advisory ; do
+yarn audit --json --groups "dependencies devDependencies" | jq -s -c 'map(select(.type == "auditAdvisory").data.advisory) | unique_by(.id) | .[] | {id, title, module_name, vulnerable_versions, patched_versions, severity, findings}' | (new=""; while read advisory ; do
   id=$(echo "${advisory}" | jq '.id')
   suppression=$(jq ".auditSuppressions[\"$id\"] | select (. != null)" package.json)
   if [ -z "$suppression" ]; then

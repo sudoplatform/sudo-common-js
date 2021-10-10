@@ -124,7 +124,7 @@ export interface SudoKeyArchive {
   getMetaInfo(): ReadonlyMap<string, string>
 }
 
-type KeyArchiveKeyInfoDecoded = KeyArchiveKeyInfo & {
+export type KeyArchiveKeyInfoDecoded = KeyArchiveKeyInfo & {
   Decoded: ArrayBuffer
 }
 
