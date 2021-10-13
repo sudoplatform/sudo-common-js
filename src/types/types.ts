@@ -122,7 +122,7 @@ export interface ListOperationPartialResult<T, S extends Subset<S, T>> {
  * S is a subset of T's properties that won't be present if the
  * additional processing after the item has been fetched fails.
  */
-export type ListOperationResult<T, S extends Subset<S, T>> =
+export type ListOperationResult<T, S extends Subset<S, T> = T> =
   | ListOperationSuccessResult<T>
   | ListOperationFailureResult
   | ListOperationPartialResult<T, S>
