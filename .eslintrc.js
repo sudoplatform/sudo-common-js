@@ -63,10 +63,7 @@ module.exports = {
     },
     {
       files: [
-        '**/*.spec.ts',
-        '**/test/**/*.ts',
-        'integration-tests/**/*.ts',
-        'src/utils/testing/**/*.ts',
+        'test/**/*.ts',
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
@@ -83,6 +80,7 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-unsafe-call': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/restrict-plus-operands': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',

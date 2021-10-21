@@ -16,16 +16,25 @@ export function isAppSyncNetworkError(u: Error): u is AppSyncNetworkError {
 }
 
 /**
- * Indicates the GraphQL API returned an error that's not recognized by the client.
+ * Indicates the GraphQL API returned an error that's not recognized by
+ * the client.
  */
 export class UnknownGraphQLError extends Error {
-  constructor(cause: AppSyncError) {
-    super(
-      `type: ${cause.errorType ?? '<cause type not specified>'}, message: ${
-        cause.message
-      }`,
-    )
-    this.name = 'GraphQLError'
+  constructor(cause: unknown) {
+    const maybeAppSyncError = cause as AppSyncError
+    let message: string
+    if (maybeAppSyncError?.errorType) {
+      message = `type: ${maybeAppSyncError.errorType}, message: ${maybeAppSyncError.message}`
+    } else if (maybeAppSyncError?.message) {
+      message = maybeAppSyncError?.message
+    } else if (maybeAppSyncError?.name) {
+      message = maybeAppSyncError.name
+    } else {
+      message = 'unknown cause'
+    }
+    super(message)
+
+    this.name = 'UnknownGraphQLError'
   }
 }
 
