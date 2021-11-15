@@ -64,6 +64,13 @@ export interface SudoKeyManager {
   getSymmetricKey(name: string): Promise<ArrayBuffer | undefined>
 
   /**
+   * Checks to see if the specified symmetric key exists.
+   *
+   * @param name The name of the symmetric key.
+   */
+  doesSymmetricKeyExists(name: string): Promise<boolean>
+
+  /**
    * Deletes a symmetric key from the secure store.
    *
    * @param name The name of the symmetric key.
@@ -86,6 +93,13 @@ export interface SudoKeyManager {
    * @returns Requested private key or undefined if the key was not found.
    */
   getPrivateKey(name: string): Promise<ArrayBuffer | undefined>
+
+  /**
+   * Checks to see if the specified private key exists.
+   *
+   * @param name The name of the private key.
+   */
+  doesPrivateKeyExists(name: string): Promise<boolean>
 
   /**
    * Adds a public key to the secure store.
@@ -379,6 +393,10 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     return this.sudoCryptoProvider.getSymmetricKey(name)
   }
 
+  public doesSymmetricKeyExists(name: string): Promise<boolean> {
+    return this.sudoCryptoProvider.doesSymmetricKeyExists(name)
+  }
+
   public deleteSymmetricKey(name: string): Promise<void> {
     return this.sudoCryptoProvider.deleteSymmetricKey(name)
   }
@@ -393,6 +411,10 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
 
   public getPrivateKey(name: string): Promise<ArrayBuffer | undefined> {
     return this.sudoCryptoProvider.getPrivateKey(name)
+  }
+
+  public doesPrivateKeyExists(name: string): Promise<boolean> {
+    return this.sudoCryptoProvider.doesPrivateKeyExists(name)
   }
 
   public addPublicKey(key: ArrayBuffer, name: string): Promise<void> {

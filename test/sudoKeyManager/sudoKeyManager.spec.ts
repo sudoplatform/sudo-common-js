@@ -177,6 +177,24 @@ describe('DefaultSudoKeyManager', () => {
     })
   })
 
+  describe('doesSymmetricKeyExists', () => {
+    it('should call crypto provider doesSymmetricKeyExists', async () => {
+      when(
+        sudoCryptoProviderMock.doesSymmetricKeyExists(anything()),
+      ).thenResolve(true)
+
+      await expect(
+        sudoKeyManager.doesSymmetricKeyExists('VpnKey'),
+      ).resolves.toEqual(true)
+      const [actualKey] = capture(
+        sudoCryptoProviderMock.doesSymmetricKeyExists,
+      ).first()
+      expect(actualKey).toStrictEqual('VpnKey')
+
+      verify(sudoCryptoProviderMock.doesSymmetricKeyExists(anything())).once()
+    })
+  })
+
   describe('deleteSymmetricKey', () => {
     it('should call crypto provider deleteSymmetricKey', async () => {
       when(sudoCryptoProviderMock.deleteSymmetricKey(anything())).thenResolve()
@@ -260,6 +278,25 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKeyName).toStrictEqual('VpnKeyPair')
 
       verify(sudoCryptoProviderMock.getPrivateKey(anything())).once()
+    })
+  })
+
+  describe('doesPrivateKeyExists', () => {
+    it('should call crypto provider doesPrivateKeyExists', async () => {
+      when(sudoCryptoProviderMock.doesPrivateKeyExists(anything())).thenResolve(
+        true,
+      )
+
+      await expect(
+        sudoKeyManager.doesPrivateKeyExists('VpnKeyPair'),
+      ).resolves.toBeTruthy()
+
+      const [actualKeyName] = capture(
+        sudoCryptoProviderMock.doesPrivateKeyExists,
+      ).first()
+      expect(actualKeyName).toStrictEqual('VpnKeyPair')
+
+      verify(sudoCryptoProviderMock.doesPrivateKeyExists(anything())).once()
     })
   })
 
