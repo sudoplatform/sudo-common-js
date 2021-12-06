@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "audit-with-suppressions": "bin/yarn-audit-with-suppression.sh",
-    "outdated-with-suppressions": "bin/yarn-outdated-with-suppression.sh",
+    "outdated-with-suppressions": "bin/outdated-with-suppression.sh",
     "clean": "rimraf ./lib ./test-lib",
     "lint": "yarn lint:eslint && yarn lint:prettier",
     "lint:eslint": "eslint \"{bin,integration-tests,src,test}/**/*.{ts,tsx}\"",
@@ -26,7 +26,7 @@
   "bin": {
     "audit-with-suppressions": "bin/yarn-audit-with-suppression.sh",
     "suppress-audit": "bin/suppress-audit.sh",
-    "outdated-with-suppressions": "bin/yarn-outdated-with-suppression.sh",
+    "outdated-with-suppressions": "bin/outdated-with-suppression.sh",
     "suppress-outdated": "bin/suppress-outdated.sh"
   },
   "files": [
