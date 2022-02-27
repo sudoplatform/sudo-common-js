@@ -1,7 +1,7 @@
 import {
   ListOperationResult,
   ListOperationResultStatus,
-} from '../../src/types/types'
+} from '../../../src/types/types'
 
 type Item = {
   id: string

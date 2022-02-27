@@ -1,12 +1,66 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { fold, left } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as t from 'io-ts'
+import * as AWS from 'aws-sdk'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 import {
   ConfigurationNotSetError,
   DecodeError,
   ConfigurationSetNotFoundError,
 } from '../errors/error'
+
+/**
+ * Service compatibility information.
+ */
+export interface ServiceCompatibilityInfo {
+  /**
+   * The name of the service associated with the compatibility info. This matches one of the
+   * service name present in sudoplatformconfig.json.
+   */
+  name: string
+  /**
+   * The version of the service config present in sudoplatformconfig.json. It defaults
+   * to 1 if not present.
+   */
+  configVersion: number
+  /**
+   * The minimum supported service config version currently supported by the backend.
+   */
+  minSupportedVersion?: number
+  /**
+   * Any service config version less than or equal to this version is considered deprecated
+   * and the backend may remove the support for those versions after a grace period.
+   */
+  deprecatedVersion?: number
+  /**
+   * After this time any deprecated service config versions will no longer be compatible
+   * with the backend. It is recommended to warn the user prior to the deprecation grace.
+   */
+  deprecationGrace?: Date
+}
+
+/**
+ * Result returned by `validateConfig` API if an incompatible client config is found when compared
+ * to the deployed backend services.
+ */
+export interface ValidationResult {
+  /**
+   * The list of incompatible services. The client must be upgraded to the latest
+   * version in order to use these services.
+   */
+  incompatible: ServiceCompatibilityInfo[]
+  /**
+   * The list of services that will be made incompatible with the current version of the
+   * client. The users should be warned that after the specified grace period these services will be
+   * made incompatible.
+   */
+  deprecated: ServiceCompatibilityInfo[]
+}
 
 /**
  * Interface that encapsulates the APIs common to all configuration manager implementations.
@@ -62,6 +116,17 @@ export interface ConfigurationManager {
    * @throws {@link DecodeError}
    */
   bindConfigSet<T>(codec: t.Mixed, namespace?: string): T
+
+  /**
+   * Validates the client configuration (sudoplatformconfig.json) against the currently deployed set of
+   * backend services. If the client configuration is valid, i.e. the client is compatible will all deployed
+   * backend services, then the call will complete with `success` result. If any part of the client
+   * configuration is incompatible then a detailed information on the incompatible service will be
+   * returned in `failure` result. See `SudoConfigManagerError.compatibilityIssueFound` for more details.
+   *
+   * @return validation result with the details of incompatible or deprecated service configurations.
+   */
+  validateConfig(): Promise<ValidationResult>
 }
 
 /**
@@ -95,15 +160,9 @@ export class DefaultConfigurationManager implements ConfigurationManager {
       throw new ConfigurationNotSetError()
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const parsed = JSON.parse(this._config)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const configSet = namespace
-      ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        parsed[namespace]
-      : parsed
+    const configSet = namespace ? parsed[namespace] : parsed
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return configSet
   }
 
@@ -128,5 +187,95 @@ export class DefaultConfigurationManager implements ConfigurationManager {
     }
 
     return this.bind<T>(configSet, codec)
+  }
+
+  public async validateConfig(): Promise<ValidationResult> {
+    if (!this._config) {
+      return { incompatible: [], deprecated: [] }
+    }
+
+    const config = JSON.parse(this._config)
+
+    const region = config.identityService?.region
+    const bucket = config.identityService?.serviceInfoBucket
+
+    if (!(region && bucket)) {
+      return { incompatible: [], deprecated: [] }
+    }
+
+    const s3Client = new AWS.S3({ region: region })
+
+    const incompatible: ServiceCompatibilityInfo[] = []
+    const deprecated: ServiceCompatibilityInfo[] = []
+
+    const objects = await s3Client
+      .makeUnauthenticatedRequest('listObjects', {
+        Bucket: bucket,
+      })
+      .promise()
+
+    if (!objects.Contents?.length) {
+      return { incompatible: [], deprecated: [] }
+    }
+
+    const keys = objects.Contents.map((object: any) => object.Key)
+
+    // Only fetch the service info docs for the services that are present in client config
+    // to minimize the network calls.
+    const keysToFetch = keys.filter(
+      (key: string) =>
+        key.endsWith('.json') && config[key.replace('.json', '')],
+    )
+
+    for (const key of keysToFetch) {
+      const object = await s3Client
+        .makeUnauthenticatedRequest('getObject', {
+          Key: key,
+          Bucket: bucket,
+        })
+        .promise()
+
+      let body: string
+
+      if (typeof object.Body === 'string') {
+        body = object.Body
+      } else if (ArrayBuffer.isView(object.Body)) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        body = new TextDecoder().decode(object.Body)
+      } else {
+        continue
+      }
+
+      const json = JSON.parse(body)
+      const serviceName = key.replace('.json', '')
+      const serviceInfo: any = json[serviceName]
+      const serviceConfig: any = config[serviceName]
+      if (serviceInfo && serviceConfig) {
+        const currentVersion: number = serviceConfig.version ?? 1
+        const deprecationGrace: number = serviceInfo.deprecationGrace ?? -1
+        const compatibilityInfo: ServiceCompatibilityInfo = {
+          name: serviceName,
+          configVersion: currentVersion,
+          minSupportedVersion: serviceInfo.minVersion,
+          deprecatedVersion: serviceInfo.deprecated,
+          deprecationGrace:
+            deprecationGrace != -1 ? new Date(deprecationGrace) : undefined,
+        }
+
+        // If the service config in `sudoplatformconfig.json` is less than the
+        // minimum supported version then the client is incompatible.
+        if (currentVersion < (compatibilityInfo.minSupportedVersion ?? 0)) {
+          incompatible.push(compatibilityInfo)
+        }
+
+        // If the service config is less than or equal to the deprecated version
+        // then it will be made incompatible after the deprecation grace.
+        if (currentVersion <= (compatibilityInfo.deprecatedVersion ?? 0)) {
+          deprecated.push(compatibilityInfo)
+        }
+      }
+    }
+
+    return { incompatible, deprecated }
   }
 }

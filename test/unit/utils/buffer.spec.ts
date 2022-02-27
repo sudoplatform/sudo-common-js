@@ -1,4 +1,4 @@
-import { Buffer as BufferUtil } from '../../src/utils/buffer'
+import { Buffer as BufferUtil } from '../../../src/utils/buffer'
 
 describe('Buffer', () => {
   it('split()', () => {

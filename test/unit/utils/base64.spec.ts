@@ -1,4 +1,4 @@
-import { Base64 } from '../../src/utils/base64'
+import { Base64 } from '../../../src/utils/base64'
 
 describe('Base64', () => {
   const dummyDataB64 = 'ZHVtbXlfZGF0YQ==' // b64(dummy_data)

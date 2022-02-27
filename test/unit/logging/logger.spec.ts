@@ -1,4 +1,4 @@
-import { DefaultLogger } from '../../src/logging/logger'
+import { DefaultLogger } from '../../../src/logging/logger'
 
 afterEach(() => {
   jest.clearAllMocks()

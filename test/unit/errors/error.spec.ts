@@ -13,7 +13,7 @@ import {
   RequestFailedError,
   ServiceError,
   UnknownGraphQLError,
-} from '../../src/errors/error'
+} from '../../../src/errors/error'
 
 describe('error', () => {
   const message = 'graphql-error'
