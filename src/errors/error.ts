@@ -425,7 +425,9 @@ export class UnrecognizedAlgorithmError extends Error {
  * @param error The App Sync error to map
  * @returns The mapped error
  */
-export function mapGraphQLToClientError(error: AppSyncError): Error {
+export function mapGraphQLToClientError(
+  error: Pick<AppSyncError, 'errorType' | 'message'>,
+): Error {
   switch (error.errorType) {
     case 'sudoplatform.AccountLockedError':
       return new AccountLockedError()
@@ -435,6 +437,8 @@ export function mapGraphQLToClientError(error: AppSyncError): Error {
       return new InvalidTokenError()
     case 'sudoplatform.InvalidArgumentError':
       return new IllegalArgumentError()
+    case 'sudoplatform.LimitExceededError':
+      return new LimitExceededError()
     case 'sudoplatform.NoEntitlementsError':
       return new NoEntitlementsError()
     case 'sudoplatform.ServiceError':

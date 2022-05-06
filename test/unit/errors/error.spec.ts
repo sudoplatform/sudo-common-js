@@ -1,11 +1,11 @@
 import {
   AccountLockedError,
-  AppSyncError,
   AppSyncNetworkError,
   IllegalArgumentError,
   InsufficientEntitlementsError,
   InvalidTokenError,
   isAppSyncNetworkError,
+  LimitExceededError,
   mapGraphQLToClientError,
   mapNetworkErrorToClientError,
   NoEntitlementsError,
@@ -26,34 +26,19 @@ describe('error', () => {
       ${'sudoplatform.InvalidArgumentError'}          | ${new IllegalArgumentError()}
       ${'sudoplatform.NoEntitlementsError'}           | ${new NoEntitlementsError()}
       ${'sudoplatform.ServiceError'}                  | ${new ServiceError(message)}
+      ${'sudoplatform.LimitExceededError'}            | ${new LimitExceededError()}
     `('should map common error $code properly', ({ code, error }) => {
       expect(
         mapGraphQLToClientError({
           message,
-          path: [],
-          locations: [],
-          nodes: [],
-          positions: [],
-          source: undefined,
-          originalError: undefined,
-          extensions: [],
-          name: code,
           errorType: code,
         }),
       ).toEqual(error)
     })
 
     it('should map an unrecognized error to UnknownGraphQLError', () => {
-      const unrecognized: AppSyncError = {
+      const unrecognized = {
         message,
-        path: [],
-        locations: [],
-        nodes: [],
-        positions: [],
-        source: undefined,
-        originalError: undefined,
-        extensions: [],
-        name: 'unrecognized',
         errorType: 'unrecognized',
       }
       expect(mapGraphQLToClientError(unrecognized)).toEqual(
