@@ -46,6 +46,7 @@ export interface BooleanFilter {
  */
 export enum EncryptionAlgorithm {
   AesCbcPkcs7Padding = 'AES/CBC/PKCS7Padding',
+  AesGcmNoPadding = 'AES/GCM/NoPadding',
   RsaOaepSha1 = 'RSA/OAEPWithSHA-1',
 }
 
