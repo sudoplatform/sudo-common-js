@@ -435,11 +435,9 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
     if (BufferUtil.isArrayBuffer(ivOrOptions)) {
-      return this.sudoCryptoProvider.encryptWithSymmetricKey(
-        key,
-        data,
-        ivOrOptions,
-      )
+      return this.sudoCryptoProvider.encryptWithSymmetricKey(key, data, {
+        iv: ivOrOptions,
+      })
     } else {
       return this.sudoCryptoProvider.encryptWithSymmetricKey(
         key,
@@ -455,11 +453,9 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
     if (BufferUtil.isArrayBuffer(ivOrOptions)) {
-      return this.sudoCryptoProvider.decryptWithSymmetricKey(
-        key,
-        data,
-        ivOrOptions,
-      )
+      return this.sudoCryptoProvider.decryptWithSymmetricKey(key, data, {
+        iv: ivOrOptions,
+      })
     } else {
       return this.sudoCryptoProvider.decryptWithSymmetricKey(
         key,
@@ -475,11 +471,9 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
     if (BufferUtil.isArrayBuffer(ivOrOptions)) {
-      return this.sudoCryptoProvider.encryptWithSymmetricKeyName(
-        name,
-        data,
-        ivOrOptions,
-      )
+      return this.sudoCryptoProvider.encryptWithSymmetricKeyName(name, data, {
+        iv: ivOrOptions,
+      })
     } else {
       return this.sudoCryptoProvider.encryptWithSymmetricKeyName(
         name,
@@ -495,11 +489,9 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     ivOrOptions?: ArrayBuffer | SymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
     if (BufferUtil.isArrayBuffer(ivOrOptions)) {
-      return this.sudoCryptoProvider.decryptWithSymmetricKeyName(
-        name,
-        data,
-        ivOrOptions,
-      )
+      return this.sudoCryptoProvider.decryptWithSymmetricKeyName(name, data, {
+        iv: ivOrOptions,
+      })
     } else {
       return this.sudoCryptoProvider.decryptWithSymmetricKeyName(
         name,

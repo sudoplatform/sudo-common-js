@@ -393,8 +393,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(decrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toStrictEqual(iv)
-      expect(actualOptions.algorithm).toBeUndefined()
+      expect(actualOptions!.iv).toStrictEqual(iv)
+      expect(actualOptions!.algorithm).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName(
@@ -430,8 +430,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(decrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toStrictEqual(options.iv)
-      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+      expect(actualOptions!.iv).toStrictEqual(options.iv)
+      expect(actualOptions!.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKeyName(
@@ -492,8 +492,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toStrictEqual(iv)
-      expect(actualOptions.algorithm).toBeUndefined()
+      expect(actualOptions!.iv).toStrictEqual(iv)
+      expect(actualOptions!.algorithm).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKey(
@@ -530,8 +530,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toBeUndefined()
-      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+      expect(actualOptions!.iv).toBeUndefined()
+      expect(actualOptions!.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.encryptWithSymmetricKey(
@@ -599,8 +599,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(encrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toStrictEqual(options.iv)
-      expect(actualOptions.algorithm).toBeUndefined()
+      expect(actualOptions!.iv).toStrictEqual(options.iv)
+      expect(actualOptions!.algorithm).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName(
@@ -638,8 +638,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(encrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toStrictEqual(options.iv)
-      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+      expect(actualOptions!.iv).toStrictEqual(options.iv)
+      expect(actualOptions!.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKeyName(
@@ -707,8 +707,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toStrictEqual(iv)
-      expect(actualOptions.algorithm).toBeUndefined()
+      expect(actualOptions!.iv).toStrictEqual(iv)
+      expect(actualOptions!.algorithm).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKey(
@@ -746,8 +746,8 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKey).toStrictEqual(symmetricKey)
       expect(actualData).toStrictEqual(encrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.iv).toStrictEqual(iv)
-      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+      expect(actualOptions!.iv).toStrictEqual(iv)
+      expect(actualOptions!.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.decryptWithSymmetricKey(
@@ -811,7 +811,7 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(decrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+      expect(actualOptions!.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.encryptWithPublicKey(
@@ -875,7 +875,7 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(encrypted)
       expect(actualOptions).toBeDefined()
-      expect(actualOptions.algorithm).toStrictEqual(options.algorithm)
+      expect(actualOptions!.algorithm).toStrictEqual(options.algorithm)
 
       verify(
         sudoCryptoProviderMock.decryptWithPrivateKey(
