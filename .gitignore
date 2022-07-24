@@ -11,3 +11,4 @@ coverage
 .yalc/
 yalc.lock
 config
+package.json.old

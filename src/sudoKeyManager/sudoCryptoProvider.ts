@@ -5,6 +5,7 @@ import { PublicKey } from './publicKey'
 export class SudoCryptoProviderDefaults {
   public static readonly aesIVSize = 16
   public static readonly aesKeySize = 256
+  public static readonly rsaKeySize = 2048
   public static readonly pbkdfRounds = 10000
   public static readonly pbkdfSaltSize = 16
 }
@@ -90,6 +91,15 @@ export interface SudoCryptoProvider {
    *
    * @param name The name of the symmetric key.
    */
+  doesSymmetricKeyExist(name: string): Promise<boolean>
+
+  /**
+   * Checks to see if the specified symmetric key exists.
+   *
+   * @param name The name of the symmetric key.
+   *
+   * @deprecated Use doesSymmetricKeyExist
+   */
   doesSymmetricKeyExists(name: string): Promise<boolean>
 
   /**
@@ -138,6 +148,36 @@ export interface SudoCryptoProvider {
   deleteKeyPair(name: string): Promise<void>
 
   /**
+   * Generates a signature for the given data with the specified private key.
+   *
+   * @param name The name of the private key to use for generation.
+   * @param data The data to sign.
+   *
+   * @returns Data signature
+   *
+   * @throws {@link KeyNotFoundError}
+   */
+  generateSignatureWithPrivateKey(
+    name: string,
+    data: ArrayBuffer,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * Verifies the given data against the provided signature using the specified public key.
+   *
+   * @param name The name of the public key to use for validation.
+   * @param data The data to verify
+   * @param signature The signature to verify against
+   *
+   * @returns True if the data and signature could be successfully verified
+   */
+  verifySignatureWithPublicKey(
+    name: string,
+    data: ArrayBuffer,
+    signature: ArrayBuffer,
+  ): Promise<boolean>
+
+  /**
    * Adds a private key to the secure store.
    *
    * @param key The private key to store securely.
@@ -159,6 +199,15 @@ export interface SudoCryptoProvider {
    *
    * @param name The name of the private key.
    */
+  doesPrivateKeyExist(name: string): Promise<boolean>
+
+  /**
+   * Checks to see if the specified private key exists.
+   *
+   * @param name The name of the private key.
+   *
+   * @deprecated Use doesPrivateKeyExist
+   */
   doesPrivateKeyExists(name: string): Promise<boolean>
 
   /**
@@ -168,6 +217,13 @@ export interface SudoCryptoProvider {
    * @param name The name of the public key to be stored.
    */
   addPublicKey(key: ArrayBuffer, name: string): Promise<void>
+
+  /**
+   * Deletes the specified public key from the secure store.
+   *
+   * @param name The name of the public key to be removed.
+   */
+  deletePublicKey(name: string): Promise<void>
 
   /**
    * Retrieves the public key from the secure store.
@@ -210,6 +266,7 @@ export interface SudoCryptoProvider {
    * @returns Encrypted data and IV
    *
    * @throws {@link UnrecognizedAlgorithmError}
+   * @throws {@link KeyNotFoundError}
    */
   encryptWithSymmetricKeyName(
     name: string,
@@ -243,6 +300,7 @@ export interface SudoCryptoProvider {
    * @returns Decrypted data
    *
    * @throws {@link UnrecognizedAlgorithmError}
+   * @throws {@link KeyNotFoundError}
    */
   decryptWithSymmetricKeyName(
     name: string,
@@ -325,6 +383,7 @@ export interface SudoCryptoProvider {
    * @returns Encrypted data
    *
    * @throws {@link UnrecognizedAlgorithmError}
+   * @throws {@link KeyNotFoundError}
    */
   encryptWithPublicKey(
     name: string,
@@ -338,9 +397,10 @@ export interface SudoCryptoProvider {
    * @param name The name of the private key to use for decryption.
    * @param data The data to decrypt.
    *
-   * @returns Decrypted data or undefined if the private key is not found.
+   * @returns Decrypted data.
    *
    * @throws {@link UnrecognizedAlgorithmError}
+   * @throws {@link KeyNotFoundError}
    */
   decryptWithPrivateKey(
     name: string,

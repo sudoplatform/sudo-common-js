@@ -195,7 +195,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
    *
    * @param excludedKeyTypes
    *     Set of key types to exclude from archive or restore operation.
-   *     Default: {{@link KeyArchiveKeyType.PublicKey}}
+   *     Default: {@link KeyArchiveKeyType.PublicKey}
    *
    * @param metaInfo
    *     Meta information to include with the key archive
