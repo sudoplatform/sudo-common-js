@@ -94,15 +94,6 @@ export interface SudoCryptoProvider {
   doesSymmetricKeyExist(name: string): Promise<boolean>
 
   /**
-   * Checks to see if the specified symmetric key exists.
-   *
-   * @param name The name of the symmetric key.
-   *
-   * @deprecated Use doesSymmetricKeyExist
-   */
-  doesSymmetricKeyExists(name: string): Promise<boolean>
-
-  /**
    * Deletes a symmetric key from the secure store.
    *
    * @param name The name of the symmetric key.
@@ -200,15 +191,6 @@ export interface SudoCryptoProvider {
    * @param name The name of the private key.
    */
   doesPrivateKeyExist(name: string): Promise<boolean>
-
-  /**
-   * Checks to see if the specified private key exists.
-   *
-   * @param name The name of the private key.
-   *
-   * @deprecated Use doesPrivateKeyExist
-   */
-  doesPrivateKeyExists(name: string): Promise<boolean>
 
   /**
    * Adds a public key to the secure store.
