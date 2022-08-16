@@ -32,8 +32,7 @@
     "suppress-outdated": "bin/suppress-outdated.sh"
   },
   "files": [
-    "lib",
-    "!*.spec.*"
+    "lib"
   ],
   "resolutions": {
     "**/apollo-cache-inmemory": "^1.6.6",

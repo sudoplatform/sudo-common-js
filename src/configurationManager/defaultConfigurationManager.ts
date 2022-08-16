@@ -6,7 +6,7 @@
 import { fold, left } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as t from 'io-ts'
-import * as AWS from 'aws-sdk'
+import S3 from 'aws-sdk/clients/s3'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 import {
   ConfigurationNotSetError,
@@ -203,7 +203,7 @@ export class DefaultConfigurationManager implements ConfigurationManager {
       return { incompatible: [], deprecated: [] }
     }
 
-    const s3Client = new AWS.S3({ region: region })
+    const s3Client = new S3({ region: region })
 
     const incompatible: ServiceCompatibilityInfo[] = []
     const deprecated: ServiceCompatibilityInfo[] = []
