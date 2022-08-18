@@ -1,7 +1,4 @@
 {
-  "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts", "test/**/*.ts"],
-  "compilerOptions": {
-    "outDir": "test-lib"
-  }
+  "extends": "./tsconfig.commonjs.json",
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }

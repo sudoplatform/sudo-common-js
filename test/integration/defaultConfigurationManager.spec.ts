@@ -2,11 +2,21 @@ import { DefaultConfigurationManager } from '../../src/configurationManager/defa
 import { readFileSync, existsSync } from 'fs'
 import { TextEncoder, TextDecoder } from 'util'
 
+require('isomorphic-fetch')
+
 global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
+global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 describe('configuration manager', () => {
   const configFilePath = 'config/sudoplatformconfig.json'
+
+  beforeEach(() => {
+    delete process.env.AWS_PROFILE
+    delete process.env.AWS_ACCESS_KEY_ID
+    delete process.env.AWS_SECRET_ACCESS_KEY
+    delete process.env.AWS_SESSION_TOKEN
+  })
+
   if (existsSync(configFilePath)) {
     const config = readFileSync(configFilePath, 'utf-8')
     const json = JSON.parse(config)

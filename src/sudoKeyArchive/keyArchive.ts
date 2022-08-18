@@ -5,7 +5,7 @@ export const CURRENT_ARCHIVE_VERSION = 3
 
 const CommonKeyArchiveRequiredProps = {
   /**
-   * Version this arhive format.
+   * Version this archive format.
    */
   Version: t.literal(CURRENT_ARCHIVE_VERSION),
 
@@ -20,7 +20,7 @@ export const InsecureKeyArchiveType = 'Insecure'
 const InsecureKeyArchiveRequiredProps = {
   ...CommonKeyArchiveRequiredProps,
   /**
-   * Disciminant for InsecureKeyArchive type.
+   * Discriminant for InsecureKeyArchive type.
    */
   Type: t.literal(InsecureKeyArchiveType),
 
@@ -34,6 +34,7 @@ export const InsecureKeyArchiveCodec = t.type(
   InsecureKeyArchiveRequiredProps,
   'InsecureKeyArchive',
 )
+
 export type InsecureKeyArchive = t.TypeOf<typeof InsecureKeyArchiveCodec>
 
 export const SecureKeyArchiveType = 'Secure'
@@ -41,7 +42,7 @@ export const SecureKeyArchiveType = 'Secure'
 const SecureKeyArchiveRequiredProps = {
   ...CommonKeyArchiveRequiredProps,
   /**
-   * Disciminant for SecureKeyArchive type.
+   * Discriminant for SecureKeyArchive type.
    */
   Type: t.literal(SecureKeyArchiveType),
 
@@ -99,6 +100,7 @@ export const KeyArchiveCodec = t.union(
   ],
   'KeyArchive',
 )
+
 export type KeyArchive = t.TypeOf<typeof KeyArchiveCodec>
 
 export function isSecureKeyArchive(

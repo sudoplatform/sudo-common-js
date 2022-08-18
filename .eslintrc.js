@@ -2,17 +2,18 @@ module.exports = {
   root: true,
   overrides: [
     {
-      files: ['*.js'],
-      extends: 'eslint:recommended',
+      files: ['*.js', '*.json'],
+      plugins: ['prettier'],
+      extends: ['eslint:recommended', 'prettier'],
       parserOptions: { ecmaVersion: 2018 },
       env: { node: true },
     },
     {
-      files: ['**/*.ts'],
-      plugins: ['@typescript-eslint', 'import', 'prettier'],
+      files: ['src/**/*.ts'],
+      plugins: ['@typescript-eslint', 'import', 'prettier', 'tree-shaking'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: './tsconfig.test.json'
+        project: './tsconfig.test.json',
       },
       extends: [
         'plugin:@typescript-eslint/recommended',
@@ -50,9 +51,28 @@ module.exports = {
         '@typescript-eslint/unbound-method': [
           'error',
           {
-            'ignoreStatic': true
-          }
-        ]
+            ignoreStatic: true,
+          },
+        ],
+        'tree-shaking/no-side-effects-in-initialization': [
+          2,
+          {
+            noSideEffectsWhenCalled: [
+              {
+                module: 'io-ts',
+                functions: [
+                  'array',
+                  'literal',
+                  'partial',
+                  'record',
+                  'type',
+                  'union',
+                  'Type',
+                ],
+              },
+            ],
+          },
+        ],
       },
     },
     {
@@ -62,12 +82,10 @@ module.exports = {
       },
     },
     {
-      files: [
-        'test/**/*.ts',
-      ],
+      files: ['test/**/*.ts'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: './tsconfig.test.json'
+        project: './tsconfig.test.json',
       },
       extends: [
         'plugin:@typescript-eslint/recommended',
@@ -84,7 +102,7 @@ module.exports = {
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/restrict-plus-operands': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
-        '@typescript-eslint/unbound-method': 'off'
+        '@typescript-eslint/unbound-method': 'off',
       },
     },
   ],

@@ -1,5 +1,12 @@
 {
   "editor.formatOnSave": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "eslint.validate": ["typescript"],
+  "eslint.validate": [
+    "typescript"
+  ],
+  "cSpell.words": [
+    "fflate",
+    "sudoplatformconfig",
+    "Synchronizable"
+  ],
 }

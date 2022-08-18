@@ -2,7 +2,7 @@ export {}
 
 function match(
   context: jest.MatcherContext,
-  caught: Error,
+  caught: Error | undefined,
   error: {
     name: string | RegExp | undefined
     message?: string | RegExp | undefined | null
@@ -105,7 +105,7 @@ expect.extend({
     try {
       operation()
     } catch (err) {
-      caught = err
+      caught = err as Error
     }
 
     return match(this, caught, error)

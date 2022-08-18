@@ -1,7 +1,19 @@
 import { DefaultConfigurationManager } from '../../../src/configurationManager/defaultConfigurationManager'
 import * as t from 'io-ts'
 import { ConfigurationSetNotFoundError } from '../../../src/errors/error'
-import AWS from 'aws-sdk'
+import { ListObjectsCommand, S3Client } from '@aws-sdk/client-s3'
+import { TextEncoder, TextDecoder } from 'util'
+import { Readable } from 'stream'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder as typeof global.TextDecoder
+
+function bodyFromString(s: string): Readable {
+  const readable = new Readable()
+  readable.push(s)
+  readable.push(null)
+  return readable
+}
 
 describe('configuration manager', () => {
   const config = {
@@ -123,7 +135,7 @@ describe('configuration manager', () => {
       }).toThrow(ConfigurationSetNotFoundError)
     })
 
-    it('should still bind when no nampespace provided', () => {
+    it('should still bind when no namespace provided', () => {
       const result = DefaultConfigurationManager.getInstance()
         .setConfig(JSON.stringify(config))
         .bindConfigSet<SdkConfig>(SdkConfig)
@@ -187,21 +199,15 @@ describe('configuration manager', () => {
         JSON.stringify(config),
       )
 
-      jest.mock('aws-sdk')
+      jest.mock('@aws-sdk/client-s3')
 
-      AWS.Service.prototype.makeUnauthenticatedRequest = jest
-        .fn()
-        .mockImplementation((operation) => {
-          if (operation === 'listObjects') {
-            return {
-              promise() {
-                return Promise.resolve({
-                  Contents: [{ Key: 'identityService' }],
-                })
-              },
-            }
-          }
-        })
+      S3Client.prototype.send = jest.fn().mockImplementation((operation) => {
+        if (operation instanceof ListObjectsCommand) {
+          return Promise.resolve({
+            Contents: [{ Key: 'identityService' }],
+          })
+        }
+      })
 
       await expect(manager.validateConfig()).resolves.toEqual({
         deprecated: [],
@@ -221,21 +227,15 @@ describe('configuration manager', () => {
         JSON.stringify(config),
       )
 
-      jest.mock('aws-sdk')
+      jest.mock('@aws-sdk/client-s3')
 
-      AWS.Service.prototype.makeUnauthenticatedRequest = jest
-        .fn()
-        .mockImplementation((operation) => {
-          if (operation === 'listObjects') {
-            return {
-              promise() {
-                return Promise.resolve({
-                  Contents: [{ Key: 'sudoService' }],
-                })
-              },
-            }
-          }
-        })
+      S3Client.prototype.send = jest.fn().mockImplementation((operation) => {
+        if (operation instanceof ListObjectsCommand) {
+          return Promise.resolve({
+            Contents: [{ Key: 'sudoService' }],
+          })
+        }
+      })
 
       await expect(manager.validateConfig()).resolves.toEqual({
         deprecated: [],
@@ -255,21 +255,15 @@ describe('configuration manager', () => {
         JSON.stringify(config),
       )
 
-      jest.mock('aws-sdk')
+      jest.mock('@aws-sdk/client-s3')
 
-      AWS.Service.prototype.makeUnauthenticatedRequest = jest
-        .fn()
-        .mockImplementation((operation) => {
-          if (operation === 'listObjects') {
-            return {
-              promise() {
-                return Promise.resolve({
-                  Contents: [],
-                })
-              },
-            }
-          }
-        })
+      S3Client.prototype.send = jest.fn().mockImplementation((operation) => {
+        if (operation instanceof ListObjectsCommand) {
+          return Promise.resolve({
+            Contents: [],
+          })
+        }
+      })
 
       await expect(manager.validateConfig()).resolves.toEqual({
         deprecated: [],
@@ -296,30 +290,22 @@ describe('configuration manager', () => {
         JSON.stringify(config),
       )
 
-      jest.mock('aws-sdk')
+      jest.mock('@aws-sdk/client-s3')
 
-      AWS.Service.prototype.makeUnauthenticatedRequest = jest
-        .fn()
-        .mockImplementation((operation, params) => {
-          if (operation === 'listObjects') {
-            return {
-              promise() {
-                return Promise.resolve({
-                  Contents: [{ Key: 'identityService.json' }],
-                })
-              },
-            }
-          } else if (
-            params.Key === 'identityService.json' &&
-            params.Bucket === 'dummy_bucket'
-          ) {
-            return {
-              promise() {
-                return Promise.resolve({ Body: JSON.stringify(serviceInfo) })
-              },
-            }
-          }
-        })
+      S3Client.prototype.send = jest.fn().mockImplementation((operation) => {
+        if (operation instanceof ListObjectsCommand) {
+          return Promise.resolve({
+            Contents: [{ Key: 'identityService.json' }],
+          })
+        } else if (
+          operation.input.Key === 'identityService.json' &&
+          operation.input.Bucket === 'dummy_bucket'
+        ) {
+          return Promise.resolve({
+            Body: bodyFromString(JSON.stringify(serviceInfo)),
+          })
+        }
+      })
 
       await expect(manager.validateConfig()).resolves.toEqual({
         deprecated: [],
@@ -352,30 +338,22 @@ describe('configuration manager', () => {
         JSON.stringify(config),
       )
 
-      jest.mock('aws-sdk')
+      jest.mock('@aws-sdk/client-s3')
 
-      AWS.Service.prototype.makeUnauthenticatedRequest = jest
-        .fn()
-        .mockImplementation((operation, params) => {
-          if (operation === 'listObjects') {
-            return {
-              promise() {
-                return Promise.resolve({
-                  Contents: [{ Key: 'identityService.json' }],
-                })
-              },
-            }
-          } else if (
-            params.Key === 'identityService.json' &&
-            params.Bucket === 'dummy_bucket'
-          ) {
-            return {
-              promise() {
-                return Promise.resolve({ Body: JSON.stringify(serviceInfo) })
-              },
-            }
-          }
-        })
+      S3Client.prototype.send = jest.fn().mockImplementation((operation) => {
+        if (operation instanceof ListObjectsCommand) {
+          return Promise.resolve({
+            Contents: [{ Key: 'identityService.json' }],
+          })
+        } else if (
+          operation.input.Key === 'identityService.json' &&
+          operation.input.Bucket === 'dummy_bucket'
+        ) {
+          return Promise.resolve({
+            Body: bodyFromString(JSON.stringify(serviceInfo)),
+          })
+        }
+      })
 
       await expect(manager.validateConfig()).resolves.toEqual({
         deprecated: [],
@@ -404,30 +382,22 @@ describe('configuration manager', () => {
         JSON.stringify(config),
       )
 
-      jest.mock('aws-sdk')
+      jest.mock('@aws-sdk/client-s3')
 
-      AWS.Service.prototype.makeUnauthenticatedRequest = jest
-        .fn()
-        .mockImplementation((operation, params) => {
-          if (operation === 'listObjects') {
-            return {
-              promise() {
-                return Promise.resolve({
-                  Contents: [{ Key: 'identityService.json' }],
-                })
-              },
-            }
-          } else if (
-            params.Key === 'identityService.json' &&
-            params.Bucket === 'dummy_bucket'
-          ) {
-            return {
-              promise() {
-                return Promise.resolve({ Body: JSON.stringify(serviceInfo) })
-              },
-            }
-          }
-        })
+      S3Client.prototype.send = jest.fn().mockImplementation((operation) => {
+        if (operation instanceof ListObjectsCommand) {
+          return Promise.resolve({
+            Contents: [{ Key: 'identityService.json' }],
+          })
+        } else if (
+          operation.input.Key === 'identityService.json' &&
+          operation.input.Bucket === 'dummy_bucket'
+        ) {
+          return Promise.resolve({
+            Body: bodyFromString(JSON.stringify(serviceInfo)),
+          })
+        }
+      })
 
       await expect(manager.validateConfig()).resolves.toEqual({
         deprecated: [
@@ -464,30 +434,22 @@ describe('configuration manager', () => {
         JSON.stringify(config),
       )
 
-      jest.mock('aws-sdk')
+      jest.mock('@aws-sdk/client-s3')
 
-      AWS.Service.prototype.makeUnauthenticatedRequest = jest
-        .fn()
-        .mockImplementation((operation, params) => {
-          if (operation === 'listObjects') {
-            return {
-              promise() {
-                return Promise.resolve({
-                  Contents: [{ Key: 'identityService.json' }],
-                })
-              },
-            }
-          } else if (
-            params.Key === 'identityService.json' &&
-            params.Bucket === 'dummy_bucket'
-          ) {
-            return {
-              promise() {
-                return Promise.resolve({ Body: JSON.stringify(serviceInfo) })
-              },
-            }
-          }
-        })
+      S3Client.prototype.send = jest.fn().mockImplementation((operation) => {
+        if (operation instanceof ListObjectsCommand) {
+          return Promise.resolve({
+            Contents: [{ Key: 'identityService.json' }],
+          })
+        } else if (
+          operation.input.Key === 'identityService.json' &&
+          operation.input.Bucket === 'dummy_bucket'
+        ) {
+          return Promise.resolve({
+            Body: bodyFromString(JSON.stringify(serviceInfo)),
+          })
+        }
+      })
 
       await expect(manager.validateConfig()).resolves.toEqual({
         deprecated: [

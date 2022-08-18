@@ -1,9 +1,9 @@
 .cache
 config
 docs/
-lib
-test-lib
-node_modules
+lib/
+cjs/
+node_modules/
 src/gen
 scratch
 yarn-error.log

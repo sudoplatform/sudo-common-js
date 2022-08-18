@@ -6,13 +6,19 @@
 import { fold, left } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as t from 'io-ts'
-import S3 from 'aws-sdk/clients/s3'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 import {
   ConfigurationNotSetError,
   DecodeError,
   ConfigurationSetNotFoundError,
+  FatalError,
 } from '../errors/error'
+import {
+  S3Client,
+  ListObjectsCommand,
+  GetObjectCommand,
+} from '@aws-sdk/client-s3'
+import { bodyToString } from '../utils/stream'
 
 /**
  * Service compatibility information.
@@ -203,17 +209,21 @@ export class DefaultConfigurationManager implements ConfigurationManager {
       return { incompatible: [], deprecated: [] }
     }
 
-    const s3Client = new S3({ region: region })
+    const s3Client = new S3Client({
+      region: region,
+      // We want these request to be unauthenticated
+      // so we provide a no-op signer for the requests
+      signer: { sign: (request: any) => Promise.resolve(request) },
+    })
 
     const incompatible: ServiceCompatibilityInfo[] = []
     const deprecated: ServiceCompatibilityInfo[] = []
 
-    const objects = await s3Client
-      .makeUnauthenticatedRequest('listObjects', {
-        Bucket: bucket,
-      })
-      .promise()
+    const listObjectsCommand = new ListObjectsCommand({
+      Bucket: bucket,
+    })
 
+    const objects = await s3Client.send(listObjectsCommand)
     if (!objects.Contents?.length) {
       return { incompatible: [], deprecated: [] }
     }
@@ -228,24 +238,15 @@ export class DefaultConfigurationManager implements ConfigurationManager {
     )
 
     for (const key of keysToFetch) {
-      const object = await s3Client
-        .makeUnauthenticatedRequest('getObject', {
-          Key: key,
-          Bucket: bucket,
-        })
-        .promise()
-
-      let body: string
-
-      if (typeof object.Body === 'string') {
-        body = object.Body
-      } else if (ArrayBuffer.isView(object.Body)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        body = new TextDecoder().decode(object.Body)
-      } else {
-        continue
+      const getObject = new GetObjectCommand({
+        Key: key,
+        Bucket: bucket,
+      })
+      const object = await s3Client.send(getObject)
+      if (!object.Body) {
+        throw new FatalError('No S3 object body')
       }
-
+      const body = await bodyToString(object.Body)
       const json = JSON.parse(body)
       const serviceName = key.replace('.json', '')
       const serviceInfo: any = json[serviceName]
