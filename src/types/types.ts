@@ -50,8 +50,7 @@ export enum EncryptionAlgorithm {
   RsaOaepSha1 = 'RSA/OAEPWithSHA-1',
 }
 
-export type Subset<T, S> = Pick<S, Extract<keyof T, keyof S>> &
-  Partial<Record<Exclude<keyof T, keyof S>, never>>
+export type Subset<T, S> = Pick<T, keyof T & keyof S>
 
 /**
  * Status of the list operation result.
