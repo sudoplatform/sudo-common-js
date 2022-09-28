@@ -35,7 +35,7 @@ class StringReadableStreamDefaultReader
 
   public constructor(public readonly s: string) {}
 
-  read(): Promise<ReadableStreamDefaultReadResult<any>> {
+  read(): Promise<ReadableStreamReadResult<any>> {
     if (!this.done) {
       this.close()
       return Promise.resolve({ value: Buffer.from(this.s), done: false })

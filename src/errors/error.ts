@@ -1,8 +1,11 @@
 import { GraphQLError } from 'graphql'
 import { ApolloError } from 'apollo-client'
+import { JsonValue } from '../types/types'
+import { isJsonRecord } from '../utils/json'
 
 export type AppSyncError = GraphQLError & {
   errorType?: string | null
+  errorInfo?: unknown
 }
 export type AppSyncNetworkError = Error & {
   networkError: Error & {
@@ -20,8 +23,12 @@ export function isAppSyncNetworkError(u: Error): u is AppSyncNetworkError {
  * the client.
  */
 export class UnknownGraphQLError extends Error {
+  public readonly errorType?: string
+  public readonly errorInfo?: Record<string, JsonValue>
+
   constructor(cause: unknown) {
     const maybeAppSyncError = cause as AppSyncError
+
     let message: string
     if (maybeAppSyncError?.errorType) {
       message = `type: ${maybeAppSyncError.errorType}, message: ${maybeAppSyncError.message}`
@@ -35,6 +42,10 @@ export class UnknownGraphQLError extends Error {
     super(message)
 
     this.name = 'UnknownGraphQLError'
+    this.errorType = maybeAppSyncError?.errorType ?? undefined
+    if (isJsonRecord(maybeAppSyncError?.errorInfo)) {
+      this.errorInfo = maybeAppSyncError.errorInfo
+    }
   }
 }
 
@@ -265,7 +276,7 @@ export class RequestFailedError extends Error {
 
 /**
  * An unexpected error was encountered. This may result from programmatic error
- * and is unlikley to be user recoverable.
+ * and is unlikely to be user recoverable.
  */
 export class FatalError extends Error {
   constructor(message: string) {
@@ -426,7 +437,7 @@ export class UnrecognizedAlgorithmError extends Error {
  * @returns The mapped error
  */
 export function mapGraphQLToClientError(
-  error: Pick<AppSyncError, 'errorType' | 'message'>,
+  error: Pick<AppSyncError, 'errorInfo' | 'errorType' | 'message'>,
 ): Error {
   switch (error.errorType) {
     case 'sudoplatform.AccountLockedError':

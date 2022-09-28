@@ -126,3 +126,15 @@ export type ListOperationResult<T, S extends Subset<S, T> = T> =
   | ListOperationSuccessResult<T>
   | ListOperationFailureResult
   | ListOperationPartialResult<T, S>
+
+/**
+ * Representation of opaque of application defined JSON data values
+ * as used and returned by Sudo Platform SDKs.
+ */
+export type JsonValue =
+  | null
+  | boolean
+  | number
+  | string
+  | Array<JsonValue>
+  | { [key: string]: JsonValue }
