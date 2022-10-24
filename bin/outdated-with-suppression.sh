@@ -184,19 +184,19 @@ yarn outdated --json | jq -r -s -c 'map(select(.type == "table").data.body) | .[
     echo "${package_name}: current: ${current} wanted: ${wanted} latest: ${latest} [${outdated_diff_type} suppression expired]"
     new=1
   else
-    echo "${package_name}: current: ${current} wanted: ${wanted} latest: ${latest} [${outdated_diff_type} suppressed]"
+    echo "${package_name}: current: ${current} wanted: ${wanted} latest: ${latest} [${outdated_diff_type} suppressed until $(dateFromSeconds "${suppression}")]"
   fi
 done
 
 # If we're not within cadence and there are new outdated dependencies
 # then fail
-if [ -z "${within_cadence}" -a -n "${new}" ]; then
+if [ -z "${within_cadence}" ] && [ -n "${new}" ]; then
   exit 1
 fi
 
 # If there a no outdated dependencies and we're tracking last success then
 # refresh the last success timestamp.
-if [ -z "${new}" -a -n "${last}" ]; then
+if [ -z "${new}" ] && [ -n "${last}" ]; then
   mkdir -p "${last}"
   date +%s > "${last}/last_success"
 fi
