@@ -3,6 +3,7 @@ import { KeyData } from './keyData'
 import { PublicKey } from './publicKey'
 import {
   AsymmetricEncryptionOptions,
+  SignatureOptions,
   SudoCryptoProvider,
   SymmetricEncryptionOptions,
 } from './sudoCryptoProvider'
@@ -141,12 +142,14 @@ export interface SudoKeyManager {
    *
    * @param name The name of the private key to use for generation.
    * @param data The data to sign.
+   * @param options Signature options. Defaults to \{ algorithm: SignatureAlgorithm.RsaPkcs15Sha256 \}
    *
    * @returns Data signature or undefined if the private key is not found.
    */
   generateSignatureWithPrivateKey(
     name: string,
     data: ArrayBuffer,
+    options?: SignatureOptions,
   ): Promise<ArrayBuffer>
 
   /**
@@ -155,6 +158,7 @@ export interface SudoKeyManager {
    * @param name The name of the public key to use for validation.
    * @param data The data to verify
    * @param signature The signature to verify against
+   * @param options Signature options. Defaults to \{ algorithm: SignatureAlgorithm.RsaPkcs15Sha256 \}
    *
    * @returns True if the data and signature could be successfully verified
    */
@@ -162,6 +166,7 @@ export interface SudoKeyManager {
     name: string,
     data: ArrayBuffer,
     signature: ArrayBuffer,
+    options?: SignatureOptions,
   ): Promise<boolean>
 
   /**
@@ -471,19 +476,26 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
   public generateSignatureWithPrivateKey(
     name: string,
     data: ArrayBuffer,
+    options?: SignatureOptions,
   ): Promise<ArrayBuffer> {
-    return this.sudoCryptoProvider.generateSignatureWithPrivateKey(name, data)
+    return this.sudoCryptoProvider.generateSignatureWithPrivateKey(
+      name,
+      data,
+      options,
+    )
   }
 
   verifySignatureWithPublicKey(
     name: string,
     data: ArrayBuffer,
     signature: ArrayBuffer,
+    options?: SignatureOptions,
   ): Promise<boolean> {
     return this.sudoCryptoProvider.verifySignatureWithPublicKey(
       name,
       data,
       signature,
+      options,
     )
   }
 

@@ -15,7 +15,7 @@ import {
 import { PublicKey, PublicKeyFormat } from '../../src/sudoKeyManager/publicKey'
 import { SudoCryptoProvider } from '../../src/sudoKeyManager/sudoCryptoProvider'
 import { DefaultSudoKeyManager } from '../../src/sudoKeyManager/sudoKeyManager'
-import { EncryptionAlgorithm } from '../../src/types/types'
+import { EncryptionAlgorithm, SignatureAlgorithm } from '../../src/types/types'
 import { Buffer as BufferUtil } from '../../src/utils/buffer'
 
 const sudoCryptoProviderMock: SudoCryptoProvider = mock()
@@ -36,6 +36,7 @@ describe('DefaultSudoKeyManager', () => {
   const symmetricKey = BufferUtil.fromString('14A9B3C3540142A11E70ACBB1BD8969F')
   const hash = BufferUtil.fromString('hash')
   const data = BufferUtil.fromString('data')
+  const signature = BufferUtil.fromString('signature')
   const privateKey = BufferUtil.fromString('privateKey')
   const publicKey: PublicKey = {
     keyData: BufferUtil.fromString('publickey'),
@@ -1040,6 +1041,143 @@ describe('DefaultSudoKeyManager', () => {
       actualExportedKeyData.forEach((k) =>
         expect(exportedKeyData).toContainEqual(k),
       )
+    })
+  })
+
+  describe('generateSignatureWithPrivateKey', () => {
+    it('should pass arguments to crypto provider with default options', async () => {
+      when(
+        sudoCryptoProviderMock.generateSignatureWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(signature)
+
+      const name = 'key-id'
+      const actualSignature =
+        await sudoKeyManager.generateSignatureWithPrivateKey(name, data)
+      expect(actualSignature).toEqual(signature)
+
+      verify(
+        sudoCryptoProviderMock.generateSignatureWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+      const [actualName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.generateSignatureWithPrivateKey,
+      ).first()
+      expect(actualName).toEqual(name)
+      expect(actualData).toStrictEqual(data)
+      expect(actualOptions).toEqual(undefined)
+    })
+
+    it('should pass arguments to crypto provider with non-default options', async () => {
+      when(
+        sudoCryptoProviderMock.generateSignatureWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(signature)
+
+      const name = 'key-id'
+      const options = { algorithm: SignatureAlgorithm.RsaPkcs15Sha256 }
+      const actualSignature =
+        await sudoKeyManager.generateSignatureWithPrivateKey(
+          name,
+          data,
+          options,
+        )
+      expect(actualSignature).toEqual(signature)
+
+      verify(
+        sudoCryptoProviderMock.generateSignatureWithPrivateKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+      const [actualName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.generateSignatureWithPrivateKey,
+      ).first()
+      expect(actualName).toEqual(name)
+      expect(actualData).toStrictEqual(data)
+      expect(actualOptions).toEqual(options)
+    })
+  })
+
+  describe('verifySignatureWithPublicKey', () => {
+    it('should pass arguments to crypto provider with default options', async () => {
+      when(
+        sudoCryptoProviderMock.verifySignatureWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(true)
+
+      const name = 'key-id'
+      const actualVerification =
+        await sudoKeyManager.verifySignatureWithPublicKey(name, data, signature)
+      expect(actualVerification).toEqual(true)
+
+      verify(
+        sudoCryptoProviderMock.verifySignatureWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+      const [actualName, actualData, actualSignature, actualOptions] = capture(
+        sudoCryptoProviderMock.verifySignatureWithPublicKey,
+      ).first()
+      expect(actualName).toEqual(name)
+      expect(actualData).toStrictEqual(data)
+      expect(actualSignature).toStrictEqual(signature)
+      expect(actualOptions).toEqual(undefined)
+    })
+
+    it('should pass arguments to crypto provider with non-default options', async () => {
+      when(
+        sudoCryptoProviderMock.verifySignatureWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(true)
+
+      const name = 'key-id'
+      const options = { algorithm: SignatureAlgorithm.RsaPkcs15Sha256 }
+      const actualVerification =
+        await sudoKeyManager.verifySignatureWithPublicKey(
+          name,
+          data,
+          signature,
+          options,
+        )
+      expect(actualVerification).toEqual(true)
+
+      verify(
+        sudoCryptoProviderMock.verifySignatureWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+      const [actualName, actualData, actualSignature, actualOptions] = capture(
+        sudoCryptoProviderMock.verifySignatureWithPublicKey,
+      ).first()
+      expect(actualName).toEqual(name)
+      expect(actualData).toStrictEqual(data)
+      expect(actualSignature).toStrictEqual(signature)
+      expect(actualOptions).toEqual(options)
     })
   })
 })
