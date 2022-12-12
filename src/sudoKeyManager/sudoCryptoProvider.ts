@@ -1,4 +1,4 @@
-import { EncryptionAlgorithm } from '../types/types'
+import { EncryptionAlgorithm, SignatureAlgorithm } from '../types/types'
 import { KeyData } from './keyData'
 import { PublicKey } from './publicKey'
 
@@ -28,6 +28,16 @@ export interface AsymmetricEncryptionOptions {
   // Algorithm used to encrypt data.
   // Defaulted to RSA/OAEPSHA-1
   algorithm?: EncryptionAlgorithm
+}
+
+/**
+ * Optional arguments for private key signature generation
+ * and verification
+ */
+export interface SignatureOptions {
+  // Algorithm used to sign data.
+  // Defaults to RSA/SSAPKCS15withSHA-256
+  algorithm?: SignatureAlgorithm
 }
 
 /**
@@ -143,6 +153,7 @@ export interface SudoCryptoProvider {
    *
    * @param name The name of the private key to use for generation.
    * @param data The data to sign.
+   * @param options Signature options. Defaults to \{ algorithm: SignatureAlgorithm.RsaPkcs15Sha256 \}
    *
    * @returns Data signature
    *
@@ -151,6 +162,7 @@ export interface SudoCryptoProvider {
   generateSignatureWithPrivateKey(
     name: string,
     data: ArrayBuffer,
+    options?: SignatureOptions,
   ): Promise<ArrayBuffer>
 
   /**
@@ -159,6 +171,7 @@ export interface SudoCryptoProvider {
    * @param name The name of the public key to use for validation.
    * @param data The data to verify
    * @param signature The signature to verify against
+   * @param options Signature options. Defaults to \{ algorithm: SignatureAlgorithm.RsaPkcs15Sha256 \}
    *
    * @returns True if the data and signature could be successfully verified
    */
@@ -166,6 +179,7 @@ export interface SudoCryptoProvider {
     name: string,
     data: ArrayBuffer,
     signature: ArrayBuffer,
+    options?: SignatureOptions,
   ): Promise<boolean>
 
   /**

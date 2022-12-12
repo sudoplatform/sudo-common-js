@@ -50,6 +50,15 @@ export enum EncryptionAlgorithm {
   RsaOaepSha1 = 'RSA/OAEPWithSHA-1',
 }
 
+/**
+ * Signature algorithm names that are
+ * supported by the Sudo Platform and can be used
+ * between devices.
+ */
+export enum SignatureAlgorithm {
+  RsaPkcs15Sha256 = 'RSA/SSAPKCS15withSHA-256',
+}
+
 export type Subset<T, S> = Pick<T, keyof T & keyof S>
 
 /**
