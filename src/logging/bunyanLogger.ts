@@ -4,7 +4,7 @@ import * as t from 'io-ts'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { fold } from 'fp-ts/lib/Either'
 
-const Level = t.union([
+export const Level = t.union([
   t.literal('trace'),
   t.literal('debug'),
   t.literal('info'),
@@ -13,7 +13,7 @@ const Level = t.union([
   t.literal('fatal'),
 ])
 
-type Level = t.TypeOf<typeof Level>
+export type Level = t.TypeOf<typeof Level>
 
 export function getLogLevel(level: string | undefined): Level | undefined {
   if (!level) {

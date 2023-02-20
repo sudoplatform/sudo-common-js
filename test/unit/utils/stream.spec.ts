@@ -97,7 +97,7 @@ describe('stream utils test suite', () => {
 
   describe('isBodyReadableStream', () => {
     it('should return true for a ReadableStream', () => {
-      expect(isBodyReadableStream(toReadableStream(s))).toEqual(true)
+      expect(isBodyReadableStream(toReadableStream(s) as any)).toEqual(true)
     })
 
     it('should return false for a Readable', () => {
@@ -111,7 +111,7 @@ describe('stream utils test suite', () => {
 
   describe('isBodyReadable', () => {
     it('should return false for a ReadableStream', () => {
-      expect(isBodyReadable(toReadableStream(s))).toEqual(false)
+      expect(isBodyReadable(toReadableStream(s) as any)).toEqual(false)
     })
 
     it('should return true for a Readable', () => {
@@ -125,7 +125,7 @@ describe('stream utils test suite', () => {
 
   describe('isBodyBlob', () => {
     it('should return false for a ReadableStream', () => {
-      expect(isBodyBlob(toReadableStream(s))).toEqual(false)
+      expect(isBodyBlob(toReadableStream(s) as any)).toEqual(false)
     })
 
     it('should return true for a Readable', () => {
@@ -139,7 +139,7 @@ describe('stream utils test suite', () => {
 
   describe('bodyToString', () => {
     it('should read a ReadableString', async () => {
-      await expect(bodyToString(toReadableStream(s))).resolves.toEqual(s)
+      await expect(bodyToString(toReadableStream(s) as any)).resolves.toEqual(s)
     })
 
     it('should read a Readable', async () => {
