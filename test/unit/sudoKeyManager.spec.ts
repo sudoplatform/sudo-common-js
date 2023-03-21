@@ -17,6 +17,7 @@ import { SudoCryptoProvider } from '../../src/sudoKeyManager/sudoCryptoProvider'
 import { DefaultSudoKeyManager } from '../../src/sudoKeyManager/sudoKeyManager'
 import { EncryptionAlgorithm, SignatureAlgorithm } from '../../src/types/types'
 import { Buffer as BufferUtil } from '../../src/utils/buffer'
+import * as crypto from 'crypto'
 
 const sudoCryptoProviderMock: SudoCryptoProvider = mock()
 
@@ -1178,6 +1179,240 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualData).toStrictEqual(data)
       expect(actualSignature).toStrictEqual(signature)
       expect(actualOptions).toEqual(options)
+    })
+
+    it('should export SPKI as PEM encoded SPKI', async () => {
+      const keyPair = await crypto.webcrypto.subtle.generateKey(
+        {
+          name: 'RSA-OAEP',
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: 'SHA-256',
+        },
+        true,
+        ['encrypt', 'decrypt'],
+      )
+      const exported = await crypto.webcrypto.subtle.exportKey(
+        'spki',
+        keyPair.publicKey,
+      )
+
+      when(sudoCryptoProviderMock.getPublicKey('dummy_id')).thenResolve({
+        keyData: exported,
+        keyFormat: PublicKeyFormat.SPKI,
+      })
+
+      const publicKeyAsPEM = await sudoKeyManager.exportPublicKeyAsPEM(
+        'dummy_id',
+        PublicKeyFormat.SPKI,
+      )
+
+      if (!publicKeyAsPEM) {
+        fail('Public key not found')
+      }
+
+      expect(
+        publicKeyAsPEM?.includes('-----BEGIN PUBLIC KEY-----'),
+      ).toBeTruthy()
+      expect(publicKeyAsPEM?.includes('-----END PUBLIC KEY-----')).toBeTruthy()
+
+      const encrypted = crypto.publicEncrypt(
+        {
+          key: publicKeyAsPEM,
+          padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+          oaepHash: 'sha256',
+        },
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const decrypted = await crypto.webcrypto.subtle.decrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        keyPair.privateKey,
+        encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+    })
+
+    it('should export SPKI as PEM encoded RSAPublicKey', async () => {
+      const keyPair = await crypto.webcrypto.subtle.generateKey(
+        {
+          name: 'RSA-OAEP',
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: 'SHA-256',
+        },
+        true,
+        ['encrypt', 'decrypt'],
+      )
+      const exported = await crypto.webcrypto.subtle.exportKey(
+        'spki',
+        keyPair.publicKey,
+      )
+
+      when(sudoCryptoProviderMock.getPublicKey('dummy_id')).thenResolve({
+        keyData: exported,
+        keyFormat: PublicKeyFormat.SPKI,
+      })
+
+      const publicKeyAsPEM = await sudoKeyManager.exportPublicKeyAsPEM(
+        'dummy_id',
+        PublicKeyFormat.RSAPublicKey,
+      )
+
+      if (!publicKeyAsPEM) {
+        fail('Public key not found')
+      }
+
+      expect(
+        publicKeyAsPEM?.includes('-----BEGIN RSA PUBLIC KEY-----'),
+      ).toBeTruthy()
+      expect(
+        publicKeyAsPEM?.includes('-----END RSA PUBLIC KEY-----'),
+      ).toBeTruthy()
+
+      const encrypted = crypto.publicEncrypt(
+        {
+          key: publicKeyAsPEM,
+          padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+          oaepHash: 'sha256',
+        },
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const decrypted = await crypto.webcrypto.subtle.decrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        keyPair.privateKey,
+        encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+    })
+
+    it('should export RSAPublicKey as PEM encoded RSAPublicKey', async () => {
+      const keyPair = crypto.generateKeyPairSync('rsa', {
+        modulusLength: 2048,
+        publicKeyEncoding: {
+          type: 'pkcs1',
+          format: 'der',
+        },
+        privateKeyEncoding: {
+          type: 'pkcs8',
+          format: 'der',
+        },
+      })
+
+      when(sudoCryptoProviderMock.getPublicKey('dummy_id')).thenResolve({
+        keyData: keyPair.publicKey,
+        keyFormat: PublicKeyFormat.RSAPublicKey,
+      })
+
+      const publicKeyAsPEM = await sudoKeyManager.exportPublicKeyAsPEM(
+        'dummy_id',
+        PublicKeyFormat.RSAPublicKey,
+      )
+
+      if (!publicKeyAsPEM) {
+        fail('Public key not found')
+      }
+
+      expect(
+        publicKeyAsPEM?.includes('-----BEGIN RSA PUBLIC KEY-----'),
+      ).toBeTruthy()
+      expect(
+        publicKeyAsPEM?.includes('-----END RSA PUBLIC KEY-----'),
+      ).toBeTruthy()
+
+      const encrypted = crypto.publicEncrypt(
+        {
+          key: publicKeyAsPEM,
+          padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+          oaepHash: 'sha256',
+        },
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const privateKey = await crypto.webcrypto.subtle.importKey(
+        'pkcs8',
+        keyPair.privateKey,
+        { name: 'RSA-OAEP', hash: 'SHA-256' },
+        true,
+        ['decrypt'],
+      )
+
+      const decrypted = await crypto.webcrypto.subtle.decrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        privateKey,
+        encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+    })
+
+    it('should export RSAPublicKey as PEM encoded SPKI', async () => {
+      const keyPair = crypto.generateKeyPairSync('rsa', {
+        modulusLength: 2048,
+        publicKeyEncoding: {
+          type: 'pkcs1',
+          format: 'der',
+        },
+        privateKeyEncoding: {
+          type: 'pkcs8',
+          format: 'der',
+        },
+      })
+
+      when(sudoCryptoProviderMock.getPublicKey('dummy_id')).thenResolve({
+        keyData: keyPair.publicKey,
+        keyFormat: PublicKeyFormat.RSAPublicKey,
+      })
+
+      const publicKeyAsPEM = await sudoKeyManager.exportPublicKeyAsPEM(
+        'dummy_id',
+        PublicKeyFormat.SPKI,
+      )
+
+      if (!publicKeyAsPEM) {
+        fail('Public key not found')
+      }
+
+      expect(
+        publicKeyAsPEM?.includes('-----BEGIN PUBLIC KEY-----'),
+      ).toBeTruthy()
+      expect(publicKeyAsPEM?.includes('-----END PUBLIC KEY-----')).toBeTruthy()
+
+      const encrypted = crypto.publicEncrypt(
+        {
+          key: publicKeyAsPEM,
+          padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+          oaepHash: 'sha256',
+        },
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const privateKey = await crypto.webcrypto.subtle.importKey(
+        'pkcs8',
+        keyPair.privateKey,
+        { name: 'RSA-OAEP', hash: 'SHA-256' },
+        true,
+        ['decrypt'],
+      )
+
+      const decrypted = await crypto.webcrypto.subtle.decrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        privateKey,
+        encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
     })
   })
 })

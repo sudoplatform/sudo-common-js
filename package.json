@@ -54,11 +54,13 @@
     "json5": "^1.0.2"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.272.0",
+    "@aws-sdk/client-s3": "3.295.0",
     "apollo-client": "^2.6.10",
+    "asn1js": "^3.0.5",
     "browser-bunyan": "^1.8.0",
     "fflate": "^0.7.4",
     "graphql": "^15.8.0",
+    "pkijs": "^3.0.14",
     "tslib": "^2.5.0"
   },
   "peerDependencies": {
@@ -66,13 +68,13 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.12",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0",
+    "@types/node": "^16.18.18",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
     "aws-sdk-mock": "^5.8.0",
     "concurrently": "^7.6.0",
-    "eslint": "^8.34.0",
-    "eslint-config-prettier": "^8.6.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-tree-shaking": "^1.10.0",
@@ -84,21 +86,23 @@
     "jest": "^27.5.1",
     "monocle-ts": "^2.3.13",
     "newtype-ts": "^0.3.5",
-    "prettier": "^2.8.4",
-    "rimraf": "^3.0.2",
+    "prettier": "^2.8.5",
+    "rimraf": "^4.4.0",
     "ts-jest": "^27.1.5",
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.9.1",
-    "typedoc": "^0.23.25",
+    "typedoc": "^0.23.28",
     "typescript": "^4.9.5"
   },
   "outdatedSuppressions": {
     "major": {
-      "@types/jest": 1669184645,
-      "@types/node": 1669184645,
-      "graphql": 1669184645,
-      "jest": 1669184645,
-      "ts-jest": 1669184646
+      "@types/jest": 1681893993,
+      "@types/node": 1681893993,
+      "graphql": 1681893994,
+      "jest": 1681893994,
+      "ts-jest": 1681893994,
+      "typescript": 1681893994,
+      "json5": 1681893994
     }
   }
 }

@@ -1,12 +1,23 @@
 import { Buffer as BufferUtil } from '../utils/buffer'
 import { KeyData } from './keyData'
-import { PublicKey } from './publicKey'
+import { PublicKey, PublicKeyFormat } from './publicKey'
 import {
   AsymmetricEncryptionOptions,
   SignatureOptions,
   SudoCryptoProvider,
   SymmetricEncryptionOptions,
 } from './sudoCryptoProvider'
+import * as pkijs from 'pkijs'
+import * as asn1js from 'asn1js'
+import { Base64 } from '../utils/base64'
+import { IllegalArgumentError } from '../errors/error'
+
+/**
+ * ASN.1 OIDs.
+ */
+enum OID {
+  rsaEncryption = '1.2.840.113549.1.1.1',
+}
 
 /**
  * Interface for a set of methods for securely storing keys and performing
@@ -129,6 +140,20 @@ export interface SudoKeyManager {
    * @returns The public key or undefined if the key was not found.
    */
   getPublicKey(name: string): Promise<PublicKey | undefined>
+
+  /**
+   * Exports the public key from the secure store as PEM encoded
+   * string.
+   *
+   * @param name The name of the public key.
+   * @param format The key format to use.
+   *
+   * @returns The public key or undefined if the key was not found.
+   */
+  exportPublicKeyAsPEM(
+    name: string,
+    format: PublicKeyFormat,
+  ): Promise<string | undefined>
 
   /**
    * Deletes a key pair from the secure store.
@@ -469,6 +494,44 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     return this.sudoCryptoProvider.getPublicKey(name)
   }
 
+  public async exportPublicKeyAsPEM(
+    name: string,
+    format: PublicKeyFormat,
+  ): Promise<string | undefined> {
+    const publicKey = await this.getPublicKey(name)
+
+    if (!publicKey) {
+      return undefined
+    }
+
+    if (publicKey.keyFormat === PublicKeyFormat.RSAPublicKey) {
+      if (format === PublicKeyFormat.RSAPublicKey) {
+        return this.publicKeyToPEM(publicKey.keyData, format)
+      } else {
+        // Convert RSAPublicKey (RFC3447) to SPKI (RFC5280).
+        const spki = new pkijs.PublicKeyInfo()
+        spki.algorithm = new pkijs.AlgorithmIdentifier({
+          algorithmId: OID.rsaEncryption,
+          algorithmParams: new asn1js.Null(),
+        })
+        spki.subjectPublicKey = new asn1js.BitString({
+          valueHex: publicKey.keyData,
+        })
+
+        return this.publicKeyToPEM(spki.toSchema().toBER(), format)
+      }
+    } else {
+      if (format === PublicKeyFormat.SPKI) {
+        return this.publicKeyToPEM(publicKey.keyData, format)
+      } else {
+        // Convert SPKI (RFC5280) to RSAPublicKey (RFC3447).
+        const publicKeyInfo = pkijs.PublicKeyInfo.fromBER(publicKey.keyData)
+        const keyData = publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
+        return this.publicKeyToPEM(keyData, format)
+      }
+    }
+  }
+
   public deleteKeyPair(name: string): Promise<void> {
     return this.sudoCryptoProvider.deleteKeyPair(name)
   }
@@ -617,5 +680,23 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
 
   public exportKeys(): Promise<KeyData[]> {
     return this.sudoCryptoProvider.exportKeys()
+  }
+
+  private publicKeyToPEM(key: ArrayBuffer, format: PublicKeyFormat): string {
+    const encoded = Base64.encode(key)
+    const lines = encoded.match(/.{1,64}/g)
+    if (!lines) {
+      throw new IllegalArgumentError()
+    }
+    const formatted = lines.join('\n')
+    return (
+      '-----BEGIN ' +
+      (format === PublicKeyFormat.RSAPublicKey ? 'RSA ' : '') +
+      'PUBLIC KEY-----\n' +
+      formatted +
+      '\n-----END ' +
+      (format === PublicKeyFormat.RSAPublicKey ? 'RSA ' : '') +
+      'PUBLIC KEY-----'
+    )
   }
 }
