@@ -28,7 +28,7 @@ cryptographic operations.</p>
 <ul class="tsd-hierarchy">
 <li><a href="../classes/DefaultSudoKeyManager.html" class="tsd-signature-type" data-tsd-kind="Class">DefaultSudoKeyManager</a></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:26</li></ul></aside>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:42</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -69,6 +69,7 @@ cryptographic operations.</p>
 <a href="SudoKeyManager.html#getPrivateKey" class="tsd-index-link tsd-kind-method tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Private<wbr/>Key</span></a>
 <a href="SudoKeyManager.html#getPublicKey" class="tsd-index-link tsd-kind-method tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Public<wbr/>Key</span></a>
 <a href="SudoKeyManager.html#getSymmetricKey" class="tsd-index-link tsd-kind-method tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Symmetric<wbr/>Key</span></a>
+<a href="SudoKeyManager.html#importPublicKeyFromPEM" class="tsd-index-link tsd-kind-method tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>import<wbr/>Public<wbr/>Key<wbr/>FromPEM</span></a>
 <a href="SudoKeyManager.html#removeAllKeys" class="tsd-index-link tsd-kind-method tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>remove<wbr/>All<wbr/>Keys</span></a>
 <a href="SudoKeyManager.html#updatePassword" class="tsd-index-link tsd-kind-method tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>update<wbr/>Password</span></a>
 <a href="SudoKeyManager.html#verifySignatureWithPublicKey" class="tsd-index-link tsd-kind-method tsd-parent-kind-interface"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>verify<wbr/>Signature<wbr/>With<wbr/>Public<wbr/>Key</span></a>
@@ -79,12 +80,12 @@ cryptographic operations.</p>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>namespace</span><a href="#namespace" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <div class="tsd-signature">namespace<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:27</li></ul></aside></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:43</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface"><a id="serviceName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>service<wbr/>Name</span><a href="#serviceName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">service<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:28</li></ul></aside></section></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:44</li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="addPassword" class="tsd-anchor"></a>
@@ -103,7 +104,7 @@ cryptographic operations.</p>
 <h5>name: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:35</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:51</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="addPrivateKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Private<wbr/>Key</span><a href="#addPrivateKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -124,7 +125,7 @@ cryptographic operations.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:98</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:114</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="addPublicKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Public<wbr/>Key</span><a href="#addPublicKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -146,7 +147,7 @@ cryptographic operations.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:124</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:140</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="addSymmetricKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Symmetric<wbr/>Key</span><a href="#addSymmetricKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -167,7 +168,7 @@ cryptographic operations.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:67</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:83</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="decryptWithPrivateKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>decrypt<wbr/>With<wbr/>Private<wbr/>Key</span><a href="#decryptWithPrivateKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -194,7 +195,7 @@ cryptographic operations.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="AsymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AsymmetricEncryptionOptions</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:354</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:378</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="decryptWithSymmetricKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>decrypt<wbr/>With<wbr/>Symmetric<wbr/>Key</span><a href="#decryptWithSymmetricKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -221,7 +222,7 @@ cryptographic operations.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:241</li></ul></aside></li>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:265</li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="decryptWithSymmetricKey.decryptWithSymmetricKey-2">decrypt<wbr/>With<wbr/>Symmetric<wbr/>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, options<span class="tsd-signature-symbol">?: </span><a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span><a href="#decryptWithSymmetricKey.decryptWithSymmetricKey-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Decrypt the given data with the given symmetric key</p>
@@ -243,7 +244,7 @@ cryptographic operations.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:257</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:281</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="decryptWithSymmetricKeyName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>decrypt<wbr/>With<wbr/>Symmetric<wbr/>Key<wbr/>Name</span><a href="#decryptWithSymmetricKeyName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -272,7 +273,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:306</li></ul></aside></li>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:330</li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="decryptWithSymmetricKeyName.decryptWithSymmetricKeyName-2">decrypt<wbr/>With<wbr/>Symmetric<wbr/>Key<wbr/>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, options<span class="tsd-signature-symbol">?: </span><a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span><a href="#decryptWithSymmetricKeyName.decryptWithSymmetricKeyName-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Decrypt the given data with the specified symmetric key stored in the secure store.</p>
@@ -296,7 +297,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:322</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:346</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="deleteKeyPair" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>delete<wbr/>Key<wbr/>Pair</span><a href="#deleteKeyPair" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -313,7 +314,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:163</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:187</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="deletePassword" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>delete<wbr/>Password</span><a href="#deletePassword" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -328,7 +329,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 <h5>name: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:51</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:67</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="deletePublicKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>delete<wbr/>Public<wbr/>Key</span><a href="#deletePublicKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -345,7 +346,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:131</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:147</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="deleteSymmetricKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>delete<wbr/>Symmetric<wbr/>Key</span><a href="#deleteSymmetricKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -362,7 +363,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:90</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:106</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="doesPrivateKeyExist" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>does<wbr/>Private<wbr/>Key<wbr/>Exist</span><a href="#doesPrivateKeyExist" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -379,7 +380,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:114</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:130</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="doesSymmetricKeyExist" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>does<wbr/>Symmetric<wbr/>Key<wbr/>Exist</span><a href="#doesSymmetricKeyExist" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -396,7 +397,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:83</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:99</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="encryptWithPublicKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>encrypt<wbr/>With<wbr/>Public<wbr/>Key</span><a href="#encryptWithPublicKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -423,7 +424,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="AsymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AsymmetricEncryptionOptions</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:338</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:362</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="encryptWithSymmetricKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>encrypt<wbr/>With<wbr/>Symmetric<wbr/>Key</span><a href="#encryptWithSymmetricKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -450,7 +451,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:208</li></ul></aside></li>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:232</li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="encryptWithSymmetricKey.encryptWithSymmetricKey-2">encrypt<wbr/>With<wbr/>Symmetric<wbr/>Key<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, options<span class="tsd-signature-symbol">?: </span><a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span><a href="#encryptWithSymmetricKey.encryptWithSymmetricKey-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Encrypts the given data with the specified key</p>
@@ -472,7 +473,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:224</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:248</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="encryptWithSymmetricKeyName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>encrypt<wbr/>With<wbr/>Symmetric<wbr/>Key<wbr/>Name</span><a href="#encryptWithSymmetricKeyName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -501,7 +502,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:274</li></ul></aside></li>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:298</li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="encryptWithSymmetricKeyName.encryptWithSymmetricKeyName-2">encrypt<wbr/>With<wbr/>Symmetric<wbr/>Key<wbr/>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayBuffer</span>, options<span class="tsd-signature-symbol">?: </span><a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span><a href="#encryptWithSymmetricKeyName.encryptWithSymmetricKeyName-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Decrypt the given data with the specified symmetric key stored in the secure store.</p>
@@ -525,7 +526,7 @@ Decrypt the given data with the specified symmetric key stored in the secure sto
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="SymmetricEncryptionOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">SymmetricEncryptionOptions</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:290</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:314</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="exportKeys" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>export<wbr/>Keys</span><a href="#exportKeys" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -536,7 +537,7 @@ ready for archive.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="KeyData.html" class="tsd-signature-type" data-tsd-kind="Interface">KeyData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:418</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:442</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="exportPublicKeyAsPEM" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>export<wbr/>Public<wbr/>Key<wbr/>AsPEM</span><a href="#exportPublicKeyAsPEM" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -560,7 +561,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:153</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:169</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="generateHash" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>generate<wbr/>Hash</span><a href="#generateHash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -577,7 +578,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:402</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:426</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="generateKeyPair" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>generate<wbr/>Key<wbr/>Pair</span><a href="#generateKeyPair" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -595,7 +596,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:412</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:436</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="generateRandomData" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>generate<wbr/>Random<wbr/>Data</span><a href="#generateRandomData" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -614,7 +615,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:395</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:419</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="generateSignatureWithPrivateKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>generate<wbr/>Signature<wbr/>With<wbr/>Private<wbr/>Key</span><a href="#generateSignatureWithPrivateKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -641,7 +642,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:174</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:198</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="generateSymmetricKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>generate<wbr/>Symmetric<wbr/>Key</span><a href="#generateSymmetricKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -658,7 +659,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:370</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:394</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="generateSymmetricKeyFromPassword" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>generate<wbr/>Symmetric<wbr/>Key<wbr/>From<wbr/>Password</span><a href="#generateSymmetricKeyFromPassword" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -686,7 +687,7 @@ string.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> rounds<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:382</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:406</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="getPassword" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Password</span><a href="#getPassword" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -705,7 +706,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:44</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:60</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="getPrivateKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Private<wbr/>Key</span><a href="#getPrivateKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -724,7 +725,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:107</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:123</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="getPublicKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Public<wbr/>Key</span><a href="#getPublicKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -744,7 +745,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="PublicKey.html" class="tsd-signature-type" data-tsd-kind="Interface">PublicKey</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:142</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:158</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="getSymmetricKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Symmetric<wbr/>Key</span><a href="#getSymmetricKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -763,7 +764,28 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:76</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:92</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="importPublicKeyFromPEM" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>import<wbr/>Public<wbr/>Key<wbr/>FromPEM</span><a href="#importPublicKeyFromPEM" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+<li class="tsd-signature tsd-anchor-link" id="importPublicKeyFromPEM.importPublicKeyFromPEM-1">import<wbr/>Public<wbr/>Key<wbr/>FromPEM<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, publicKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#importPublicKeyFromPEM.importPublicKeyFromPEM-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Imports a PEM encoded public key into the secure store.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>name: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The name of the public key.</p>
+</div></li>
+<li>
+<h5>publicKey: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The public key to import.</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:180</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="removeAllKeys" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove<wbr/>All<wbr/>Keys</span><a href="#removeAllKeys" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -773,7 +795,7 @@ string.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:363</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:387</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="updatePassword" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Password</span><a href="#updatePassword" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -790,7 +812,7 @@ string.</p>
 <h5>name: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:59</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:75</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface"><a id="verifySignatureWithPublicKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>verify<wbr/>Signature<wbr/>With<wbr/>Public<wbr/>Key</span><a href="#verifySignatureWithPublicKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -821,7 +843,7 @@ string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:190</li></ul></aside></li></ul></section></section></div>
+<li>Defined in src/sudoKeyManager/sudoKeyManager.ts:214</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -876,6 +898,7 @@ string.</p>
 <li class="tsd-kind-method tsd-parent-kind-interface"><a href="SudoKeyManager.html#getPrivateKey" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Private<wbr/>Key</a></li>
 <li class="tsd-kind-method tsd-parent-kind-interface"><a href="SudoKeyManager.html#getPublicKey" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Public<wbr/>Key</a></li>
 <li class="tsd-kind-method tsd-parent-kind-interface"><a href="SudoKeyManager.html#getSymmetricKey" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Symmetric<wbr/>Key</a></li>
+<li class="tsd-kind-method tsd-parent-kind-interface"><a href="SudoKeyManager.html#importPublicKeyFromPEM" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>import<wbr/>Public<wbr/>Key<wbr/>FromPEM</a></li>
 <li class="tsd-kind-method tsd-parent-kind-interface"><a href="SudoKeyManager.html#removeAllKeys" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>remove<wbr/>All<wbr/>Keys</a></li>
 <li class="tsd-kind-method tsd-parent-kind-interface"><a href="SudoKeyManager.html#updatePassword" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>update<wbr/>Password</a></li>
 <li class="tsd-kind-method tsd-parent-kind-interface"><a href="SudoKeyManager.html#verifySignatureWithPublicKey" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>verify<wbr/>Signature<wbr/>With<wbr/>Public<wbr/>Key</a></li></ul></li></ul></nav></div></div>

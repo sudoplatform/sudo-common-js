@@ -1414,5 +1414,115 @@ describe('DefaultSudoKeyManager', () => {
 
       expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
     })
+
+    it('should import PEM encoded SPKI successfully', async () => {
+      const keyPair = crypto.generateKeyPairSync('rsa', {
+        modulusLength: 2048,
+        publicKeyEncoding: {
+          type: 'spki',
+          format: 'pem',
+        },
+        privateKeyEncoding: {
+          type: 'pkcs8',
+          format: 'der',
+        },
+      })
+
+      await sudoKeyManager.importPublicKeyFromPEM('dummy_id', keyPair.publicKey)
+
+      verify(sudoCryptoProviderMock.addPublicKey(anything(), anything())).once()
+
+      const [key, name] = capture(sudoCryptoProviderMock.addPublicKey).first()
+      expect(name).toBe('dummy_id')
+
+      const privateKey = await crypto.webcrypto.subtle.importKey(
+        'pkcs8',
+        keyPair.privateKey,
+        { name: 'RSA-OAEP', hash: 'SHA-256' },
+        true,
+        ['decrypt'],
+      )
+
+      const publicKey = await crypto.webcrypto.subtle.importKey(
+        'spki',
+        key,
+        { name: 'RSA-OAEP', hash: 'SHA-256' },
+        true,
+        ['encrypt'],
+      )
+
+      const encrypted = await crypto.webcrypto.subtle.encrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        publicKey,
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const decrypted = await crypto.webcrypto.subtle.decrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        privateKey,
+        encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+    })
+
+    it('should import PEM encoded RSAPublicKey successfully', async () => {
+      const keyPair = crypto.generateKeyPairSync('rsa', {
+        modulusLength: 2048,
+        publicKeyEncoding: {
+          type: 'pkcs1',
+          format: 'pem',
+        },
+        privateKeyEncoding: {
+          type: 'pkcs8',
+          format: 'der',
+        },
+      })
+
+      await sudoKeyManager.importPublicKeyFromPEM('dummy_id', keyPair.publicKey)
+
+      verify(sudoCryptoProviderMock.addPublicKey(anything(), anything())).once()
+
+      const [key, name] = capture(sudoCryptoProviderMock.addPublicKey).first()
+      expect(name).toBe('dummy_id')
+
+      const privateKey = await crypto.webcrypto.subtle.importKey(
+        'pkcs8',
+        keyPair.privateKey,
+        { name: 'RSA-OAEP', hash: 'SHA-256' },
+        true,
+        ['decrypt'],
+      )
+
+      const publicKey = await crypto.webcrypto.subtle.importKey(
+        'spki',
+        key,
+        { name: 'RSA-OAEP', hash: 'SHA-256' },
+        true,
+        ['encrypt'],
+      )
+
+      const encrypted = await crypto.webcrypto.subtle.encrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        publicKey,
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const decrypted = await crypto.webcrypto.subtle.decrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        privateKey,
+        encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+    })
   })
 })

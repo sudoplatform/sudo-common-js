@@ -20,6 +20,22 @@ enum OID {
 }
 
 /**
+ * PEM headers.
+ */
+enum PEMHeader {
+  rsaPublicKey = '-----BEGIN RSA PUBLIC KEY-----',
+  publicKey = '-----BEGIN PUBLIC KEY-----',
+}
+
+/**
+ * PEM footers.
+ */
+enum PEMFooter {
+  rsaPublicKey = '-----END RSA PUBLIC KEY-----',
+  publicKey = '-----END PUBLIC KEY-----',
+}
+
+/**
  * Interface for a set of methods for securely storing keys and performing
  * cryptographic operations.
  */
@@ -154,6 +170,14 @@ export interface SudoKeyManager {
     name: string,
     format: PublicKeyFormat,
   ): Promise<string | undefined>
+
+  /**
+   * Imports a PEM encoded public key into the secure store.
+   *
+   * @param name The name of the public key.
+   * @param publicKey The public key to import.
+   */
+  importPublicKeyFromPEM(name: string, publicKey: string): Promise<void>
 
   /**
    * Deletes a key pair from the secure store.
@@ -530,6 +554,47 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
         return this.publicKeyToPEM(keyData, format)
       }
     }
+  }
+
+  public async importPublicKeyFromPEM(
+    name: string,
+    publicKey: string,
+  ): Promise<void> {
+    let format: PublicKeyFormat
+    if (
+      publicKey.includes(PEMHeader.rsaPublicKey) &&
+      publicKey.includes(PEMFooter.rsaPublicKey)
+    ) {
+      format = PublicKeyFormat.RSAPublicKey
+    } else if (
+      publicKey.includes(PEMHeader.publicKey) &&
+      publicKey.includes(PEMFooter.publicKey)
+    ) {
+      format = PublicKeyFormat.SPKI
+    } else {
+      throw new IllegalArgumentError()
+    }
+
+    const stripped = publicKey
+      .replace(/-{5}(BEGIN|END) .*-{5}/gm, '')
+      .replace(/\s/gm, '')
+    let keyData = Base64.decode(stripped)
+    if (format === PublicKeyFormat.RSAPublicKey) {
+      // Web Crypto Provider currently only accepts SPKI and
+      // none of the native providers support adding a public
+      // key so we will need to convert RSAPublicKey (RFC3447)
+      // to SPKI (RFC5280).
+      const spki = new pkijs.PublicKeyInfo()
+      spki.algorithm = new pkijs.AlgorithmIdentifier({
+        algorithmId: OID.rsaEncryption,
+        algorithmParams: new asn1js.Null(),
+      })
+      spki.subjectPublicKey = new asn1js.BitString({
+        valueHex: keyData,
+      })
+      keyData = spki.toSchema().toBER()
+    }
+    await this.sudoCryptoProvider.addPublicKey(keyData, name)
   }
 
   public deleteKeyPair(name: string): Promise<void> {
