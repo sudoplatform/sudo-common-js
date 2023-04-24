@@ -1,5 +1,9 @@
 #!/bin/sh
 
+###
+# This script is duplicated in platform-common. Any updates to this script here should also be adjusted in the platform-common repository.
+###
+
 set -e
 d="$(dirname "$0")"
 
@@ -48,6 +52,35 @@ suppression_from_diff_type() {
   esac
 }
 
+#
+# This function will determine whether a new outdated dependency will cause the script to fail.
+# It compares the publish date of the wanted version and only populates 'new' when the publish date is outside 'stability_days'.
+#
+classify_outdated_dependency() {
+  dependency_name=$1
+  wanted_version=$2
+  # Get the publish date of the version that matches 'wanted', returning YYYY-MM-DD
+  publish_date=$(yarn info "$dependency_name" time --json | jq -r '.data | to_entries[] | select(.key == "'"$wanted_version"'") | .value | split("T") | .[0]')
+
+  # Convert the 'publish_date' variable to epoch
+  if [ -z "$CI" ]; then
+    # CI_COMMIT_BRANCH is undefined, running locally, use mac environment
+    publish_date_epoch=$(date -j -f '%Y-%m-%d' "$publish_date" '+%s')
+  else
+    # CI_COMMIT_BRANCH is defined, running in CI context, use busybox environment
+    publish_date_epoch=$(date -d "$publish_date" +%s)
+  fi
+
+  # Calculate the difference in days
+  diff_days=$(((current_epoch - publish_date_epoch) / 86400))
+
+  # Check if the difference in days is greater than or equal to 3, and set a new outdated dependency if it was not published in the last 3 days
+  if [ $diff_days -ge $stability_days ]; then
+    # The date is more than 3 days away from the current date, populate 'new' to return fail later
+    new=1
+  fi
+}
+
 # Number of days to suppress if accepting or refreshing and cadence to run if --last specified
 cadence=30
 
@@ -62,6 +95,12 @@ refresh=""
 # Only run the dependency check every cadence days if a last success
 # timestamp is found
 last=""
+
+# Define the number of days an outdated dependency exists for before it returns a fail. For example, if this is set to 3, it includes today, yesterday, and the day before.
+stability_days=3
+
+# Get the current date in epoch, this is used with stability_days and each outdated dependency's publish date to determine when the script should fail.
+current_epoch=$(date +%s)
 
 while [ -n "${1}" ]; do
   case "${1}" in
@@ -175,7 +214,8 @@ yarn outdated --json | jq -r -s -c 'map(select(.type == "table").data.body) | .[
       "${suppress_outdated}" --suppression "${cadence}" --"${latest_diff_type}" "${package_name}"
     else
       echo "${package_name}: current: ${current} wanted: ${wanted} latest: ${latest} [${outdated_diff_type} outdated]"
-      new=1
+      classify_outdated_dependency "$package_name" "$wanted"
+
     fi
   elif [ -n "${accept}${refresh}" ]; then
     echo "${package_name}: current: ${current} wanted: ${wanted} latest: ${latest} [${suppression_type} suppression refreshed]"

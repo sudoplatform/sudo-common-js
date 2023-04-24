@@ -51,10 +51,11 @@
   "resolutions": {
     "**/apollo-cache-inmemory": "^1.6.6",
     "**/apollo-client": "^2.6.10",
-    "json5": "^1.0.2"
+    "json5": "^1.0.2",
+    "xml2js": "^0.5.0"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.295.0",
+    "@aws-sdk/client-s3": "^3.317.0",
     "apollo-client": "^2.6.10",
     "asn1js": "^3.0.5",
     "browser-bunyan": "^1.8.0",
@@ -68,17 +69,17 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.18",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
+    "@types/node": "16.18.24",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
     "aws-sdk-mock": "^5.8.0",
-    "concurrently": "^7.6.0",
-    "eslint": "^8.36.0",
+    "concurrently": "^8.0.1",
+    "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-tree-shaking": "^1.10.0",
-    "fp-ts": "^2.13.1",
+    "fp-ts": "^2.14.0",
     "io-ts": "^2.2.20",
     "io-ts-types": "^0.5.19",
     "isomorphic-fetch": "^3.0.0",
@@ -86,23 +87,23 @@
     "jest": "^27.5.1",
     "monocle-ts": "^2.3.13",
     "newtype-ts": "^0.3.5",
-    "prettier": "^2.8.5",
-    "rimraf": "^4.4.0",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
     "ts-jest": "^27.1.5",
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.9.1",
-    "typedoc": "^0.23.28",
+    "typedoc": "^0.24.5",
     "typescript": "^4.9.5"
   },
   "outdatedSuppressions": {
     "major": {
-      "@types/jest": 1681893993,
-      "@types/node": 1681893993,
-      "graphql": 1681893994,
-      "jest": 1681893994,
-      "ts-jest": 1681893994,
-      "typescript": 1681893994,
-      "json5": 1681893994
+      "@types/jest": 1684846723,
+      "@types/node": 1684846723,
+      "graphql": 1684846723,
+      "jest": 1684846723,
+      "ts-jest": 1684846723,
+      "typescript": 1684846723,
+      "json5": 1684846723
     }
   }
 }
