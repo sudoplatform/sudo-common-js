@@ -1,0 +1,30 @@
+{
+  "extends": ["local>platform/gc-platform-renovate-config"],
+  "packageRules": [
+    {
+      "description": "we have not in general upgraded beyond major version 15. Updating to 16 will require work though the scope of this work has not been evaluated at this time.",
+      "matchPackageNames": ["graphql"],
+      "allowedVersions": "<16.x"
+    },
+    {
+      "description": "Keep typescript version below 5.x.x",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<5.x"
+    },
+    {
+      "description": "Need to have below v28 because later version need Node 18",
+      "matchPackageNames": ["jest"],
+      "allowedVersions": "<27.5.2"
+    },
+    {
+      "description": "Need to have below v28 because later version need Node 18",
+      "matchPackageNames": ["@types/jest"],
+      "allowedVersions": "<27.5.3"
+    },
+    {
+      "description": "Need to have below v28 because later version need Node 18",
+      "matchPackageNames": ["ts-jest"],
+      "allowedVersions": "<27.1.6"
+    }
+  ]
+}
