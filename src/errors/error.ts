@@ -1,3 +1,9 @@
+/*
+ * Copyright © 2023 Anonyome Labs, Inc. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { GraphQLError } from 'graphql'
 import { ApolloError } from 'apollo-client'
 import { JsonValue } from '../types/types'

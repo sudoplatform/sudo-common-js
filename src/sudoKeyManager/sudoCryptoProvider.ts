@@ -1,3 +1,9 @@
+/*
+ * Copyright © 2023 Anonyome Labs, Inc. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { EncryptionAlgorithm, SignatureAlgorithm } from '../types/types'
 import { KeyData } from './keyData'
 import { PublicKey } from './publicKey'

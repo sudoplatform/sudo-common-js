@@ -1,3 +1,9 @@
+/*
+ * Copyright © 2023 Anonyome Labs, Inc. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { createLogger, stdSerializers } from 'browser-bunyan'
 import { ConsolePlainStream } from '@browser-bunyan/console-plain-stream'
 import * as t from 'io-ts'
