@@ -24,7 +24,7 @@
 <ul class="tsd-hierarchy">
 <li><a href="../interfaces/SudoKeyArchive.html" class="tsd-signature-type tsd-kind-interface">SudoKeyArchive</a></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:137</li></ul></aside>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:145</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -71,7 +71,7 @@
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">archiveData</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ArrayBuffer</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">excludedKeyTypes</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><a href="../enums/KeyArchiveKeyType.html" class="tsd-signature-type tsd-kind-enum">KeyArchiveKeyType</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">excludedKeys</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">metaInfo</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">archiveData</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ArrayBuffer</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">excludedKeyTypes</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><a href="../enums/KeyArchiveKeyType.html" class="tsd-signature-type tsd-kind-enum">KeyArchiveKeyType</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">excludedKeys</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">metaInfo</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">zip</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
 <ul class="tsd-parameters">
 <li class="tsd-parameter">
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">archive<wbr/>Data</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ArrayBuffer</span></h5></li>
@@ -80,7 +80,9 @@
 <li class="tsd-parameter">
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">excluded<wbr/>Keys</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5></li>
 <li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">meta<wbr/>Info</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></li></ul></div>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">meta<wbr/>Info</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type ">ReadonlyMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">zip</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="DefaultSudoKeyArchive.html" class="tsd-signature-type tsd-kind-class">DefaultSudoKeyArchive</a></h4>
 <div class="tsd-comment tsd-typography">
 <h4>Throws</h4><p><a href="IllegalArgumentError.html" class="tsd-kind-class">IllegalArgumentError</a>
@@ -101,7 +103,7 @@
     version.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:226</li></ul></aside></li></ul></section></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:238</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member"><a id="CURRENT_ARCHIVE_VERSION" class="tsd-anchor"></a>
@@ -129,23 +131,23 @@ salted with SecureKeyArchive.Salt.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:172</li></ul></aside></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:180</li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="PREGZIP_ARCHIVE_VERSION" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>PREGZIP_<wbr/>ARCHIVE_<wbr/>VERSION</span><a href="#PREGZIP_ARCHIVE_VERSION" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">PREGZIP_<wbr/>ARCHIVE_<wbr/>VERSION</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> = 2</span></div>
+<div class="tsd-signature"><span class="tsd-kind-property">PREGZIP_<wbr/>ARCHIVE_<wbr/>VERSION</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> = PREGZIP_ARCHIVE_VERSION</span></div>
 <div class="tsd-comment tsd-typography"><p>Version 2 format is not gzipped is what&#39;s currently generated
 by iOS and Android. We may want to add support for importing
 such archives.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:143</li></ul></aside></section></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:151</li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="archive" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>archive</span><a href="#archive" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="archive.archive-1"><span class="tsd-kind-call-signature">archive</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">password</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span><a href="#archive.archive-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="archive.archive-1"><span class="tsd-kind-call-signature">archive</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">password</span>, <span class="tsd-kind-parameter">zip</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span><a href="#archive.archive-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Archives and encrypts the keys loaded into this archive.</p>
 </div>
@@ -157,13 +159,19 @@ such archives.</p>
 <div class="tsd-comment tsd-typography"><p>The password to use to encrypt the archive. Or undefined if no password.
   Choice to have no password must be explicit.</p>
 </div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">zip</span>: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5>
+<div class="tsd-comment tsd-typography"><p>Specifies whether or not to zip the archive to save space. It defaults to
+  to <code>true</code> if undefined.</p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">ArrayBuffer</span><span class="tsd-signature-symbol">&gt;</span></h4><p>Binary archive data.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#archive">archive</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:376</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:396</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="containsKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>contains<wbr/>Key</span><a href="#containsKey" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -196,7 +204,7 @@ key can be searched.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#containsKey">containsKey</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:536</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:564</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getExcludedKeyTypes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Excluded<wbr/>Key<wbr/>Types</span><a href="#getExcludedKeyTypes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -207,7 +215,7 @@ key can be searched.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#getExcludedKeyTypes">getExcludedKeyTypes</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:561</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:589</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getExcludedKeys" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Excluded<wbr/>Keys</span><a href="#getExcludedKeys" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -218,7 +226,7 @@ key can be searched.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#getExcludedKeys">getExcludedKeys</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:557</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:585</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getKeyData" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Key<wbr/>Data</span><a href="#getKeyData" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -253,7 +261,7 @@ be unarchived before the key data can be retrieved.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#getKeyData">getKeyData</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:544</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:572</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getMetaInfo" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Meta<wbr/>Info</span><a href="#getMetaInfo" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -264,7 +272,7 @@ be unarchived before the key data can be retrieved.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#getMetaInfo">getMetaInfo</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:565</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:593</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="loadKeys" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>load<wbr/>Keys</span><a href="#loadKeys" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -276,7 +284,7 @@ be unarchived before the key data can be retrieved.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#loadKeys">loadKeys</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:328</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:348</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="reset" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>reset</span><a href="#reset" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -288,7 +296,7 @@ be unarchived before the key data can be retrieved.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#reset">reset</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:532</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:560</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="saveKeys" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>save<wbr/>Keys</span><a href="#saveKeys" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -300,7 +308,7 @@ be unarchived before the key data can be retrieved.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#saveKeys">saveKeys</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:347</li></ul></aside></li></ul></section>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:367</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="unarchive" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>unarchive</span><a href="#unarchive" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -335,7 +343,7 @@ be unarchived before the key data can be retrieved.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/SudoKeyArchive.html">SudoKeyArchive</a>.<a href="../interfaces/SudoKeyArchive.html#unarchive">unarchive</a></p>
 <ul>
-<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:460</li></ul></aside></li></ul></section></section></div>
+<li>Defined in src/sudoKeyArchive/sudoKeyArchive.ts:488</li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -460,6 +468,7 @@ be unarchived before the key data can be retrieved.</p>
 <li><a href="../variables/KeyArchiveKeyInfoCodec.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>Key<wbr/>Archive<wbr/>Key<wbr/>Info<wbr/>Codec</span></a></li>
 <li><a href="../variables/KeyArchiveKeyTypeCodec.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>Key<wbr/>Archive<wbr/>Key<wbr/>Type<wbr/>Codec</span></a></li>
 <li><a href="../variables/Level-1.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>Level</span></a></li>
+<li><a href="../variables/PREGZIP_ARCHIVE_VERSION.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>PREGZIP_<wbr/>ARCHIVE_<wbr/>VERSION</span></a></li>
 <li><a href="../variables/SecureKeyArchiveCodec.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>Secure<wbr/>Key<wbr/>Archive<wbr/>Codec</span></a></li>
 <li><a href="../variables/SecureKeyArchiveType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>Secure<wbr/>Key<wbr/>Archive<wbr/>Type</span></a></li>
 <li><a href="../variables/UnrecognizedKeyArchiveCodec.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>Unrecognized<wbr/>Key<wbr/>Archive<wbr/>Codec</span></a></li>

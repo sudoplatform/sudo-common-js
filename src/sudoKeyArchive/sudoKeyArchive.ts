@@ -26,6 +26,7 @@ import { Base64 } from '../utils/base64'
 import { Buffer as BufferUtil } from '../utils/buffer'
 import {
   CURRENT_ARCHIVE_VERSION,
+  PREGZIP_ARCHIVE_VERSION,
   InsecureKeyArchive,
   InsecureKeyArchiveType,
   isSecureKeyArchive,
@@ -56,9 +57,16 @@ export interface SudoKeyArchive {
    *   The password to use to encrypt the archive. Or undefined if no password.
    *   Choice to have no password must be explicit.
    *
+   * @param zip
+   *   Specifies whether or not to zip the archive to save space. It defaults to
+   *   to `true` if undefined.
+   *
    * @returns Binary archive data.
    */
-  archive(password: ArrayBuffer | undefined): Promise<ArrayBuffer>
+  archive(
+    password: ArrayBuffer | undefined,
+    zip?: boolean,
+  ): Promise<ArrayBuffer>
 
   /**
    * Decrypts and unarchives the keys in this archive.
@@ -140,7 +148,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
    * by iOS and Android. We may want to add support for importing
    * such archives.
    */
-  public static readonly PREGZIP_ARCHIVE_VERSION = 2
+  public static readonly PREGZIP_ARCHIVE_VERSION = PREGZIP_ARCHIVE_VERSION
 
   /**
    * Version 3 format permits both secure and insecure key archives.
@@ -206,6 +214,10 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
    * @param metaInfo
    *     Meta information to include with the key archive
    *
+   * @param zip
+   *   Specifies whether or not `archiveData` is zipped. If undefined
+   *   then it will be assumed that the input `archiveData` is zipped.
+   *
    * @throws {@link IllegalArgumentError}
    *     If no key managers are provided
    *
@@ -230,6 +242,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       excludedKeys?: ReadonlySet<string>
       excludedKeyTypes?: ReadonlySet<KeyArchiveKeyType>
       metaInfo?: ReadonlyMap<string, string>
+      zip?: boolean
     },
   ) {
     if (Array.isArray(keyManagers)) {
@@ -252,7 +265,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     }
 
     if (options?.archiveData) {
-      this.keyArchive = this.loadArchive(options.archiveData)
+      this.keyArchive = this.loadArchive(options.archiveData, options.zip)
     }
 
     // We take copies of the input parameters so we own the data
@@ -281,11 +294,16 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
    */
   private loadArchive(
     archiveData: ArrayBuffer,
+    zip: boolean = true,
   ): SecureKeyArchive | InsecureKeyArchive {
-    let unzipped: Uint8Array
+    let jsonData: ArrayBuffer
 
     try {
-      unzipped = gunzipSync(new Uint8Array(archiveData))
+      if (zip) {
+        jsonData = gunzipSync(new Uint8Array(archiveData))
+      } else {
+        jsonData = archiveData
+      }
     } catch (err) {
       throw new KeyArchiveDecodingError()
     }
@@ -293,7 +311,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     let keyArchive: KeyArchive
     try {
       const decoded = KeyArchiveCodec.decode(
-        JSON.parse(BufferUtil.toString(unzipped)),
+        JSON.parse(BufferUtil.toString(jsonData)),
       )
       if (isLeft(decoded)) {
         throw new KeyArchiveDecodingError()
@@ -311,10 +329,12 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         throw new KeyArchiveTypeError(keyArchive.Type)
       }
 
-      // Only support DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION for now.
+      // Only support DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION and PREGZIP_ARCHIVE_VERSION
+      // for now.
       if (
         keyArchive.Version !== undefined &&
-        keyArchive.Version !== DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION
+        keyArchive.Version !== DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION &&
+        keyArchive.Version !== DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION
       ) {
         throw new KeyArchiveVersionError(keyArchive.Version)
       }
@@ -373,7 +393,10 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     }
   }
 
-  async archive(password: ArrayBuffer | undefined): Promise<ArrayBuffer> {
+  async archive(
+    password: ArrayBuffer | undefined,
+    zip: boolean = true,
+  ): Promise<ArrayBuffer> {
     const keys: KeyArchiveKeyInfo[] = []
     for (const key of this.keys.values()) {
       keys.push({
@@ -391,7 +414,9 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       const insecureKeyArchive: InsecureKeyArchive = {
         Type: 'Insecure',
         MetaInfo: {},
-        Version: DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION,
+        Version: zip
+          ? DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION
+          : DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
         Keys: keys,
       }
       keyArchive = insecureKeyArchive
@@ -428,7 +453,9 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         )
       const secureKeyArchive: SecureKeyArchive = {
         Type: 'Secure',
-        Version: DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION,
+        Version: zip
+          ? DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION
+          : DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
         MetaInfo: {},
         Salt: b64Salt,
         Rounds: SudoCryptoProviderDefaults.pbkdfRounds,
@@ -444,17 +471,18 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     }
 
     const archiveString = JSON.stringify(keyArchive)
+    const archiveData = BufferUtil.fromString(archiveString)
 
     // While this double Gzips the SecureKeyArchive, it allows us to roughly
     // recover the space consumed by Base64 encoding the cipher text. Otherwise
     // we would end up having a fully binary data structure for the archive.
     // If the time to compute becomes prohibitive we can look at a binary, non-JSON
     // base format for the archive.
-    const archiveGzipped = gzipSync(BufferUtil.fromString(archiveString), {
-      level: 9,
-    })
-
-    return Promise.resolve(archiveGzipped)
+    return zip
+      ? gzipSync(archiveData, {
+          level: 9,
+        })
+      : archiveData
   }
 
   async unarchive(password: ArrayBuffer | undefined): Promise<void> {

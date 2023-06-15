@@ -189,6 +189,16 @@ describe('DefaultSudoKeyArchive tests', () => {
         ).toThrowErrorMatching(new KeyArchiveDecodingError())
       })
 
+      it('should succeed if archive data is not gzip data but zip parameter set to false', () => {
+        expect(
+          () =>
+            new DefaultSudoKeyArchive(instance(mockKeyManager1), {
+              archiveData: BufferUtil.fromString('not gzipped'),
+              zip: false,
+            }),
+        ).toBeTruthy()
+      })
+
       it('throws KeyArchiveDecodingError if archive data is not gzipped JSON data', () => {
         expect(
           () =>
@@ -1408,6 +1418,39 @@ describe('DefaultSudoKeyArchive tests', () => {
           )
         },
       )
+
+      it.each`
+        name                  | withMetaInfo
+        ${'with MetaInfo'}    | ${true}
+        ${'without MetaInfo'} | ${false}
+      `(
+        'should produce an insecure archive $name without compression',
+        async ({ withMetaInfo }) => {
+          const keyArchive = new DefaultSudoKeyArchive(
+            [instance(mockKeyManager1), instance(mockKeyManager2)],
+            { metaInfo: withMetaInfo ? metaInfo : undefined },
+          )
+
+          await expect(keyArchive.loadKeys()).resolves.toBeUndefined()
+
+          const archive = await keyArchive.archive(undefined, false)
+          const string = BufferUtil.toString(archive)
+          const deserialized = JSON.parse(string)
+          const decoded = InsecureKeyArchiveCodec.decode(deserialized)
+          expect(isRight(decoded)).toEqual(true)
+          if (!isRight(decoded)) throw new Error('decoded unexpectedly lefty')
+          const insecureKeyArchive = decoded.right
+          expect(insecureKeyArchive).toMatchObject({
+            Type: 'Insecure',
+            Version: DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
+            MetaInfo: withMetaInfo ? metaInfoRecord : {},
+          })
+          expect(insecureKeyArchive.Keys).toHaveLength(keys.length)
+          keys.forEach((key) =>
+            expect(insecureKeyArchive.Keys).toContainEqual(key),
+          )
+        },
+      )
     })
 
     describe('with password', () => {
@@ -1458,6 +1501,118 @@ describe('DefaultSudoKeyArchive tests', () => {
           expect(secureKeyArchive).toEqual({
             Type: 'Secure',
             Version: DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION,
+            IV: ivB64,
+            Salt: saltB64,
+            Rounds: SudoCryptoProviderDefaults.pbkdfRounds,
+            Keys: Base64.encode(encryptedKeys),
+            MetaInfo: withMetaInfo ? metaInfoRecord : {},
+          })
+
+          verify(mockKeyManager1.exportKeys()).once()
+          verify(mockKeyManager2.exportKeys()).once()
+
+          verify(mockKeyManager1.generateRandomData(anything())).twice()
+          const [actualSaltSize] = capture(
+            mockKeyManager1.generateRandomData,
+          ).first()
+          expect(actualSaltSize).toEqual(
+            SudoCryptoProviderDefaults.pbkdfSaltSize,
+          )
+          const [actualIVSize] = capture(
+            mockKeyManager1.generateRandomData,
+          ).second()
+          expect(actualIVSize).toEqual(SudoCryptoProviderDefaults.aesIVSize)
+
+          verify(
+            mockKeyManager1.generateSymmetricKeyFromPassword(
+              anything(),
+              anything(),
+              anything(),
+            ),
+          ).once()
+          const [actualPassword, actualSalt, actualOptions] = capture(
+            mockKeyManager1.generateSymmetricKeyFromPassword,
+          ).first()
+          expect(actualPassword).toEqual(password)
+          expect(actualSalt).toEqual(salt)
+          expect(actualOptions).toEqual({
+            rounds: SudoCryptoProviderDefaults.pbkdfRounds,
+          })
+
+          verify(
+            mockKeyManager1.encryptWithSymmetricKey(
+              anything(),
+              anything(),
+              anything(),
+            ),
+          ).once()
+          const [actualKey, actualData, symmetricOptions] = capture(
+            mockKeyManager1.encryptWithSymmetricKey,
+          ).first()
+          expect(actualKey).toEqual(symmetricKey)
+          expect(symmetricOptions?.iv).toEqual(iv)
+
+          const uncompressedData = gunzipSync(new Uint8Array(actualData))
+          const deserializedData = JSON.parse(
+            BufferUtil.toString(uncompressedData),
+          )
+          const decodedData = t
+            .array(KeyArchiveKeyInfoCodec)
+            .decode(deserializedData)
+          expect(isRight(decodedData)).toEqual(true)
+          if (isLeft(decodedData)) {
+            throw new Error('decodedData unexpectedly lefty')
+          }
+          const actualKeys = decodedData.right
+          expect(actualKeys).toHaveLength(keys.length)
+          keys.forEach((key) => expect(actualKeys).toContainEqual(key))
+        },
+      )
+
+      it.each`
+        name                  | withMetaInfo
+        ${'with MetaInfo'}    | ${true}
+        ${'without MetaInfo'} | ${false}
+      `(
+        'should produce an insecure archive $name without compression',
+        async ({ withMetaInfo }) => {
+          const keyArchive = new DefaultSudoKeyArchive(
+            [instance(mockKeyManager1), instance(mockKeyManager2)],
+            { metaInfo: withMetaInfo ? metaInfo : undefined },
+          )
+
+          await expect(keyArchive.loadKeys()).resolves.toBeUndefined()
+
+          when(mockKeyManager1.generateRandomData(anything())).thenResolve(
+            salt,
+            iv,
+          )
+          when(
+            mockKeyManager1.generateSymmetricKeyFromPassword(
+              anything(),
+              anything(),
+              anything(),
+            ),
+          ).thenResolve(symmetricKey)
+          when(
+            mockKeyManager1.encryptWithSymmetricKey(
+              anything(),
+              anything(),
+              anything(),
+            ),
+          ).thenResolve(encryptedKeys)
+
+          const archive = await keyArchive.archive(password, false)
+
+          const string = BufferUtil.toString(archive)
+          const deserialized = JSON.parse(string)
+          const decoded = SecureKeyArchiveCodec.decode(deserialized)
+          expect(isRight(decoded)).toEqual(true)
+          if (!isRight(decoded)) throw new Error('decoded unexpectedly lefty')
+          const secureKeyArchive = decoded.right
+          expect(secureKeyArchive).toEqual({
+            Type: 'Secure',
+            Version: DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
             IV: ivB64,
             Salt: saltB64,
             Rounds: SudoCryptoProviderDefaults.pbkdfRounds,

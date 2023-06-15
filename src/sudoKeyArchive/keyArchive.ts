@@ -7,13 +7,17 @@
 import * as t from 'io-ts'
 import { KeyArchiveKeyInfoCodec } from './keyInfo'
 
+export const PREGZIP_ARCHIVE_VERSION = 2
 export const CURRENT_ARCHIVE_VERSION = 3
 
 const CommonKeyArchiveRequiredProps = {
   /**
    * Version this archive format.
    */
-  Version: t.literal(CURRENT_ARCHIVE_VERSION),
+  Version: t.union([
+    t.literal(CURRENT_ARCHIVE_VERSION),
+    t.literal(PREGZIP_ARCHIVE_VERSION),
+  ]),
 
   /**
    * Metainfo user is able to associate with the archive.
