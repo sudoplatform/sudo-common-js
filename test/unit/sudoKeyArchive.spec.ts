@@ -44,8 +44,11 @@ import {
 import { SudoKeyManager } from '../../src/sudoKeyManager/sudoKeyManager'
 import { Base64 } from '../../src/utils/base64'
 import { Buffer as BufferUtil } from '../../src/utils/buffer'
-
+import { TextEncoder, TextDecoder } from 'node:util'
 import '../matchers'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 describe('DefaultSudoKeyArchive tests', () => {
   const mockKeyManager1 = mock<SudoKeyManager>()
@@ -637,7 +640,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqual(salt)
+        expect(actualSalt).toEqualUint8Array(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -692,7 +695,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqual(salt)
+        expect(actualSalt).toEqualUint8Array(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -705,10 +708,10 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqual(symmetricKey)
-        expect(actualData).toEqual(encryptedEmptyKeys)
+        expect(actualKey).toEqualUint8Array(symmetricKey)
+        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
         expect(symmetricOptions).toBeDefined()
-        expect(symmetricOptions?.iv).toEqual(iv)
+        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
       })
 
       it('throws KeyArchiveDecodingError if compressed serialized keys are unable to be uncompressed', async () => {
@@ -754,7 +757,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqual(salt)
+        expect(actualSalt).toEqualUint8Array(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -767,10 +770,10 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqual(symmetricKey)
-        expect(actualData).toEqual(encryptedEmptyKeys)
+        expect(actualKey).toEqualUint8Array(symmetricKey)
+        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
         expect(symmetricOptions).toBeDefined()
-        expect(symmetricOptions?.iv).toEqual(iv)
+        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
       })
 
       it('throws KeyArchiveDecodingError if serialized keys are unable to be deserialized', async () => {
@@ -816,7 +819,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqual(salt)
+        expect(actualSalt).toEqualUint8Array(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -829,10 +832,10 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqual(symmetricKey)
-        expect(actualData).toEqual(encryptedEmptyKeys)
+        expect(actualKey).toEqualUint8Array(symmetricKey)
+        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
         expect(symmetricOptions).toBeDefined()
-        expect(symmetricOptions?.iv).toEqual(iv)
+        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
       })
 
       it('succeeds with an empty key array', async () => {
@@ -868,7 +871,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqual(salt)
+        expect(actualSalt).toEqualUint8Array(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -881,9 +884,9 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqual(symmetricKey)
-        expect(actualData).toEqual(encryptedEmptyKeys)
-        expect(symmetricOptions?.iv).toEqual(iv)
+        expect(actualKey).toEqualUint8Array(symmetricKey)
+        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
+        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
       })
 
       it('succeeds with an non-empty key array', async () => {
@@ -919,7 +922,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqual(salt)
+        expect(actualSalt).toEqualUint8Array(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -932,9 +935,9 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqual(symmetricKey)
-        expect(actualData).toEqual(encryptedKeys)
-        expect(symmetricOptions?.iv).toEqual(iv)
+        expect(actualKey).toEqualUint8Array(symmetricKey)
+        expect(actualData).toEqualUint8Array(encryptedKeys)
+        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
 
         keys.forEach((key) =>
           expect(
@@ -975,7 +978,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqual(salt)
+        expect(actualSalt).toEqualUint8Array(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -988,9 +991,9 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqual(symmetricKey)
-        expect(actualData).toEqual(encryptedKeys)
-        expect(symmetricOptions?.iv).toEqual(iv)
+        expect(actualKey).toEqualUint8Array(symmetricKey)
+        expect(actualData).toEqualUint8Array(encryptedKeys)
+        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
 
         keys.forEach((key) =>
           expect(
@@ -1534,7 +1537,7 @@ describe('DefaultSudoKeyArchive tests', () => {
             mockKeyManager1.generateSymmetricKeyFromPassword,
           ).first()
           expect(actualPassword).toEqual(password)
-          expect(actualSalt).toEqual(salt)
+          expect(actualSalt).toEqualUint8Array(salt)
           expect(actualOptions).toEqual({
             rounds: SudoCryptoProviderDefaults.pbkdfRounds,
           })
@@ -1549,8 +1552,8 @@ describe('DefaultSudoKeyArchive tests', () => {
           const [actualKey, actualData, symmetricOptions] = capture(
             mockKeyManager1.encryptWithSymmetricKey,
           ).first()
-          expect(actualKey).toEqual(symmetricKey)
-          expect(symmetricOptions?.iv).toEqual(iv)
+          expect(actualKey).toEqualUint8Array(symmetricKey)
+          expect(symmetricOptions?.iv).toEqualUint8Array(iv)
 
           const uncompressedData = gunzipSync(new Uint8Array(actualData))
           const deserializedData = JSON.parse(

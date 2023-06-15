@@ -18,6 +18,10 @@ import { DefaultSudoKeyManager } from '../../src/sudoKeyManager/sudoKeyManager'
 import { EncryptionAlgorithm, SignatureAlgorithm } from '../../src/types/types'
 import { Buffer as BufferUtil } from '../../src/utils/buffer'
 import * as crypto from 'crypto'
+import { TextEncoder, TextDecoder } from 'node:util'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 const sudoCryptoProviderMock: SudoCryptoProvider = mock()
 

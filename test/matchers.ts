@@ -89,6 +89,7 @@ declare global {
         name: string | RegExp | undefined | null
         message?: string | RegExp | undefined | null
       }): R
+      toEqualUint8Array(expected: Uint8Array): R
     }
   }
 }
@@ -118,5 +119,29 @@ expect.extend({
     },
   ) {
     return match(this, caught, error)
+  },
+
+  toEqualUint8Array(actual: Uint8Array, expected: Uint8Array) {
+    if (actual.length !== expected.length) {
+      return {
+        pass: false,
+        message: () =>
+          `expected length ${expected.length} but actual length is ${actual.length}`,
+      }
+    }
+
+    for (let i = 0; i < expected.length; ++i) {
+      if (actual[i] !== expected[i]) {
+        return {
+          pass: false,
+          message: () =>
+            `expected ${expected[i]} at index ${i} but was ${actual[i]}`,
+        }
+      }
+    }
+    return {
+      pass: true,
+      message: () => 'matched',
+    }
   },
 })

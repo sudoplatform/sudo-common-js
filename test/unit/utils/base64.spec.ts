@@ -1,4 +1,9 @@
+import { TextEncoder, TextDecoder } from 'node:util'
 import { Base64 } from '../../../src/utils/base64'
+import '../../matchers'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 describe('Base64', () => {
   const dummyDataB64 = 'ZHVtbXlfZGF0YQ==' // b64(dummy_data)
@@ -16,7 +21,7 @@ describe('Base64', () => {
   })
 
   it('Base 64 decodes the same as other decoders', () => {
-    expect(Base64.decode(dummyDataB64)).toEqual(
+    expect(Base64.decode(dummyDataB64)).toEqualUint8Array(
       new Uint8Array(Buffer.from('dummy_data', 'utf8')),
     )
   })
@@ -28,6 +33,7 @@ describe('Base64', () => {
     const decoded = Base64.urlSafeDecode({ encoded })
     expect(Buffer.from(decoded).toString('utf8')).toStrictEqual(result)
   })
+
   it('Base 64 URL safe encodes a string, validates, and decodes to a string', () => {
     const result = 'http://localhost:3000/search?q=url+test&unit=jest+test'
     const encoded = Base64.urlSafeEncodeString({ input: result })

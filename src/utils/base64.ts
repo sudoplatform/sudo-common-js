@@ -22,11 +22,11 @@ export class Base64 {
   }
 
   static decode(encoded: string): ArrayBuffer {
-    return BufferUtil.fromString(atob(encoded))
+    return BufferUtil.fromBinaryString(atob(encoded))
   }
 
   static encode(buffer: ArrayBuffer): string {
-    return btoa(BufferUtil.toString(buffer))
+    return btoa(BufferUtil.toBinaryString(buffer))
   }
 
   static decodeString(encoded: string): string {

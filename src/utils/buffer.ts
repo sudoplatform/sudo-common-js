@@ -26,20 +26,26 @@ export class Buffer {
   }
 
   static toString(buffer: ArrayBuffer): string {
-    let s = ''
     const bytes = new Uint8Array(buffer)
-    const len = bytes.byteLength
-    for (let i = 0; i < len; i++) {
-      s += String.fromCharCode(bytes[i])
-    }
-    return s
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
   }
 
   static fromString(s: string): Uint8Array {
-    return Uint8Array.from(s, (c) => c.charCodeAt(0))
+    return new TextEncoder().encode(s)
   }
 
   static isArrayBuffer(u: unknown): u is ArrayBuffer {
     return ArrayBuffer.isView(u)
+  }
+
+  static toBinaryString(buffer: ArrayBuffer): string {
+    const bytes = new Uint8Array(buffer)
+    let s = ''
+    bytes.forEach((b) => (s += String.fromCharCode(b)))
+    return s
+  }
+
+  static fromBinaryString(s: string): Uint8Array {
+    return Uint8Array.from(s, (c) => c.charCodeAt(0))
   }
 }
