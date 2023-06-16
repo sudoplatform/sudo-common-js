@@ -19,9 +19,20 @@ import { EncryptionAlgorithm, SignatureAlgorithm } from '../../src/types/types'
 import { Buffer as BufferUtil } from '../../src/utils/buffer'
 import * as crypto from 'crypto'
 import { TextEncoder, TextDecoder } from 'node:util'
+import { Base64 } from '../../src/utils/base64'
 
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
+
+function toPEM(key: ArrayBuffer, type: 'PRIVATE' | 'PUBLIC'): string {
+  const encoded = Base64.encode(key)
+  const lines = encoded.match(/.{1,64}/g)
+  if (!lines) {
+    throw new Error('Failed to format lines')
+  }
+  const formatted = lines.join('\n')
+  return `-----BEGIN ${type} KEY-----\n${formatted}\n-----END ${type} KEY-----`
+}
 
 const sudoCryptoProviderMock: SudoCryptoProvider = mock()
 
@@ -1524,6 +1535,117 @@ describe('DefaultSudoKeyManager', () => {
         },
         privateKey,
         encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+    })
+
+    it('should export/import RSAPublicKey successfully', async () => {
+      const keyPair = await crypto.webcrypto.subtle.generateKey(
+        {
+          name: 'RSA-OAEP',
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: 'SHA-256',
+        },
+        true,
+        ['encrypt', 'decrypt'],
+      )
+      const exported = await crypto.webcrypto.subtle.exportKey(
+        'spki',
+        keyPair.publicKey,
+      )
+
+      when(sudoCryptoProviderMock.getPublicKey('dummy_id')).thenResolve({
+        keyData: exported,
+        keyFormat: PublicKeyFormat.SPKI,
+      })
+
+      const publicKey = await sudoKeyManager.exportPublicKeyAsRSAPublicKey(
+        'dummy_id',
+      )
+
+      if (!publicKey) {
+        fail('Public key not found')
+      }
+
+      await sudoKeyManager.importPublicKeyFromRSAPublicKey(
+        'dummy_id',
+        publicKey,
+      )
+
+      const [key] = capture(sudoCryptoProviderMock.addPublicKey).first()
+
+      const encrypted = crypto.publicEncrypt(
+        {
+          key: toPEM(key, 'PUBLIC'),
+          padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+          oaepHash: 'sha256',
+        },
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const decrypted = await crypto.webcrypto.subtle.decrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        keyPair.privateKey,
+        encrypted,
+      )
+
+      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+    })
+
+    it('should export/import RSAPrivateKey successfully', async () => {
+      const keyPair = await crypto.webcrypto.subtle.generateKey(
+        {
+          name: 'RSA-OAEP',
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: 'SHA-256',
+        },
+        true,
+        ['encrypt', 'decrypt'],
+      )
+      const exported = await crypto.webcrypto.subtle.exportKey(
+        'pkcs8',
+        keyPair.privateKey,
+      )
+
+      when(sudoCryptoProviderMock.getPrivateKey('dummy_id')).thenResolve(
+        exported,
+      )
+
+      const privateKey = await sudoKeyManager.exportPrivateKeyAsRSAPrivateKey(
+        'dummy_id',
+      )
+
+      if (!privateKey) {
+        fail('Private key not found')
+      }
+
+      await sudoKeyManager.importPrivateKeyFromRSAPrivateKey(
+        'dummy_id',
+        privateKey,
+      )
+
+      const [key] = capture(sudoCryptoProviderMock.addPrivateKey).first()
+
+      const encrypted = await crypto.webcrypto.subtle.encrypt(
+        {
+          name: 'RSA-OAEP',
+        },
+        keyPair.publicKey,
+        BufferUtil.fromString('dummy_data'),
+      )
+
+      const decrypted = crypto.privateDecrypt(
+        {
+          key: toPEM(key, 'PRIVATE'),
+          padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+          oaepHash: 'sha256',
+        },
+        new Uint8Array(encrypted),
       )
 
       expect(BufferUtil.toString(decrypted)).toBe('dummy_data')

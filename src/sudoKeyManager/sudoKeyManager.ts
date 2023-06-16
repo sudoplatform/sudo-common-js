@@ -186,6 +186,48 @@ export interface SudoKeyManager {
   importPublicKeyFromPEM(name: string, publicKey: string): Promise<void>
 
   /**
+   * Exports the private key from the secure store as RSAPrivateKey.
+   *
+   * @param name The name of the private key.
+   *
+   * @returns The private key or undefined if the key was not found.
+   */
+  exportPrivateKeyAsRSAPrivateKey(
+    name: string,
+  ): Promise<ArrayBuffer | undefined>
+
+  /**
+   * Imports a RSAPrivateKey into the secure store.
+   *
+   * @param name The name of the private key.
+   * @param privateKey The private key to import.
+   */
+  importPrivateKeyFromRSAPrivateKey(
+    name: string,
+    privateKey: ArrayBuffer,
+  ): Promise<void>
+
+  /**
+   * Exports the public key from the secure store as RSAPublicKey.
+   *
+   * @param name The name of the public key.
+   *
+   * @returns The public key or undefined if the key was not found.
+   */
+  exportPublicKeyAsRSAPublicKey(name: string): Promise<ArrayBuffer | undefined>
+
+  /**
+   * Imports a RSAPublicKey into the secure store.
+   *
+   * @param name The name of the public key.
+   * @param publicKey The public key to import.
+   */
+  importPublicKeyFromRSAPublicKey(
+    name: string,
+    publicKey: ArrayBuffer,
+  ): Promise<void>
+
+  /**
    * Deletes a key pair from the secure store.
    *
    * @param name The name of the key pair to be deleted.
@@ -600,6 +642,80 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
       })
       keyData = spki.toSchema().toBER()
     }
+    await this.sudoCryptoProvider.addPublicKey(keyData, name)
+  }
+
+  public async exportPrivateKeyAsRSAPrivateKey(
+    name: string,
+  ): Promise<ArrayBuffer | undefined> {
+    const privateKey = await this.getPrivateKey(name)
+
+    if (!privateKey) {
+      return undefined
+    }
+
+    // Convert PrivateKeyInfo (RFC5280) to RSAPrivateKey (RFC3447).
+    const privateKeyInfo = pkijs.PrivateKeyInfo.fromBER(privateKey)
+    const keyData = privateKeyInfo.parsedKey?.toSchema().toBER()
+    return keyData
+  }
+
+  public async importPrivateKeyFromRSAPrivateKey(
+    name: string,
+    privateKey: ArrayBuffer,
+  ): Promise<void> {
+    // Web Crypto Provider currently only accepts PrivateKeyInfo.
+    const pki = new pkijs.PrivateKeyInfo()
+    pki.privateKeyAlgorithm = new pkijs.AlgorithmIdentifier({
+      algorithmId: OID.rsaEncryption,
+      algorithmParams: new asn1js.Null(),
+    })
+    pki.privateKey = new asn1js.OctetString({
+      valueHex: privateKey,
+    })
+    const keyData = pki.toSchema().toBER()
+
+    await this.sudoCryptoProvider.addPrivateKey(keyData, name)
+  }
+
+  public async exportPublicKeyAsRSAPublicKey(
+    name: string,
+  ): Promise<ArrayBuffer | undefined> {
+    const publicKey = await this.getPublicKey(name)
+
+    if (!publicKey) {
+      return undefined
+    }
+
+    switch (publicKey.keyFormat) {
+      case PublicKeyFormat.RSAPublicKey:
+        return publicKey.keyData
+      case PublicKeyFormat.SPKI:
+        // Convert SPKI (RFC5280) to RSAPublicKey (RFC3447).
+        const publicKeyInfo = pkijs.PublicKeyInfo.fromBER(publicKey.keyData)
+        const keyData = publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
+        return keyData
+    }
+  }
+
+  public async importPublicKeyFromRSAPublicKey(
+    name: string,
+    publicKey: ArrayBuffer,
+  ): Promise<void> {
+    // Web Crypto Provider currently only accepts SPKI and
+    // none of the native providers support adding a public
+    // key so we will need to convert RSAPublicKey (RFC3447)
+    // to SPKI (RFC5280).
+    const spki = new pkijs.PublicKeyInfo()
+    spki.algorithm = new pkijs.AlgorithmIdentifier({
+      algorithmId: OID.rsaEncryption,
+      algorithmParams: new asn1js.Null(),
+    })
+    spki.subjectPublicKey = new asn1js.BitString({
+      valueHex: publicKey,
+    })
+    const keyData = spki.toSchema().toBER()
+
     await this.sudoCryptoProvider.addPublicKey(keyData, name)
   }
 
