@@ -26,6 +26,7 @@ import {
 import {
   InsecureKeyArchive,
   InsecureKeyArchiveCodec,
+  InsecureKeyArchiveV2Codec,
   SecureKeyArchive,
   SecureKeyArchiveCodec,
 } from '../../src/sudoKeyArchive/keyArchive'
@@ -1431,15 +1432,26 @@ describe('DefaultSudoKeyArchive tests', () => {
         async ({ withMetaInfo }) => {
           const keyArchive = new DefaultSudoKeyArchive(
             [instance(mockKeyManager1), instance(mockKeyManager2)],
-            { metaInfo: withMetaInfo ? metaInfo : undefined },
+            { metaInfo: withMetaInfo ? metaInfo : undefined, zip: false },
           )
+
+          when(
+            mockKeyManager1.publicKeyInfoToRSAPublicKey(anything()),
+          ).thenCall((publicKey: ArrayBuffer) => {
+            return publicKey
+          })
+          when(
+            mockKeyManager1.privateKeyInfoToRSAPrivateKey(anything()),
+          ).thenCall((privateKey: ArrayBuffer) => {
+            return privateKey
+          })
 
           await expect(keyArchive.loadKeys()).resolves.toBeUndefined()
 
-          const archive = await keyArchive.archive(undefined, false)
+          const archive = await keyArchive.archive(undefined)
           const string = BufferUtil.toString(archive)
           const deserialized = JSON.parse(string)
-          const decoded = InsecureKeyArchiveCodec.decode(deserialized)
+          const decoded = InsecureKeyArchiveV2Codec.decode(deserialized)
           expect(isRight(decoded)).toEqual(true)
           if (!isRight(decoded)) throw new Error('decoded unexpectedly lefty')
           const insecureKeyArchive = decoded.right
@@ -1448,10 +1460,10 @@ describe('DefaultSudoKeyArchive tests', () => {
             Version: DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
             MetaInfo: withMetaInfo ? metaInfoRecord : {},
           })
-          expect(insecureKeyArchive.Keys).toHaveLength(keys.length)
-          keys.forEach((key) =>
-            expect(insecureKeyArchive.Keys).toContainEqual(key),
-          )
+          const keysData = Base64.decode(insecureKeyArchive.Keys)
+          const keyList = JSON.parse(new TextDecoder().decode(keysData))
+          expect(keyList).toHaveLength(keys.length)
+          keys.forEach((key) => expect(keyList).toContainEqual(key))
         },
       )
     })
@@ -1581,8 +1593,19 @@ describe('DefaultSudoKeyArchive tests', () => {
         async ({ withMetaInfo }) => {
           const keyArchive = new DefaultSudoKeyArchive(
             [instance(mockKeyManager1), instance(mockKeyManager2)],
-            { metaInfo: withMetaInfo ? metaInfo : undefined },
+            { metaInfo: withMetaInfo ? metaInfo : undefined, zip: false },
           )
+
+          when(
+            mockKeyManager1.publicKeyInfoToRSAPublicKey(anything()),
+          ).thenCall((publicKey: ArrayBuffer) => {
+            return publicKey
+          })
+          when(
+            mockKeyManager1.privateKeyInfoToRSAPrivateKey(anything()),
+          ).thenCall((privateKey: ArrayBuffer) => {
+            return privateKey
+          })
 
           await expect(keyArchive.loadKeys()).resolves.toBeUndefined()
 
@@ -1605,7 +1628,7 @@ describe('DefaultSudoKeyArchive tests', () => {
             ),
           ).thenResolve(encryptedKeys)
 
-          const archive = await keyArchive.archive(password, false)
+          const archive = await keyArchive.archive(password)
 
           const string = BufferUtil.toString(archive)
           const deserialized = JSON.parse(string)

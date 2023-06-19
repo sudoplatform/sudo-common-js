@@ -35,6 +35,8 @@ import {
   KeyArchiveCodec,
   SecureKeyArchive,
   SecureKeyArchiveType,
+  isInsecureKeyArchive,
+  InsecureKeyArchiveV2,
 } from './keyArchive'
 import { KeyArchiveKeyInfo, KeyArchiveKeyInfoArrayCodec } from './keyInfo'
 import { KeyArchiveKeyType } from './keyType'
@@ -57,16 +59,9 @@ export interface SudoKeyArchive {
    *   The password to use to encrypt the archive. Or undefined if no password.
    *   Choice to have no password must be explicit.
    *
-   * @param zip
-   *   Specifies whether or not to zip the archive to save space. It defaults to
-   *   to `true` if undefined.
-   *
    * @returns Binary archive data.
    */
-  archive(
-    password: ArrayBuffer | undefined,
-    zip?: boolean,
-  ): Promise<ArrayBuffer>
+  archive(password: ArrayBuffer | undefined): Promise<ArrayBuffer>
 
   /**
    * Decrypts and unarchives the keys in this archive.
@@ -181,7 +176,11 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
 
   private readonly defaultKeyManager: SudoKeyManager
   private readonly keyManagers: Record<string, SudoKeyManager> = {}
-  private keyArchive: SecureKeyArchive | InsecureKeyArchive | undefined
+  private keyArchive:
+    | SecureKeyArchive
+    | InsecureKeyArchive
+    | InsecureKeyArchiveV2
+    | undefined
   private readonly excludedKeys: Set<string> = new Set<string>()
   private readonly excludedKeyTypes: Set<KeyArchiveKeyType> =
     new Set<KeyArchiveKeyType>()
@@ -191,6 +190,8 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     string,
     KeyArchiveKeyInfoDecoded
   >()
+
+  private readonly zip: boolean
 
   /**
    * Construct SudoKeyArchive
@@ -215,8 +216,9 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
    *     Meta information to include with the key archive
    *
    * @param zip
-   *   Specifies whether or not `archiveData` is zipped. If undefined
-   *   then it will be assumed that the input `archiveData` is zipped.
+   * If the archive is created for importing keys, it specifies whether the provided data is
+   * zipped. If the archive is created for exporting keys, specifies whether the output should
+   * be zipped.
    *
    * @throws {@link IllegalArgumentError}
    *     If no key managers are provided
@@ -286,6 +288,8 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         this.metaInfo.set(key, value)
       }
     }
+
+    this.zip = options?.zip ?? true
   }
 
   /**
@@ -345,11 +349,46 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     return keyArchive
   }
 
+  private keyArchiveInfoFromKeyData(
+    keyData: KeyData,
+  ): KeyArchiveKeyInfoDecoded {
+    let rawKey: ArrayBuffer = keyData.data
+    // If we are not using compression then we are creating v2
+    // archive. We need to perform some key format conversion
+    // in order ensure interoperability with other platforms.
+    if (!this.zip) {
+      switch (keyData.type) {
+        case KeyDataKeyType.RSAPrivateKey:
+          rawKey = Object.values(
+            this.keyManagers,
+          )[0].privateKeyInfoToRSAPrivateKey(keyData.data)
+          break
+        case KeyDataKeyType.RSAPublicKey:
+          rawKey = Object.values(
+            this.keyManagers,
+          )[0].publicKeyInfoToRSAPublicKey(keyData.data)
+          break
+        default:
+          break
+      }
+    }
+
+    return {
+      NameSpace: keyData.namespace,
+      Name: keyData.name,
+      Type: keyArchiveKeyTypeFromKeyDataKeyType(keyData.type),
+      Data: Base64.encode(rawKey),
+      Decoded: keyData.data,
+      Synchronizable: false,
+      Exportable: true,
+    }
+  }
+
   async loadKeys(): Promise<void> {
     for (const keyManager of Object.values(this.keyManagers)) {
       await keyManager.exportKeys().then((exported) => {
         exported.forEach((data) => {
-          const keyArchiveInfoDecoded = keyArchiveInfoFromKeyData(data)
+          const keyArchiveInfoDecoded = this.keyArchiveInfoFromKeyData(data)
           if (
             !this.excludedKeyTypes.has(keyArchiveInfoDecoded.Type) &&
             !this.excludedKeys.has(data.name)
@@ -377,10 +416,21 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
           await keyManager.addPassword(keyData, info.Name)
           break
         case KeyArchiveKeyType.PrivateKey:
-          await keyManager.addPrivateKey(keyData, info.Name)
+          if (this.keyArchive?.Version === PREGZIP_ARCHIVE_VERSION) {
+            await keyManager.importPrivateKeyFromRSAPrivateKey(
+              info.Name,
+              keyData,
+            )
+          } else {
+            await keyManager.addPrivateKey(keyData, info.Name)
+          }
           break
         case KeyArchiveKeyType.PublicKey:
-          await keyManager.addPublicKey(keyData, info.Name)
+          if (this.keyArchive?.Version === PREGZIP_ARCHIVE_VERSION) {
+            await keyManager.importPublicKeyFromRSAPublicKey(info.Name, keyData)
+          } else {
+            await keyManager.addPublicKey(keyData, info.Name)
+          }
           break
         case KeyArchiveKeyType.SymmetricKey:
           await keyManager.addSymmetricKey(keyData, info.Name)
@@ -393,10 +443,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     }
   }
 
-  async archive(
-    password: ArrayBuffer | undefined,
-    zip: boolean = true,
-  ): Promise<ArrayBuffer> {
+  async archive(password: ArrayBuffer | undefined): Promise<ArrayBuffer> {
     const keys: KeyArchiveKeyInfo[] = []
     for (const key of this.keys.values()) {
       keys.push({
@@ -409,17 +456,28 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       })
     }
 
-    let keyArchive: SecureKeyArchive | InsecureKeyArchive
+    let keyArchive: SecureKeyArchive | InsecureKeyArchive | InsecureKeyArchiveV2
     if (!password) {
-      const insecureKeyArchive: InsecureKeyArchive = {
-        Type: 'Insecure',
-        MetaInfo: {},
-        Version: zip
-          ? DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION
-          : DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
-        Keys: keys,
+      if (this.zip) {
+        // Zipped archive is only supported by V3 archive.
+        const insecureKeyArchive: InsecureKeyArchive = {
+          Type: 'Insecure',
+          MetaInfo: {},
+          Version: DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION,
+          Keys: keys,
+        }
+        keyArchive = insecureKeyArchive
+      } else {
+        // Need this for backward compatibility and interoperability
+        // since other platforms only support V2 archive.
+        const insecureKeyArchive: InsecureKeyArchiveV2 = {
+          Type: 'Insecure',
+          MetaInfo: {},
+          Version: DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
+          Keys: Base64.encode(new TextEncoder().encode(JSON.stringify(keys))),
+        }
+        keyArchive = insecureKeyArchive
       }
-      keyArchive = insecureKeyArchive
     } else {
       const salt = await this.defaultKeyManager.generateRandomData(
         SudoCryptoProviderDefaults.pbkdfSaltSize,
@@ -453,7 +511,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         )
       const secureKeyArchive: SecureKeyArchive = {
         Type: 'Secure',
-        Version: zip
+        Version: this.zip
           ? DefaultSudoKeyArchive.CURRENT_ARCHIVE_VERSION
           : DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
         MetaInfo: {},
@@ -478,7 +536,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     // we would end up having a fully binary data structure for the archive.
     // If the time to compute becomes prohibitive we can look at a binary, non-JSON
     // base format for the archive.
-    return zip
+    return this.zip
       ? gzipSync(archiveData, {
           level: 9,
         })
@@ -525,9 +583,10 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         throw new KeyArchiveIncorrectPasswordError()
       }
       try {
-        const serializedKeys = gunzipSync(
-          new Uint8Array(compressedSerializedKeys),
-        )
+        const serializedKeys =
+          this.keyArchive.Version === PREGZIP_ARCHIVE_VERSION
+            ? compressedSerializedKeys
+            : gunzipSync(new Uint8Array(compressedSerializedKeys))
         const decoded = KeyArchiveKeyInfoArrayCodec.decode(
           JSON.parse(BufferUtil.toString(serializedKeys)),
         )
@@ -538,11 +597,26 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       } catch (err) {
         throw new KeyArchiveDecodingError()
       }
-    } else {
+    } else if (isInsecureKeyArchive(this.keyArchive)) {
       if (password) {
         throw new KeyArchiveNoPasswordRequiredError()
       }
       keys = this.keyArchive.Keys
+    } else {
+      // Process V2 insecure key archive. V2 archive's `Keys` attribute
+      // is always base64 encoded string.
+      const serializedKeys = Base64.decode(this.keyArchive.Keys)
+      try {
+        const decoded = KeyArchiveKeyInfoArrayCodec.decode(
+          JSON.parse(BufferUtil.toString(serializedKeys)),
+        )
+        if (isLeft(decoded)) {
+          throw new KeyArchiveDecodingError()
+        }
+        keys = decoded.right
+      } catch (err) {
+        throw new KeyArchiveDecodingError()
+      }
     }
 
     keys.forEach((key) => {
@@ -592,20 +666,6 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
 
   getMetaInfo(): ReadonlyMap<string, string> {
     return this.metaInfo
-  }
-}
-
-export function keyArchiveInfoFromKeyData(
-  keyData: KeyData,
-): KeyArchiveKeyInfoDecoded {
-  return {
-    NameSpace: keyData.namespace,
-    Name: keyData.name,
-    Type: keyArchiveKeyTypeFromKeyDataKeyType(keyData.type),
-    Data: Base64.encode(keyData.data),
-    Decoded: keyData.data,
-    Synchronizable: false,
-    Exportable: true,
   }
 }
 

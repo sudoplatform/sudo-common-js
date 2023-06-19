@@ -82,6 +82,33 @@ const SecureKeyArchiveRequiredProps = {
   IV: t.string,
 }
 
+const InsecureKeyArchiveV2RequiredProps = {
+  ...CommonKeyArchiveRequiredProps,
+  /**
+   * Archive type.
+   */
+  Type: t.union([
+    t.literal(InsecureKeyArchiveType),
+    t.literal(SecureKeyArchiveType),
+  ]),
+
+  /**
+   * Base64 encoded exported keys.
+   */
+  Keys: t.string,
+}
+
+// Existing V2 insecure key archives produced by iOS and Android
+// has a different structure to V3 insecure key archive so we
+// need a separate type and codec to process those. This is an
+// incompatibility in addition to V3 archives being zipped.
+export const InsecureKeyArchiveV2Codec = t.type(
+  InsecureKeyArchiveV2RequiredProps,
+  'InsecureKeyArchiveV2',
+)
+
+export type InsecureKeyArchiveV2 = t.TypeOf<typeof InsecureKeyArchiveV2Codec>
+
 const UnrecognizedKeyArchiveProps = {
   Version: t.number,
   Type: t.string,
@@ -104,6 +131,7 @@ export const KeyArchiveCodec = t.union(
   [
     SecureKeyArchiveCodec,
     InsecureKeyArchiveCodec,
+    InsecureKeyArchiveV2Codec,
 
     // Leave UnrecognizedKeyArchiveCodec last so it's tried last
     UnrecognizedKeyArchiveCodec,
@@ -122,11 +150,27 @@ export function isSecureKeyArchive(
 export function isInsecureKeyArchive(
   keyArchive: KeyArchive,
 ): keyArchive is InsecureKeyArchive {
-  return keyArchive.Type === InsecureKeyArchiveType
+  return (
+    keyArchive.Type === InsecureKeyArchiveType &&
+    keyArchive.Version !== PREGZIP_ARCHIVE_VERSION
+  )
+}
+
+export function isInsecureKeyArchiveV2(
+  keyArchive: KeyArchive,
+): keyArchive is InsecureKeyArchiveV2 {
+  return (
+    keyArchive.Type === InsecureKeyArchiveType &&
+    keyArchive.Version === PREGZIP_ARCHIVE_VERSION
+  )
 }
 
 export function isUnrecognizedKeyArchive(
   keyArchive: KeyArchive,
 ): keyArchive is UnrecognizedKeyArchive {
-  return !isSecureKeyArchive(keyArchive) && !isInsecureKeyArchive(keyArchive)
+  return (
+    !isSecureKeyArchive(keyArchive) &&
+    !isInsecureKeyArchive(keyArchive) &&
+    !isInsecureKeyArchiveV2(keyArchive)
+  )
 }

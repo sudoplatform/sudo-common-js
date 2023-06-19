@@ -13,12 +13,19 @@ const KeyArchiveKeyInfoRequiredProps = {
   Type: KeyArchiveKeyTypeCodec,
   Data: t.string,
   Synchronizable: t.boolean,
-  Exportable: t.boolean,
   NameSpace: t.string,
 }
 
-export const KeyArchiveKeyInfoCodec = t.type(
-  KeyArchiveKeyInfoRequiredProps,
+const KeyArchiveKeyInfoOptionalProps = {
+  Exportable: t.boolean,
+}
+
+// eslint-disable-next-line tree-shaking/no-side-effects-in-initialization
+export const KeyArchiveKeyInfoCodec = t.intersection(
+  [
+    t.type(KeyArchiveKeyInfoRequiredProps),
+    t.partial(KeyArchiveKeyInfoOptionalProps),
+  ],
   'KeyArchiveKeyInfo',
 )
 

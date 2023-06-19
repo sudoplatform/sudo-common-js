@@ -228,6 +228,20 @@ export interface SudoKeyManager {
   ): Promise<void>
 
   /**
+   * Converts PKCS#8 PrivateKeyInfo (RFC5280) to RSAPrivateKey (RFC3447).
+   *
+   * @param privateKey private key to convert.
+   */
+  privateKeyInfoToRSAPrivateKey(privateKey: ArrayBuffer): ArrayBuffer
+
+  /**
+   * Converts SubjectPubicKeyInfo (RFC5280) to RSAPublicKey (RFC3447).
+   *
+   * @param publicKey public key to convert.
+   */
+  publicKeyInfoToRSAPublicKey(publicKey: ArrayBuffer): ArrayBuffer
+
+  /**
    * Deletes a key pair from the secure store.
    *
    * @param name The name of the key pair to be deleted.
@@ -654,10 +668,7 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
       return undefined
     }
 
-    // Convert PrivateKeyInfo (RFC5280) to RSAPrivateKey (RFC3447).
-    const privateKeyInfo = pkijs.PrivateKeyInfo.fromBER(privateKey)
-    const keyData = privateKeyInfo.parsedKey?.toSchema().toBER()
-    return keyData
+    return this.privateKeyInfoToRSAPrivateKey(privateKey)
   }
 
   public async importPrivateKeyFromRSAPrivateKey(
@@ -691,10 +702,7 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
       case PublicKeyFormat.RSAPublicKey:
         return publicKey.keyData
       case PublicKeyFormat.SPKI:
-        // Convert SPKI (RFC5280) to RSAPublicKey (RFC3447).
-        const publicKeyInfo = pkijs.PublicKeyInfo.fromBER(publicKey.keyData)
-        const keyData = publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
-        return keyData
+        return this.publicKeyInfoToRSAPublicKey(publicKey.keyData)
     }
   }
 
@@ -867,6 +875,20 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
 
   public exportKeys(): Promise<KeyData[]> {
     return this.sudoCryptoProvider.exportKeys()
+  }
+
+  public privateKeyInfoToRSAPrivateKey(privateKey: ArrayBuffer): ArrayBuffer {
+    const privateKeyInfo = pkijs.PrivateKeyInfo.fromBER(privateKey)
+    const privateKeyData = privateKeyInfo.parsedKey?.toSchema().toBER()
+    if (!privateKeyData) {
+      throw new IllegalArgumentError('Private key cannot be converted.')
+    }
+    return privateKeyData
+  }
+
+  public publicKeyInfoToRSAPublicKey(publicKey: ArrayBuffer): ArrayBuffer {
+    const publicKeyInfo = pkijs.PublicKeyInfo.fromBER(publicKey)
+    return publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
   }
 
   private publicKeyToPEM(key: ArrayBuffer, format: PublicKeyFormat): string {
