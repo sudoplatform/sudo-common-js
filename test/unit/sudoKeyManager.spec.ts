@@ -1561,9 +1561,8 @@ describe('DefaultSudoKeyManager', () => {
         keyFormat: PublicKeyFormat.SPKI,
       })
 
-      const publicKey = await sudoKeyManager.exportPublicKeyAsRSAPublicKey(
-        'dummy_id',
-      )
+      const publicKey =
+        await sudoKeyManager.exportPublicKeyAsRSAPublicKey('dummy_id')
 
       if (!publicKey) {
         fail('Public key not found')
@@ -1616,9 +1615,8 @@ describe('DefaultSudoKeyManager', () => {
         exported,
       )
 
-      const privateKey = await sudoKeyManager.exportPrivateKeyAsRSAPrivateKey(
-        'dummy_id',
-      )
+      const privateKey =
+        await sudoKeyManager.exportPrivateKeyAsRSAPrivateKey('dummy_id')
 
       if (!privateKey) {
         fail('Private key not found')

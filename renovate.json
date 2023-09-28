@@ -2,14 +2,21 @@
   "extends": ["local>platform/gc-platform-renovate-config"],
   "packageRules": [
     {
+      "description": "pinning the docker images to node 16 until we are ready to force clients to upgrade",
+      "matchPackageNames": [
+        "947875592751.dkr.ecr.us-east-1.amazonaws.com/tools/node-build"
+      ],
+      "allowedVersions": "16"
+    },
+    {
       "description": "we have not in general upgraded beyond major version 15. Updating to 16 will require work though the scope of this work has not been evaluated at this time.",
       "matchPackageNames": ["graphql"],
       "allowedVersions": "<16.x"
     },
     {
-      "description": "Keep typescript version below 5.x.x",
-      "matchPackageNames": ["typescript"],
-      "allowedVersions": "<5.x"
+      "description": "Types should stay in line with node version",
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<18.x"
     },
     {
       "description": "Need to have below v28 because later version need Node 18",

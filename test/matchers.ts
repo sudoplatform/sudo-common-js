@@ -66,7 +66,9 @@ function match(
     }
   } else {
     if (context.isNot) {
-      failures.push(`expected ${caught} not to match ${error} but does`)
+      failures.push(
+        `expected ${caught} not to match ${error.name}, ${error.message} but does`,
+      )
     }
 
     return {
