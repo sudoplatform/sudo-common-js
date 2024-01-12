@@ -128,7 +128,7 @@ export interface SudoCryptoProvider {
    *
    * @param password The password from which to generate the symmetric key
    * @param salt Salt to use in generation of the key
-   * @param rounds The number of rounds of PBKDF2 to perform. Default: per getDefaultPBKDF2Rounds
+   * @param options.rounds The number of rounds of PBKDF2 to perform. Default: per getDefaultPBKDF2Rounds
    *
    * @returns The generated symmetric key.
    */
@@ -315,7 +315,7 @@ export interface SudoCryptoProvider {
    *
    * Encrypts the given data with the specified key
    *
-   * @param name The name of the symmetric key to use to encrypt.
+   * @param key The key to use to encrypt.
    * @param data Data to encrypt.
    * @param iv Optional Initialization Vector.
    *
@@ -330,8 +330,9 @@ export interface SudoCryptoProvider {
   /**
    * Encrypts the given data with the specified key
    *
-   * @param name The name of the symmetric key to use to encrypt.
+   * @param key The symmetric key to use to encrypt.
    * @param data Data to encrypt.
+   * @param options SymmetricEncryptionOptions to use
    *
    * @returns Encrypted data and IV
    *
@@ -348,7 +349,7 @@ export interface SudoCryptoProvider {
    *
    * Decrypt the given data with the specified symmetric key stored in the secure store.
    *
-   * @param name The name of the symmetric key to use to decrypt.
+   * @param key The symmetric key to use to decrypt.
    * @param data The data to decrypt.
    * @param iv Optional Initialization Vector.
    *
@@ -363,8 +364,9 @@ export interface SudoCryptoProvider {
   /**
    * Decrypt the given data with the specified symmetric key stored in the secure store.
    *
-   * @param name The name of the symmetric key to use to decrypt.
+   * @param key The symmetric key to use to decrypt.
    * @param data The data to decrypt.
+   * @param options SymmetricEncryptionOptions to use
    *
    * @returns Decrypted data
    *

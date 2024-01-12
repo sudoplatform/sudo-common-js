@@ -201,24 +201,24 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
    *     Key manager or array of key managers to either restore archive in to
    *     or construct archive from
    *
-   * @param archiveData
+   * @param options.archiveData
    *     Array buffer of binary archive data to restore.
    *
-   * @param excludedKeys
+   * @param options.excludedKeys
    *     Set of key names to exclude from archive or restore operation.
    *     Default: None
    *
-   * @param excludedKeyTypes
+   * @param options.excludedKeyTypes
    *     Set of key types to exclude from archive or restore operation.
-   *     Default: {@link KeyArchiveKeyType.PublicKey}
+   *     Default: None
    *
-   * @param metaInfo
+   * @param options.metaInfo
    *     Meta information to include with the key archive
    *
-   * @param zip
-   * If the archive is created for importing keys, it specifies whether the provided data is
-   * zipped. If the archive is created for exporting keys, specifies whether the output should
-   * be zipped.
+   * @param options.zip
+   *     If the archive is created for importing keys, it specifies whether the provided data is
+   *     zipped. If the archive is created for exporting keys, specifies whether the output should
+   *     be zipped.
    *
    * @throws {@link IllegalArgumentError}
    *     If no key managers are provided

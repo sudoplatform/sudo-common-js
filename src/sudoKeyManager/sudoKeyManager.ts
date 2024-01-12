@@ -285,7 +285,7 @@ export interface SudoKeyManager {
    *
    * Encrypts the given data with the specified key
    *
-   * @param name The name of the symmetric key to use to encrypt.
+   * @param key The symmetric key to use to encrypt.
    * @param data Data to encrypt.
    * @param iv Optional Initialization Vector.
    *
@@ -300,8 +300,9 @@ export interface SudoKeyManager {
   /**
    * Encrypts the given data with the specified key
    *
-   * @param name The name of the symmetric key to use to encrypt.
+   * @param key The symmetric key to use to encrypt.
    * @param data Data to encrypt.
+   * @param options SymmetricEncryptionOptions to use.
    *
    * @returns Encrypted data and IV
    *
@@ -319,7 +320,7 @@ export interface SudoKeyManager {
    * Decrypt the given data with the given symmetric key
    *
    * @param key The symmetric key to use to decrypt the data.
-   * @param encryptedData The encrypted data.
+   * @param data The encrypted data.
    * @param iv Optional Initialization Vector.
    *
    * @returns Decrypted data
@@ -334,7 +335,8 @@ export interface SudoKeyManager {
    * Decrypt the given data with the given symmetric key
    *
    * @param key The symmetric key to use to decrypt the data.
-   * @param encryptedData The encrypted data.
+   * @param data The encrypted data.
+   * @param options SymmetricEncryptionOptions to use.
    *
    * @returns Decrypted data
    *
@@ -458,10 +460,9 @@ export interface SudoKeyManager {
   /**
    * Generates a symmetric key, derived from a password using PBKDF2.
    *
-   * @param name The name to store the symmetric key as
    * @param password The password from which to generate the symmetric key
    * @param salt Salt to use in generation of the key
-   * @param rounds The number of rounds of PBKDF2 to perform. Default: per getDefaultPBKDF2Rounds
+   * @param options.rounds The number of rounds of PBKDF2 to perform. Default: per getDefaultPBKDF2Rounds
    *
    * @returns The generated symmetric key.
    */
@@ -506,8 +507,6 @@ export interface SudoKeyManager {
 
 export class DefaultSudoKeyManager implements SudoKeyManager {
   /**
-   * @param namespace A namespace to use as part of the key name.  If a namespace is specified then
-   * a unique identifier for each key will be `<namespace>.<keyName>`. Namespace cannot be an empty string.
    * @param sudoCryptoProvider
    */
   constructor(private readonly sudoCryptoProvider: SudoCryptoProvider) {}

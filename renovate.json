@@ -16,7 +16,7 @@
     {
       "description": "Types should stay in line with node version",
       "matchPackageNames": ["@types/node"],
-      "allowedVersions": "<18.x"
+      "allowedVersions": "<17.x"
     },
     {
       "description": "Need to have below v28 because later version need Node 18",
