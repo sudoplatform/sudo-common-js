@@ -32,6 +32,11 @@
       "description": "Need to have below v28 because later version need Node 18",
       "matchPackageNames": ["ts-jest"],
       "allowedVersions": "<27.1.6"
+    },
+    {
+      "description": "Need to have below 5.9.0 because later version need Node 18",
+      "matchPackageNames": ["aws-sdk-mock"],
+      "allowedVersions": "<5.9.0"
     }
   ]
 }
