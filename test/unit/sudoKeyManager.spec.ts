@@ -1515,7 +1515,7 @@ describe('DefaultSudoKeyManager', () => {
 
       const publicKey = await crypto.webcrypto.subtle.importKey(
         'spki',
-        key,
+        new Uint8Array(key),
         { name: 'RSA-OAEP', hash: 'SHA-256' },
         true,
         ['encrypt'],
