@@ -26,7 +26,7 @@ yarn audit --json --groups "dependencies devDependencies" | \
     echo "${advisory}" | jq .
     new=1
   else
-    if expr "$suppression" : '^[0-9][0-9]*$' >/dev/null ; then
+    if expr "$suppression" : '[0-9][0-9]*$' >/dev/null ; then
       # Old style suppression that was just the expiry timestamp
       expiry="$suppression"
     else
