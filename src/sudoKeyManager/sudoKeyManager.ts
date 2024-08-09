@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import * as asn1js from 'asn1js'
+import * as pkijs from 'pkijs'
+import { IllegalArgumentError } from '../errors/error'
+import { Base64 } from '../utils/base64'
 import { Buffer as BufferUtil } from '../utils/buffer'
 import { KeyData } from './keyData'
 import { PublicKey, PublicKeyFormat } from './publicKey'
@@ -13,10 +17,6 @@ import {
   SudoCryptoProvider,
   SymmetricEncryptionOptions,
 } from './sudoCryptoProvider'
-import * as pkijs from 'pkijs'
-import * as asn1js from 'asn1js'
-import { Base64 } from '../utils/base64'
-import { IllegalArgumentError } from '../errors/error'
 
 /**
  * ASN.1 OIDs.
@@ -430,6 +430,22 @@ export interface SudoKeyManager {
   ): Promise<ArrayBuffer>
 
   /**
+   * Encrypts the given data with the specified public key.
+   *
+   * @param {ArrayBuffer} key Raw key bytes of the public key to use for encryption.
+   * @param {ArrayBuffer} data The data to encrypt.
+   *
+   * @returns Encrypted data
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
+   */
+  encryptWithPublicKey(
+    key: ArrayBuffer,
+    data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
    * Decrypts the given data with the specified private key.
    *
    * @param name The name of the private key to use for decryption.
@@ -832,8 +848,28 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     name: string,
     data: ArrayBuffer,
     options?: AsymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  public encryptWithPublicKey(
+    key: ArrayBuffer,
+    data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  public encryptWithPublicKey(
+    key: unknown,
+    data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
-    return this.sudoCryptoProvider.encryptWithPublicKey(name, data, options)
+    if (typeof key === 'string') {
+      return this.sudoCryptoProvider.encryptWithPublicKey(key, data, options)
+    } else {
+      return this.sudoCryptoProvider.encryptWithPublicKey(
+        key as ArrayBuffer,
+        data,
+        options,
+      )
+    }
   }
 
   public decryptWithPrivateKey(

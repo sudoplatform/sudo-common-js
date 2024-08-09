@@ -379,10 +379,10 @@ export interface SudoCryptoProvider {
   ): Promise<ArrayBuffer>
 
   /**
-   * Encrypts the given data with the specified public key.
+   * Encrypts the given data with the specified public key based on name.
    *
-   * @param name The name of the public key to use for encryption.
-   * @param data The data to encrypt.
+   * @param {string} name The name of the public key to use for encryption.
+   * @param {ArrayBuffer} data The data to encrypt.
    *
    * @returns Encrypted data
    *
@@ -391,6 +391,22 @@ export interface SudoCryptoProvider {
    */
   encryptWithPublicKey(
     name: string,
+    data: ArrayBuffer,
+    options?: AsymmetricEncryptionOptions,
+  ): Promise<ArrayBuffer>
+
+  /**
+   * Encrypts the given data with the specified public key.
+   *
+   * @param {ArrayBuffer} key Raw key bytes of the public key to use for encryption.
+   * @param {ArrayBuffer} data The data to encrypt.
+   *
+   * @returns Encrypted data
+   *
+   * @throws {@link UnrecognizedAlgorithmError}
+   */
+  encryptWithPublicKey(
+    key: ArrayBuffer,
     data: ArrayBuffer,
     options?: AsymmetricEncryptionOptions,
   ): Promise<ArrayBuffer>

@@ -52,6 +52,11 @@
       "description": "Need to have below 0.26.0 while we still have node 16 support",
       "matchPackagePrefixes": ["typedoc"],
       "allowedVersions": "<0.26.0"
+    },
+    {
+      "description": "Need to have below 6.0.0 while we still have node 16 support",
+      "matchPackagePrefixes": ["rimraf"],
+      "allowedVersions": "<6.0.0"
     }
   ]
 }

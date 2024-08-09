@@ -777,29 +777,60 @@ describe('DefaultSudoKeyManager', () => {
   })
 
   describe('encryptWithPublicKey', () => {
-    it('should call crypto provider encryptWithPublicKey', async () => {
+    it('should call crypto provider encryptWithPublicKey with key name', async () => {
+      const keyName = 'stubKeyName'
       when(
         sudoCryptoProviderMock.encryptWithPublicKey(
-          anything(),
+          keyName,
           anything(),
           anything(),
         ),
       ).thenResolve(encrypted)
 
       await expect(
-        sudoKeyManager.encryptWithPublicKey('VpnKey', decrypted),
+        sudoKeyManager.encryptWithPublicKey(keyName, decrypted),
       ).resolves.toEqual(encrypted)
 
       const [actualKeyName, actualData, actualOptions] = capture(
         sudoCryptoProviderMock.encryptWithPublicKey,
       ).first()
-      expect(actualKeyName).toStrictEqual('VpnKey')
+      expect(actualKeyName).toStrictEqual(keyName)
       expect(actualData).toStrictEqual(decrypted)
       expect(actualOptions).toBeUndefined()
 
       verify(
         sudoCryptoProviderMock.encryptWithPublicKey(
+          keyName,
           anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider encryptWithPublicKey with key', async () => {
+      const key = new ArrayBuffer(0)
+      when(
+        sudoCryptoProviderMock.encryptWithPublicKey(
+          key,
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(encrypted)
+
+      await expect(
+        sudoKeyManager.encryptWithPublicKey(key, decrypted),
+      ).resolves.toEqual(encrypted)
+
+      const [actualKeyName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.encryptWithPublicKey,
+      ).first()
+      expect(actualKeyName).toStrictEqual(key)
+      expect(actualData).toStrictEqual(decrypted)
+      expect(actualOptions).toBeUndefined()
+
+      verify(
+        sudoCryptoProviderMock.encryptWithPublicKey(
+          key,
           anything(),
           anything(),
         ),
