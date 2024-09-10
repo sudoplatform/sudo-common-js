@@ -308,7 +308,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       } else {
         jsonData = archiveData
       }
-    } catch (err) {
+    } catch {
       throw new KeyArchiveDecodingError()
     }
 
@@ -321,7 +321,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         throw new KeyArchiveDecodingError()
       }
       keyArchive = decoded.right
-    } catch (err) {
+    } catch {
       throw new KeyArchiveDecodingError()
     }
     if (isUnrecognizedKeyArchive(keyArchive)) {
@@ -567,7 +567,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
           salt,
           { rounds: this.keyArchive.Rounds },
         )
-      } catch (err) {
+      } catch {
         throw new KeyArchiveDecodingError()
       }
 
@@ -579,7 +579,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
             encryptedKeys,
             { iv },
           )
-      } catch (err) {
+      } catch {
         throw new KeyArchiveIncorrectPasswordError()
       }
       try {
@@ -594,7 +594,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
           throw new KeyArchiveDecodingError()
         }
         keys = decoded.right
-      } catch (err) {
+      } catch {
         throw new KeyArchiveDecodingError()
       }
     } else if (isInsecureKeyArchive(this.keyArchive)) {
@@ -614,7 +614,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
           throw new KeyArchiveDecodingError()
         }
         keys = decoded.right
-      } catch (err) {
+      } catch {
         throw new KeyArchiveDecodingError()
       }
     }
@@ -624,7 +624,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       let decoded: ArrayBuffer
       try {
         decoded = Base64.decode(key.Data)
-      } catch (err) {
+      } catch {
         throw new KeyArchiveDecodingError(`Unable to decode key ${keyKey}`)
       }
       this.keys.set(keyKey, { ...key, Decoded: decoded })
