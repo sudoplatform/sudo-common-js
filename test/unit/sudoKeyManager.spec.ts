@@ -777,10 +777,10 @@ describe('DefaultSudoKeyManager', () => {
   })
 
   describe('encryptWithPublicKey', () => {
-    it('should call crypto provider encryptWithPublicKey with key name', async () => {
+    it('should call crypto provider encryptWithPublicKeyName with key name', async () => {
       const keyName = 'stubKeyName'
       when(
-        sudoCryptoProviderMock.encryptWithPublicKey(
+        sudoCryptoProviderMock.encryptWithPublicKeyName(
           keyName,
           anything(),
           anything(),
@@ -792,14 +792,14 @@ describe('DefaultSudoKeyManager', () => {
       ).resolves.toEqual(encrypted)
 
       const [actualKeyName, actualData, actualOptions] = capture(
-        sudoCryptoProviderMock.encryptWithPublicKey,
+        sudoCryptoProviderMock.encryptWithPublicKeyName,
       ).first()
       expect(actualKeyName).toStrictEqual(keyName)
       expect(actualData).toStrictEqual(decrypted)
       expect(actualOptions).toBeUndefined()
 
       verify(
-        sudoCryptoProviderMock.encryptWithPublicKey(
+        sudoCryptoProviderMock.encryptWithPublicKeyName(
           keyName,
           anything(),
           anything(),
@@ -807,8 +807,10 @@ describe('DefaultSudoKeyManager', () => {
       ).once()
     })
 
-    it('should call crypto provider encryptWithPublicKey with key', async () => {
-      const key = new ArrayBuffer(0)
+    it('should call crypto provider encryptWithPublicKey with valid SPKI key', async () => {
+      const keyString =
+        'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyTNXRSJ0a+DtfykHZ+rLOBANlShFFBCle9x93V+8NrYsQkylazbmeV53GE6mp5W4jF5whYxAdBxNy/pRxNZAKsm+I1k3iJQv4YUqtrcTVtmLDKpJpykj+RtbVmqOXUCARJT5I8vIfcdsbUJKBnXTmMzEDXsDXUTtA54oRSgW7dd2kGmDhfqtbWyhm/5lRCpOXR3DXyClQ8DiaFfSYSm+kPYQUbhGb0xPZgrUrLkT7VyoHkMMzF4ymQIG7H3+guNy6W5v52bu4IA398uzHXTydt8JnqrvnO0rhpjkGB2iWsYiHbe7zg08mL29ACd+4c1aKzePja4nfRK2/bmNO5t4gwIDAQAB'
+      const key = BufferUtil.fromString(keyString)
       when(
         sudoCryptoProviderMock.encryptWithPublicKey(
           key,
@@ -826,7 +828,9 @@ describe('DefaultSudoKeyManager', () => {
       ).first()
       expect(actualKeyName).toStrictEqual(key)
       expect(actualData).toStrictEqual(decrypted)
-      expect(actualOptions).toBeUndefined()
+      expect(actualOptions).toStrictEqual({
+        publicKeyFormat: PublicKeyFormat.SPKI,
+      })
 
       verify(
         sudoCryptoProviderMock.encryptWithPublicKey(
@@ -837,9 +841,46 @@ describe('DefaultSudoKeyManager', () => {
       ).once()
     })
 
-    it('should call crypto provider encryptWithPublicKey with algorithm', async () => {
+    it('should call crypto provider encryptWithPublicKey with valid RSA key', async () => {
+      const keyString =
+        'MIIBCgKCAQEArZXraFLIOiZpNezKcI4fvJkI3+D186clWBwd97Xl80H9Ikdek2j9PG4uuli852ShGmydyT/eV/XqE/noD9Rx0Dba9pxdI0YWWry/bFClcJDVAGpSWhYvAhEM4LiAqWYyG7ieU6S7DgjHAo9qdzYmK9XK+jPstfmTtIgRpXFKkKgcYobykdTZvaDGhGVEBGrFzNiJ3DzBe4cYgEt/HBQYqMUF2w9vX3/3aylQV4nKTjIEOMLoxQqymxvpoKrMmSaL8UJdVh15PqWArk5a6n1NG2MdnImQ9ak2UQ4LcUIENHVxKXdW6SsXxBbOoTMomIQbgmv61Tx9JTdHD4ZEg0tq8QIDAQAB'
+      const key = BufferUtil.fromString(keyString)
+
       when(
         sudoCryptoProviderMock.encryptWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).thenResolve(encrypted)
+
+      await expect(
+        sudoKeyManager.encryptWithPublicKey(key, decrypted, {
+          publicKeyFormat: PublicKeyFormat.RSAPublicKey,
+        }),
+      ).resolves.toEqual(encrypted)
+
+      const [actualKeyName, actualData, actualOptions] = capture(
+        sudoCryptoProviderMock.encryptWithPublicKey,
+      ).first()
+      expect(actualKeyName).not.toStrictEqual(key)
+      expect(actualData).toStrictEqual(decrypted)
+      expect(actualOptions).toStrictEqual({
+        publicKeyFormat: PublicKeyFormat.SPKI,
+      })
+
+      verify(
+        sudoCryptoProviderMock.encryptWithPublicKey(
+          anything(),
+          anything(),
+          anything(),
+        ),
+      ).once()
+    })
+
+    it('should call crypto provider encryptWithPublicKeyName with algorithm', async () => {
+      when(
+        sudoCryptoProviderMock.encryptWithPublicKeyName(
           anything(),
           anything(),
           anything(),
@@ -854,7 +895,7 @@ describe('DefaultSudoKeyManager', () => {
       ).resolves.toEqual(encrypted)
 
       const [actualKeyName, actualData, actualOptions] = capture(
-        sudoCryptoProviderMock.encryptWithPublicKey,
+        sudoCryptoProviderMock.encryptWithPublicKeyName,
       ).first()
       expect(actualKeyName).toStrictEqual('VpnKey')
       expect(actualData).toStrictEqual(decrypted)
@@ -862,7 +903,7 @@ describe('DefaultSudoKeyManager', () => {
       expect(actualOptions!.algorithm).toStrictEqual(options.algorithm)
 
       verify(
-        sudoCryptoProviderMock.encryptWithPublicKey(
+        sudoCryptoProviderMock.encryptWithPublicKeyName(
           anything(),
           anything(),
           anything(),

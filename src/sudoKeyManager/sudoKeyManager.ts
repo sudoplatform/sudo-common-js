@@ -651,26 +651,7 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     } else {
       throw new IllegalArgumentError()
     }
-
-    const stripped = publicKey
-      .replace(/-{5}(BEGIN|END) .*-{5}/gm, '')
-      .replace(/\s/gm, '')
-    let keyData = Base64.decode(stripped)
-    if (format === PublicKeyFormat.RSAPublicKey) {
-      // Web Crypto Provider currently only accepts SPKI and
-      // none of the native providers support adding a public
-      // key so we will need to convert RSAPublicKey (RFC3447)
-      // to SPKI (RFC5280).
-      const spki = new pkijs.PublicKeyInfo()
-      spki.algorithm = new pkijs.AlgorithmIdentifier({
-        algorithmId: OID.rsaEncryption,
-        algorithmParams: new asn1js.Null(),
-      })
-      spki.subjectPublicKey = new asn1js.BitString({
-        valueHex: keyData,
-      })
-      keyData = spki.toSchema().toBER()
-    }
+    const keyData = this.publicKeyAsSpki(publicKey, format)
     await this.sudoCryptoProvider.addPublicKey(keyData, name)
   }
 
@@ -857,19 +838,34 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
   ): Promise<ArrayBuffer>
 
   public encryptWithPublicKey(
-    key: unknown,
+    key: ArrayBuffer | string,
     data: ArrayBuffer,
     options?: AsymmetricEncryptionOptions,
   ): Promise<ArrayBuffer> {
     if (typeof key === 'string') {
-      return this.sudoCryptoProvider.encryptWithPublicKey(key, data, options)
-    } else {
-      return this.sudoCryptoProvider.encryptWithPublicKey(
-        key as ArrayBuffer,
+      return this.sudoCryptoProvider.encryptWithPublicKeyName(
+        key,
         data,
         options,
       )
     }
+
+    let keyToUse = key
+    const formatToUse =
+      options?.publicKeyFormat ??
+      (BufferUtil.toString(key).startsWith(this.getSpkiHeaderBytes())
+        ? PublicKeyFormat.SPKI
+        : PublicKeyFormat.RSAPublicKey)
+    if (formatToUse !== PublicKeyFormat.SPKI) {
+      keyToUse = this.publicKeyAsSpki(
+        BufferUtil.toString(key),
+        PublicKeyFormat.RSAPublicKey,
+      )
+    }
+    return this.sudoCryptoProvider.encryptWithPublicKey(keyToUse, data, {
+      ...options,
+      publicKeyFormat: PublicKeyFormat.SPKI,
+    })
   }
 
   public decryptWithPrivateKey(
@@ -924,6 +920,42 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
   public publicKeyInfoToRSAPublicKey(publicKey: ArrayBuffer): ArrayBuffer {
     const publicKeyInfo = pkijs.PublicKeyInfo.fromBER(publicKey)
     return publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
+  }
+
+  private publicKeyAsSpki(
+    publicKey: string,
+    format: PublicKeyFormat,
+  ): ArrayBuffer {
+    const stripped = publicKey
+      .replace(/-{5}(BEGIN|END) .*-{5}/gm, '')
+      .replace(/\s/gm, '')
+    let keyData = Base64.decode(stripped)
+    if (format === PublicKeyFormat.RSAPublicKey) {
+      // Convert RSAPublicKey (RFC3447) to SPKI (RFC5280).
+      const spki = new pkijs.PublicKeyInfo()
+      spki.algorithm = new pkijs.AlgorithmIdentifier({
+        algorithmId: OID.rsaEncryption,
+        algorithmParams: new asn1js.Null(),
+      })
+      spki.subjectPublicKey = new asn1js.BitString({
+        valueHex: keyData,
+      })
+      keyData = spki.toSchema().toBER()
+    }
+    return keyData
+  }
+
+  private getSpkiHeaderBytes(length: number = 24): string {
+    const spki = new pkijs.PublicKeyInfo()
+    spki.algorithm = new pkijs.AlgorithmIdentifier({
+      algorithmId: OID.rsaEncryption,
+      algorithmParams: new asn1js.Null(),
+    })
+    spki.subjectPublicKey = new asn1js.BitString({
+      valueHex: new ArrayBuffer(270),
+    })
+    const encoded = Base64.encode(spki.toSchema().toBER())
+    return encoded.substring(0, length)
   }
 
   private publicKeyToPEM(key: ArrayBuffer, format: PublicKeyFormat): string {

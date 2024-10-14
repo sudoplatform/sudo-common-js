@@ -57,6 +57,11 @@
       "description": "Need to have below 6.0.0 while we still have node 16 support",
       "matchPackagePrefixes": ["rimraf"],
       "allowedVersions": "<6.0.0"
+    },
+    {
+      "description": "Need to have below 9.0.0 because later versions need node 18",
+      "matchPackagePrefixes": ["concurrently"],
+      "allowedVersions": "<9.0.0"
     }
   ]
 }

@@ -6,7 +6,7 @@
 
 import { EncryptionAlgorithm, SignatureAlgorithm } from '../types/types'
 import { KeyData } from './keyData'
-import { PublicKey } from './publicKey'
+import { PublicKey, PublicKeyFormat } from './publicKey'
 
 export class SudoCryptoProviderDefaults {
   public static readonly aesIVSize = 16
@@ -34,6 +34,10 @@ export interface AsymmetricEncryptionOptions {
   // Algorithm used to encrypt data.
   // Defaulted to RSA/OAEPSHA-1
   algorithm?: EncryptionAlgorithm
+  // If a public key is provided as data only to public key operations,
+  // permits specification of key format.
+  // Defaulted to RSAPublicKey
+  publicKeyFormat?: PublicKeyFormat
 }
 
 /**
@@ -389,7 +393,7 @@ export interface SudoCryptoProvider {
    * @throws {@link UnrecognizedAlgorithmError}
    * @throws {@link KeyNotFoundError}
    */
-  encryptWithPublicKey(
+  encryptWithPublicKeyName(
     name: string,
     data: ArrayBuffer,
     options?: AsymmetricEncryptionOptions,
@@ -397,6 +401,8 @@ export interface SudoCryptoProvider {
 
   /**
    * Encrypts the given data with the specified public key.
+   *
+   * The format of the public key is defined in the options parameter.
    *
    * @param {ArrayBuffer} key Raw key bytes of the public key to use for encryption.
    * @param {ArrayBuffer} data The data to encrypt.
