@@ -30,11 +30,15 @@ export class Base64 {
   }
 
   static decodeString(encoded: string): string {
-    return atob(encoded)
+    const buffer = this.decode(encoded)
+    const decodedString = BufferUtil.toString(buffer)
+    return decodedString
   }
 
   static encodeString(string: string): string {
-    return btoa(string)
+    const bytes = BufferUtil.fromString(string)
+    const encodedString = this.encode(bytes.buffer)
+    return encodedString
   }
 
   /**

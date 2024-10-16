@@ -48,4 +48,18 @@ describe('Base64', () => {
   it('should encode like buffer encode/decode', () => {
     expect(Base64.encode(decodedPKBuffer)).toEqual(encodedPK)
   })
+
+  it('Base 64 encodes/decodes ASCII correctly', () => {
+    const result = 'super basic string to be tested'
+    const encoded = Base64.encodeString(result)
+    const decoded = Base64.decodeString(encoded)
+    expect(decoded).toEqual(result)
+  })
+
+  it('Base 64 encodes/decodes strings with emojis (non-ASCII strings) correctly', () => {
+    const result = 'this is definitely not ascii 👍'
+    const encoded = Base64.encodeString(result)
+    const decoded = Base64.decodeString(encoded)
+    expect(decoded).toEqual(result)
+  })
 })
