@@ -853,12 +853,12 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
     let keyToUse = key
     const formatToUse =
       options?.publicKeyFormat ??
-      (BufferUtil.toString(key).startsWith(this.getSpkiHeaderBytes())
+      (Base64.encode(key).startsWith(this.getSpkiHeaderBytes())
         ? PublicKeyFormat.SPKI
         : PublicKeyFormat.RSAPublicKey)
     if (formatToUse !== PublicKeyFormat.SPKI) {
       keyToUse = this.publicKeyAsSpki(
-        BufferUtil.toString(key),
+        Base64.encode(key),
         PublicKeyFormat.RSAPublicKey,
       )
     }
