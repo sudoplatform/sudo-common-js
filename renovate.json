@@ -2,11 +2,11 @@
   "extends": ["local>platform/gc-platform-renovate-config"],
   "packageRules": [
     {
-      "description": "pinning the docker images to node 16 until we are ready to force clients to upgrade",
+      "description": "pinning the docker images to node 20 until we are ready to force clients to upgrade",
       "matchPackageNames": [
         "947875592751.dkr.ecr.us-east-1.amazonaws.com/tools/node-build"
       ],
-      "allowedVersions": "16"
+      "allowedVersions": "20"
     },
     {
       "description": "we have not in general upgraded beyond major version 15. Updating to 16 will require work though the scope of this work has not been evaluated at this time.",
@@ -14,54 +14,9 @@
       "allowedVersions": "<16.x"
     },
     {
-      "description": "Types should stay in line with node version",
-      "matchPackageNames": ["@types/node"],
-      "allowedVersions": "<17.x"
-    },
-    {
-      "description": "Need to have below v28 because later version need Node 18",
-      "matchPackageNames": ["jest"],
-      "allowedVersions": "<27.5.2"
-    },
-    {
-      "description": "Need to have below v28 because later version need Node 18",
-      "matchPackageNames": ["@types/jest"],
-      "allowedVersions": "<27.5.3"
-    },
-    {
-      "description": "Need to have below v28 because later version need Node 18",
-      "matchPackageNames": ["ts-jest"],
-      "allowedVersions": "<27.1.6"
-    },
-    {
-      "description": "Need to have below 5.9.0 because later version need Node 18",
-      "matchPackageNames": ["aws-sdk-mock"],
-      "allowedVersions": "<5.9.0"
-    },
-    {
-      "description": "Need to have below 7.3.0 because later version need Node 18",
-      "matchPackagePrefixes": ["@typescript-eslint/"],
-      "allowedVersions": "<7.3.0"
-    },
-    {
-      "description": "Need to have below 5.5 for typedoc support",
-      "matchPackagePrefixes": ["typescript"],
-      "allowedVersions": "<5.5.0"
-    },
-    {
-      "description": "Need to have below 0.26.0 while we still have node 16 support",
-      "matchPackagePrefixes": ["typedoc"],
-      "allowedVersions": "<0.26.0"
-    },
-    {
-      "description": "Need to have below 6.0.0 while we still have node 16 support",
-      "matchPackagePrefixes": ["rimraf"],
-      "allowedVersions": "<6.0.0"
-    },
-    {
-      "description": "Need to have below 9.0.0 because later versions need node 18",
-      "matchPackagePrefixes": ["concurrently"],
-      "allowedVersions": "<9.0.0"
+      "description": "Need to keep below 9.0.0 due to issues with eslint-plugin-tree-shaking and eslint 9.x",
+      "matchPackageNames": ["eslint"],
+      "allowedVersions": "<9.x"
     }
   ]
 }
