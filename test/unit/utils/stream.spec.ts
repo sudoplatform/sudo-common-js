@@ -83,6 +83,9 @@ function toBlob(s: string): Blob {
     size: s.length,
     type: 'text/plain',
     arrayBuffer: () => Promise.resolve(new TextEncoder().encode(s)),
+    bytes: () => {
+      throw new Error('Not implemented')
+    },
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     stream: () => toReadableStream(s) as any,
     slice: () => {
