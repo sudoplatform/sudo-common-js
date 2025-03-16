@@ -220,6 +220,7 @@ export class DefaultConfigurationManager implements ConfigurationManager {
       // We want these request to be unauthenticated
       // so we provide a no-op signer for the requests
       signer: { sign: (request: any) => Promise.resolve(request) },
+      credentials: { accessKeyId: '', secretAccessKey: '' },
     })
 
     const incompatible: ServiceCompatibilityInfo[] = []
