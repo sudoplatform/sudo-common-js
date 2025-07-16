@@ -13,3 +13,4 @@ coverage
 yalc.lock
 config
 package.json.old
+.yarn/install-state.gz

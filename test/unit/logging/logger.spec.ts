@@ -14,13 +14,13 @@ describe('Logging utility test suite', () => {
     console.log = jest.fn()
     logger.error('Custom logger name with custom level', fooBar)
 
-    expect(console.log).toBeCalledTimes(2)
-    expect(console.log).toBeCalledWith(
+    expect(console.log).toHaveBeenCalledTimes(2)
+    expect(console.log).toHaveBeenCalledWith(
       expect.stringContaining(
         'ERROR: TestProject: Custom logger name with custom level',
       ),
     )
-    expect(console.log).toBeCalledWith(
+    expect(console.log).toHaveBeenCalledWith(
       expect.objectContaining({
         foo: 'bar',
       }),
@@ -31,13 +31,13 @@ describe('Logging utility test suite', () => {
     const logger = new DefaultLogger()
     console.log = jest.fn()
     logger.info('Default logger name with default level', fooBar)
-    expect(console.log).toBeCalledTimes(2)
-    expect(console.log).toBeCalledWith(
+    expect(console.log).toHaveBeenCalledTimes(2)
+    expect(console.log).toHaveBeenCalledWith(
       expect.stringContaining(
         'INFO: rootLogger: Default logger name with default level',
       ),
     )
-    expect(console.log).toBeCalledWith(
+    expect(console.log).toHaveBeenCalledWith(
       expect.objectContaining({
         foo: 'bar',
       }),
@@ -50,8 +50,8 @@ describe('Logging utility test suite', () => {
     const logger = new DefaultLogger()
     console.log = jest.fn()
     logger.debug('logger name at level set by environment variables')
-    expect(console.log).toBeCalledTimes(1)
-    expect(console.log).toBeCalledWith(
+    expect(console.log).toHaveBeenCalledTimes(1)
+    expect(console.log).toHaveBeenCalledWith(
       expect.stringContaining(
         'DEBUG: DummyProject: logger name at level set by environment variables',
       ),
@@ -64,8 +64,8 @@ describe('Logging utility test suite', () => {
     const logger = new DefaultLogger()
     console.log = jest.fn()
     logger.debug('logger name at level set by environment variables')
-    expect(console.log).toBeCalledTimes(1)
-    expect(console.log).toBeCalledWith(
+    expect(console.log).toHaveBeenCalledTimes(1)
+    expect(console.log).toHaveBeenCalledWith(
       expect.stringContaining(
         'DEBUG: DummyProject: logger name at level set by environment variables',
       ),
