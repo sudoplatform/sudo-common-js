@@ -1,4 +1,3 @@
-import { gunzipSync, gzipSync } from 'fflate'
 import { isLeft, isRight } from 'fp-ts/lib/Either'
 import * as t from 'io-ts'
 import {
@@ -47,8 +46,9 @@ import { Base64 } from '../../src/utils/base64'
 import { Buffer as BufferUtil } from '../../src/utils/buffer'
 import { TextEncoder, TextDecoder } from 'node:util'
 import '../matchers'
+import { Gzip } from '../../src/utils/gzip'
 
-global.TextEncoder = TextEncoder
+global.TextEncoder = TextEncoder as typeof global.TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 describe('DefaultSudoKeyArchive tests', () => {
@@ -207,7 +207,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         expect(
           () =>
             new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-              archiveData: gzipSync(BufferUtil.fromString('not JSON')),
+              archiveData: Gzip.compress(BufferUtil.fromString('not JSON')),
             }),
         ).toThrowErrorMatching(new KeyArchiveDecodingError())
       })
@@ -216,7 +216,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         expect(
           () =>
             new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-              archiveData: gzipSync(
+              archiveData: Gzip.compress(
                 BufferUtil.fromString(JSON.stringify({ Some: 'JSON' })),
               ),
             }),
@@ -228,7 +228,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         expect(
           () =>
             new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-              archiveData: gzipSync(
+              archiveData: Gzip.compress(
                 BufferUtil.fromString(
                   JSON.stringify({ Type: unsupportedType }),
                 ),
@@ -243,7 +243,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         expect(
           () =>
             new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-              archiveData: gzipSync(
+              archiveData: Gzip.compress(
                 BufferUtil.fromString(
                   JSON.stringify({ Version: unsupportedVersion }),
                 ),
@@ -299,7 +299,7 @@ describe('DefaultSudoKeyArchive tests', () => {
 
     it('throws KeyArchiveDecodingError if key data cannot be decoded', async () => {
       const keyArchive = new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-        archiveData: gzipSync(
+        archiveData: Gzip.compress(
           BufferUtil.fromString(
             JSON.stringify({
               Type: 'Insecure',
@@ -336,7 +336,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(insecureArchive)),
             ),
           },
@@ -358,7 +358,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(insecureArchive)),
             ),
           },
@@ -383,7 +383,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(insecureArchive)),
             ),
           },
@@ -402,11 +402,11 @@ describe('DefaultSudoKeyArchive tests', () => {
     describe('with secure archive', () => {
       const emptyKeys: KeyArchiveKeyInfo[] = []
       const serializedEmptyKeys = JSON.stringify(emptyKeys)
-      const compressedSerializedEmptyKeys = gzipSync(
+      const compressedSerializedEmptyKeys = Gzip.compress(
         BufferUtil.fromString(serializedEmptyKeys),
       )
       const serializedKeys = JSON.stringify(keys)
-      const compressedSerializedKeys = gzipSync(
+      const compressedSerializedKeys = Gzip.compress(
         BufferUtil.fromString(serializedKeys),
       )
       const encryptedEmptyKeys = BufferUtil.fromString('encrypted-empty-keys')
@@ -452,7 +452,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -492,7 +492,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -532,7 +532,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -572,7 +572,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -612,7 +612,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -641,7 +641,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqualUint8Array(salt)
+        expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -667,7 +667,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -696,7 +696,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqualUint8Array(salt)
+        expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -709,10 +709,10 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqualUint8Array(symmetricKey)
-        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
+        expect(actualKey).toEqual(symmetricKey)
+        expect(actualData).toEqual(encryptedEmptyKeys)
         expect(symmetricOptions).toBeDefined()
-        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
+        expect(symmetricOptions?.iv).toEqual(iv)
       })
 
       it('throws KeyArchiveDecodingError if compressed serialized keys are unable to be uncompressed', async () => {
@@ -729,7 +729,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -758,7 +758,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqualUint8Array(salt)
+        expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -771,10 +771,10 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqualUint8Array(symmetricKey)
-        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
+        expect(actualKey).toEqual(symmetricKey)
+        expect(actualData).toEqual(encryptedEmptyKeys)
         expect(symmetricOptions).toBeDefined()
-        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
+        expect(symmetricOptions?.iv).toEqual(iv)
       })
 
       it('throws KeyArchiveDecodingError if serialized keys are unable to be deserialized', async () => {
@@ -791,7 +791,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -803,7 +803,7 @@ describe('DefaultSudoKeyArchive tests', () => {
             anything(),
             anything(),
           ),
-        ).thenResolve(gzipSync(BufferUtil.fromString('not JSON')))
+        ).thenResolve(Gzip.compress(BufferUtil.fromString('not JSON')))
 
         await expect(keyArchive.unarchive(password)).rejects.toMatchError(
           new KeyArchiveDecodingError(),
@@ -820,7 +820,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqualUint8Array(salt)
+        expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -833,10 +833,10 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqualUint8Array(symmetricKey)
-        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
+        expect(actualKey).toEqual(symmetricKey)
+        expect(actualData).toEqual(encryptedEmptyKeys)
         expect(symmetricOptions).toBeDefined()
-        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
+        expect(symmetricOptions?.iv).toEqual(iv)
       })
 
       it('succeeds with an empty key array', async () => {
@@ -853,7 +853,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -872,7 +872,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqualUint8Array(salt)
+        expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -885,9 +885,9 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqualUint8Array(symmetricKey)
-        expect(actualData).toEqualUint8Array(encryptedEmptyKeys)
-        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
+        expect(actualKey).toEqual(symmetricKey)
+        expect(actualData).toEqual(encryptedEmptyKeys)
+        expect(symmetricOptions?.iv).toEqual(iv)
       })
 
       it('succeeds with an non-empty key array', async () => {
@@ -904,7 +904,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -923,7 +923,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqualUint8Array(salt)
+        expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -936,9 +936,9 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqualUint8Array(symmetricKey)
-        expect(actualData).toEqualUint8Array(encryptedKeys)
-        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
+        expect(actualKey).toEqual(symmetricKey)
+        expect(actualData).toEqual(encryptedKeys)
+        expect(symmetricOptions?.iv).toEqual(iv)
 
         keys.forEach((key) =>
           expect(
@@ -960,7 +960,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         const keyArchive = new DefaultSudoKeyArchive(
           instance(mockKeyManager1),
           {
-            archiveData: gzipSync(
+            archiveData: Gzip.compress(
               BufferUtil.fromString(JSON.stringify(secureArchive)),
             ),
           },
@@ -979,7 +979,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           mockKeyManager1.generateSymmetricKeyFromPassword,
         ).first()
         expect(actualPassword).toEqual(password)
-        expect(actualSalt).toEqualUint8Array(salt)
+        expect(actualSalt).toEqual(salt)
         expect(actualOptions).toEqual({ rounds: secureArchive.Rounds })
 
         verify(
@@ -992,9 +992,9 @@ describe('DefaultSudoKeyArchive tests', () => {
         const [actualKey, actualData, symmetricOptions] = capture(
           mockKeyManager1.decryptWithSymmetricKey,
         ).first()
-        expect(actualKey).toEqualUint8Array(symmetricKey)
-        expect(actualData).toEqualUint8Array(encryptedKeys)
-        expect(symmetricOptions?.iv).toEqualUint8Array(iv)
+        expect(actualKey).toEqual(symmetricKey)
+        expect(actualData).toEqual(encryptedKeys)
+        expect(symmetricOptions?.iv).toEqual(iv)
 
         keys.forEach((key) =>
           expect(
@@ -1153,7 +1153,7 @@ describe('DefaultSudoKeyArchive tests', () => {
         MetaInfo: {},
       }
 
-      insecureKeyArchiveData = gzipSync(
+      insecureKeyArchiveData = Gzip.compress(
         BufferUtil.fromString(JSON.stringify(insecureArchive)),
       )
     })
@@ -1404,7 +1404,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           await expect(keyArchive.loadKeys()).resolves.toBeUndefined()
 
           const archive = await keyArchive.archive(undefined)
-          const unzipped = gunzipSync(new Uint8Array(archive))
+          const unzipped = Gzip.decompress(archive)
           const string = BufferUtil.toString(unzipped)
           const deserialized = JSON.parse(string)
           const decoded = InsecureKeyArchiveCodec.decode(deserialized)
@@ -1506,7 +1506,7 @@ describe('DefaultSudoKeyArchive tests', () => {
 
           const archive = await keyArchive.archive(password)
 
-          const unzipped = gunzipSync(new Uint8Array(archive))
+          const unzipped = Gzip.decompress(archive)
           const string = BufferUtil.toString(unzipped)
           const deserialized = JSON.parse(string)
           const decoded = SecureKeyArchiveCodec.decode(deserialized)
@@ -1549,7 +1549,7 @@ describe('DefaultSudoKeyArchive tests', () => {
             mockKeyManager1.generateSymmetricKeyFromPassword,
           ).first()
           expect(actualPassword).toEqual(password)
-          expect(actualSalt).toEqualUint8Array(salt)
+          expect(actualSalt).toEqual(salt)
           expect(actualOptions).toEqual({
             rounds: SudoCryptoProviderDefaults.pbkdfRounds,
           })
@@ -1564,10 +1564,10 @@ describe('DefaultSudoKeyArchive tests', () => {
           const [actualKey, actualData, symmetricOptions] = capture(
             mockKeyManager1.encryptWithSymmetricKey,
           ).first()
-          expect(actualKey).toEqualUint8Array(symmetricKey)
-          expect(symmetricOptions?.iv).toEqualUint8Array(iv)
+          expect(actualKey).toEqual(symmetricKey)
+          expect(symmetricOptions?.iv).toEqual(iv)
 
-          const uncompressedData = gunzipSync(new Uint8Array(actualData))
+          const uncompressedData = Gzip.decompress(actualData)
           const deserializedData = JSON.parse(
             BufferUtil.toString(uncompressedData),
           )
@@ -1690,7 +1690,7 @@ describe('DefaultSudoKeyArchive tests', () => {
           expect(actualKey).toEqual(symmetricKey)
           expect(symmetricOptions?.iv).toEqual(iv)
 
-          const uncompressedData = gunzipSync(new Uint8Array(actualData))
+          const uncompressedData = Gzip.decompress(actualData)
           const deserializedData = JSON.parse(
             BufferUtil.toString(uncompressedData),
           )
@@ -1719,7 +1719,7 @@ describe('DefaultSudoKeyArchive tests', () => {
       }
 
       const keyArchive = new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-        archiveData: gzipSync(
+        archiveData: Gzip.compress(
           BufferUtil.fromString(JSON.stringify(insecureArchive)),
         ),
       })
@@ -1742,7 +1742,7 @@ describe('DefaultSudoKeyArchive tests', () => {
       }
 
       const keyArchive = new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-        archiveData: gzipSync(
+        archiveData: Gzip.compress(
           BufferUtil.fromString(JSON.stringify(insecureArchive)),
         ),
       })
@@ -1767,7 +1767,7 @@ describe('DefaultSudoKeyArchive tests', () => {
       }
 
       const keyArchive = new DefaultSudoKeyArchive(instance(mockKeyManager1), {
-        archiveData: gzipSync(
+        archiveData: Gzip.compress(
           BufferUtil.fromString(JSON.stringify(insecureArchive)),
         ),
       })

@@ -5,7 +5,7 @@ import { ListObjectsCommand, S3Client } from '@aws-sdk/client-s3'
 import { TextEncoder, TextDecoder } from 'util'
 import { Readable } from 'stream'
 
-global.TextEncoder = TextEncoder
+global.TextEncoder = TextEncoder as typeof global.TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 function bodyFromString(s: string): Readable {

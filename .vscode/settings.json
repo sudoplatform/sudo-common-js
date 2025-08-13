@@ -11,4 +11,13 @@
     "sudoplatformconfig",
     "Synchronizable"
   ],
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "jest.jestCommandLine": "yarn unit-test",
+  "jest.rootPath": ".",
+  "jest.testMatch": ["<rootDir>/test/**/*.spec.ts"],
+  "typescript.preferences.importModuleSpecifier": "relative"
 }

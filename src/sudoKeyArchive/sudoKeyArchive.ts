@@ -1,10 +1,9 @@
 /*
- * Copyright © 2023 Anonyome Labs, Inc. All rights reserved.
+ * Copyright © 2025 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { gunzipSync, gzipSync } from 'fflate'
 import { isLeft } from 'fp-ts/lib/Either'
 
 import {
@@ -40,6 +39,7 @@ import {
 } from './keyArchive'
 import { KeyArchiveKeyInfo, KeyArchiveKeyInfoArrayCodec } from './keyInfo'
 import { KeyArchiveKeyType } from './keyType'
+import { Gzip } from '../utils/gzip'
 
 export interface SudoKeyArchive {
   /**
@@ -284,7 +284,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     }
 
     if (options?.metaInfo?.size) {
-      for (const [key, value] of options?.metaInfo?.entries()) {
+      for (const [key, value] of options?.metaInfo?.entries() ?? []) {
         this.metaInfo.set(key, value)
       }
     }
@@ -304,7 +304,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
 
     try {
       if (zip) {
-        jsonData = gunzipSync(new Uint8Array(archiveData))
+        jsonData = Gzip.decompress(archiveData)
       } else {
         jsonData = archiveData
       }
@@ -470,11 +470,13 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       } else {
         // Need this for backward compatibility and interoperability
         // since other platforms only support V2 archive.
+        const keysJson = JSON.stringify(keys)
+
         const insecureKeyArchive: InsecureKeyArchiveV2 = {
           Type: 'Insecure',
           MetaInfo: {},
           Version: DefaultSudoKeyArchive.PREGZIP_ARCHIVE_VERSION,
-          Keys: Base64.encode(new TextEncoder().encode(JSON.stringify(keys))),
+          Keys: Base64.encodeString(keysJson),
         }
         keyArchive = insecureKeyArchive
       }
@@ -492,7 +494,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       )
 
       const serializedKeys = JSON.stringify(keys)
-      const compressedSerializedKeys = gzipSync(
+      const compressedSerializedKeys = Gzip.compress(
         BufferUtil.fromString(serializedKeys),
         {
           level: 9,
@@ -524,7 +526,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
       keyArchive = secureKeyArchive
     }
 
-    for (const [key, value] of this.metaInfo.entries()) {
+    for (const [key, value] of this.metaInfo?.entries() ?? []) {
       keyArchive.MetaInfo[key] = value
     }
 
@@ -536,11 +538,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
     // we would end up having a fully binary data structure for the archive.
     // If the time to compute becomes prohibitive we can look at a binary, non-JSON
     // base format for the archive.
-    return this.zip
-      ? gzipSync(archiveData, {
-          level: 9,
-        })
-      : archiveData
+    return this.zip ? Gzip.compress(archiveData, { level: 9 }) : archiveData
   }
 
   async unarchive(password: ArrayBuffer | undefined): Promise<void> {
@@ -586,7 +584,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
         const serializedKeys =
           this.keyArchive.Version === PREGZIP_ARCHIVE_VERSION
             ? compressedSerializedKeys
-            : gunzipSync(new Uint8Array(compressedSerializedKeys))
+            : Gzip.decompress(compressedSerializedKeys)
         const decoded = KeyArchiveKeyInfoArrayCodec.decode(
           JSON.parse(BufferUtil.toString(serializedKeys)),
         )

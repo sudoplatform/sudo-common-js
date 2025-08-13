@@ -21,7 +21,7 @@ import * as crypto from 'crypto'
 import { TextEncoder, TextDecoder } from 'node:util'
 import { Base64 } from '../../src/utils/base64'
 
-global.TextEncoder = TextEncoder
+global.TextEncoder = TextEncoder as typeof global.TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 function toPEM(key: ArrayBuffer, type: 'PRIVATE' | 'PUBLIC'): string {
@@ -1042,7 +1042,7 @@ describe('DefaultSudoKeyManager', () => {
   describe('generateRandomData', () => {
     it('should call crypto provider generateRandomData', async () => {
       when(sudoCryptoProviderMock.generateRandomData(anything())).thenResolve(
-        new Uint8Array(),
+        BufferUtil.toArrayBuffer(new Uint8Array()),
       )
 
       const size = 100
@@ -1309,7 +1309,7 @@ describe('DefaultSudoKeyManager', () => {
           padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
           oaepHash: 'sha256',
         },
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const decrypted = await crypto.webcrypto.subtle.decrypt(
@@ -1366,7 +1366,7 @@ describe('DefaultSudoKeyManager', () => {
           padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
           oaepHash: 'sha256',
         },
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const decrypted = await crypto.webcrypto.subtle.decrypt(
@@ -1394,7 +1394,7 @@ describe('DefaultSudoKeyManager', () => {
       })
 
       when(sudoCryptoProviderMock.getPublicKey('dummy_id')).thenResolve({
-        keyData: keyPair.publicKey,
+        keyData: BufferUtil.toArrayBuffer(keyPair.publicKey),
         keyFormat: PublicKeyFormat.RSAPublicKey,
       })
 
@@ -1420,7 +1420,7 @@ describe('DefaultSudoKeyManager', () => {
           padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
           oaepHash: 'sha256',
         },
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const privateKey = await crypto.webcrypto.subtle.importKey(
@@ -1456,7 +1456,7 @@ describe('DefaultSudoKeyManager', () => {
       })
 
       when(sudoCryptoProviderMock.getPublicKey('dummy_id')).thenResolve({
-        keyData: keyPair.publicKey,
+        keyData: BufferUtil.toArrayBuffer(keyPair.publicKey),
         keyFormat: PublicKeyFormat.RSAPublicKey,
       })
 
@@ -1480,7 +1480,7 @@ describe('DefaultSudoKeyManager', () => {
           padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
           oaepHash: 'sha256',
         },
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const privateKey = await crypto.webcrypto.subtle.importKey(
@@ -1532,7 +1532,7 @@ describe('DefaultSudoKeyManager', () => {
 
       const publicKey = await crypto.webcrypto.subtle.importKey(
         'spki',
-        key,
+        new Uint8Array(key),
         { name: 'RSA-OAEP', hash: 'SHA-256' },
         true,
         ['encrypt'],
@@ -1543,7 +1543,7 @@ describe('DefaultSudoKeyManager', () => {
           name: 'RSA-OAEP',
         },
         publicKey,
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const decrypted = await crypto.webcrypto.subtle.decrypt(
@@ -1598,7 +1598,7 @@ describe('DefaultSudoKeyManager', () => {
           name: 'RSA-OAEP',
         },
         publicKey,
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const decrypted = await crypto.webcrypto.subtle.decrypt(
@@ -1653,7 +1653,7 @@ describe('DefaultSudoKeyManager', () => {
           padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
           oaepHash: 'sha256',
         },
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const decrypted = await crypto.webcrypto.subtle.decrypt(
@@ -1706,7 +1706,7 @@ describe('DefaultSudoKeyManager', () => {
           name: 'RSA-OAEP',
         },
         keyPair.publicKey,
-        BufferUtil.fromString('dummy_data'),
+        new Uint8Array(BufferUtil.fromString('dummy_data')),
       )
 
       const decrypted = crypto.privateDecrypt(
@@ -1718,7 +1718,9 @@ describe('DefaultSudoKeyManager', () => {
         new Uint8Array(encrypted),
       )
 
-      expect(BufferUtil.toString(decrypted)).toBe('dummy_data')
+      expect(BufferUtil.toString(BufferUtil.toArrayBuffer(decrypted))).toBe(
+        'dummy_data',
+      )
     })
   })
 })

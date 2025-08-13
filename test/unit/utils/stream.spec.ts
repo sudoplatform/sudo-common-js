@@ -7,8 +7,9 @@ import {
 import { ReadableStream } from 'node:stream/web'
 import { Readable } from 'node:stream'
 import { TextEncoder, TextDecoder } from 'node:util'
+import { Buffer as BufferUtil } from '../../../src/utils/buffer'
 
-global.TextEncoder = TextEncoder
+global.TextEncoder = TextEncoder as typeof global.TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 function toReadable(s: string): Readable {
@@ -40,7 +41,7 @@ class StringReadableStreamDefaultReader
       this.close()
       return Promise.resolve({ value: Buffer.from(this.s), done: false })
     } else {
-      return Promise.resolve({ done: true })
+      return Promise.resolve({ value: undefined, done: true })
     }
   }
 
@@ -82,7 +83,10 @@ function toBlob(s: string): Blob {
   return {
     size: s.length,
     type: 'text/plain',
-    arrayBuffer: () => Promise.resolve(new TextEncoder().encode(s)),
+    arrayBuffer: () => {
+      const arrayBuffer = BufferUtil.fromString(s)
+      return Promise.resolve(arrayBuffer)
+    },
     bytes: () => {
       throw new Error('Not implemented')
     },

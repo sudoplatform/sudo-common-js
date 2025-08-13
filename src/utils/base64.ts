@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Anonyome Labs, Inc. All rights reserved.
+ * Copyright © 2025 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -36,8 +36,8 @@ export class Base64 {
   }
 
   static encodeString(string: string): string {
-    const bytes = BufferUtil.fromString(string)
-    const encodedString = this.encode(bytes.buffer)
+    const arrayBuffer = BufferUtil.fromString(string)
+    const encodedString = this.encode(arrayBuffer)
     return encodedString
   }
 

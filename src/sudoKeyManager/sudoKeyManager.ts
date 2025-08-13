@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Anonyome Labs, Inc. All rights reserved.
+ * Copyright © 2025 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -627,7 +627,9 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
       } else {
         // Convert SPKI (RFC5280) to RSAPublicKey (RFC3447).
         const publicKeyInfo = pkijs.PublicKeyInfo.fromBER(publicKey.keyData)
-        const keyData = publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
+        const keyDataView =
+          publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
+        const keyData = BufferUtil.toArrayBuffer(keyDataView)
         return this.publicKeyToPEM(keyData, format)
       }
     }
@@ -919,7 +921,8 @@ export class DefaultSudoKeyManager implements SudoKeyManager {
 
   public publicKeyInfoToRSAPublicKey(publicKey: ArrayBuffer): ArrayBuffer {
     const publicKeyInfo = pkijs.PublicKeyInfo.fromBER(publicKey)
-    return publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
+    const keyDataView = publicKeyInfo.subjectPublicKey.valueBlock.valueHexView
+    return BufferUtil.toArrayBuffer(keyDataView)
   }
 
   private publicKeyAsSpki(
