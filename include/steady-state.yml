@@ -1,0 +1,166 @@
+# Includable fragment for building steady state jobs based on
+# tools provided by platform-common.
+
+# Common variables for steady-state jobs. Do not add comments to these variables
+# in your gitlab config.
+#
+#   JIRA_PROJECT: <project-name-in-which-to-create-tickets>
+#
+#   JIRA_BOARD_ID: [Optional] <board-id-of-JIRA-board-to-add-tickets-to>
+#      Add the ticket to the active sprint of that Jira board, as long as that board
+#      supports sprints
+#
+#   JIRA_TEAM_ID: [Optional] <team-id-to-assign-issue-to>
+#      Note that is is ID rather than human readable name. Suggestion is to define
+#      CI/CD variable e.g. GC_JIRA_TEAM_ID with the ID and reference that if you want
+#      to assign a team ID.
+#
+#   JIRA_PRIORITY: [Optional] <name-of-JIRA-priority-to-assign>
+#      Example: P1
+
+# Common initialisation for .steady_state_audit_check and .renovate_create_issue
+.steady_state_init: &steady_state_init
+  - |
+    if [ -f ".yarnrc.yml" ]; then
+      corepack enable
+      yarn install --immutable
+    elif [ "${YARN_V1_WILL_BREAK_WITHOUT_FURTHER_WARNING:-unset}" != "accepted" ]; then
+      exit 1
+    else
+      yarn install --frozen-lockfile
+    fi
+  - |
+    if [ -f "justfile" ]; then
+      audit_with_suppressions="just audit-with-suppressions"
+      create_or_update_issue="just create-or-update-issue"
+    elif [ -f .publisher.json ]; then
+      audit_with_suppressions=yarn-audit-with-suppressions.sh
+      create_or_update_issue=create-or-update-issue.py
+    elif [ -f ".yarnrc.yml" ]; then
+      audit_with_suppressions="yarn exec node_modules/.bin/audit-with-suppressions"
+      create_or_update_issue="yarn exec node_modules/.bin/create-or-update-issue"
+    else
+      if [ -x bin/yarn-audit-with-suppression.sh ]; then
+        audit_with_suppressions=bin/yarn-audit-with-suppression.sh
+      else
+        audit_with_suppressions="yarn --silent audit-with-suppressions"
+      fi
+      if [ -x bin/create-or-update-issue.py ]; then
+        create_or_update_issue=bin/create-or-update-issue.py
+      else
+        create_or_update_issue="yarn --silent create-or-update-issue"
+      fi
+    fi
+
+# Steady State dependency audit job
+#
+# To use this define a job in your pipeline e.g.
+#
+# include:
+#   - project: 'platform/platform-common'
+#     file: 'include/steady-state.yml'
+#
+# stages:
+#   Steady State
+#
+# Dependency Check:
+#   stage: Steady State
+#   extends: .steady_state_audit_check
+#   variables: See above
+#
+# And then define a Scheduled job in the project
+# that sets CI/CD variable SS_DEPENDENCY_CHECK
+# to a non-empty value.
+#
+# Set JIRA_PROJECT to name of project in which to create JIRA
+# tickets. Defaults to SP project if not set.
+#
+# The JIRA_BOARD_ID value can be seen in the URL of the board
+# e.g. board ID of
+#
+#  https://anonyome.atlassian.net/jira/software/c/projects/SPT/boards/191
+#
+# is 191.
+#
+.steady_state_audit_check:
+  script:
+    - *steady_state_init
+    - |
+      if ! AUDIT=$(${audit_with_suppressions}); then
+        ${create_or_update_issue} \
+          --email "${JIRA_USER_EMAIL}" \
+          --api-token "${JIRA_USER_API_TOKEN}" \
+          --project "${JIRA_PROJECT:-SP}" \
+          --issue-type Bug \
+          --issue-summary "AUDIT FAILURE: ${CI_PROJECT_PATH}" \
+          --issue-description "{noformat}${AUDIT}{noformat} \
+          \
+          Job: ${CI_JOB_URL}" \
+          --issue-label "${CI_PROJECT_PATH_SLUG}-audit-failure" \
+          --lookup-type label \
+          --lookup-value "${CI_PROJECT_PATH_SLUG}-audit-failure" \
+          ${JIRA_PRIORITY:+--issue-priority ${JIRA_PRIORITY}} \
+          ${JIRA_BOARD_ID:+--issue-current-sprint-board-id ${JIRA_BOARD_ID}} \
+          ${JIRA_TEAM_ID:+--issue-team ${JIRA_TEAM_ID}}
+        exit 1
+      fi
+  tags:
+    - docker
+  rules:
+    - if: $TARGET || $CI_PIPELINE_SOURCE == 'trigger'
+      when: never
+    # Run on schedules with SS_DEPENDENCY_CHECK set
+    - if: $CI_PIPELINE_SOURCE == 'schedule' && $SS_DEPENDENCY_CHECK == 'true'
+    # Run on merge to default branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# Renovate Create Issue Job
+#
+# This job will create an issue in jira when Renovate creates an MR.
+# This will allow us to monitor the status of these dependency updates as they move from an MR all the way out to production.
+# This job will only run when the Platform Build GitLab User (ie. Renovate) creates an MR in your project.
+#
+# To use this define a job in your pipeline e.g.
+#
+# include:
+#   - project: 'platform/platform-common'
+#     file: 'include/steady-state.yml'
+#   # Optional: Import pipeline tools configuration for slack notification support
+#   - project: 'platform/pipeline-tools'
+#     file: '/include/build-deploy-image.yml'
+#
+# stages:
+#   Renovate MR Notifier
+#
+# Renovate MR Notifier:
+#   stage: Renovate MR Notifier
+#   extends: .renovate_create_issue
+#   variables: See above, plus
+#     SLACK_CHANNEL: <slack-channel-of-choice>
+#     SLACK_MESSAGE: <slack-message-of-choice>
+#   script:
+#     - !reference [.renovate_create_issue, script]
+#     # Optional: This will send a slack notification after the jira ticket has been created
+#     - !reference [.inc-slack-notification, script]
+#
+.renovate_create_issue:
+  script:
+    - *steady_state_init
+    - |
+      ${create_or_update_issue} \
+        --email "${JIRA_USER_EMAIL}" \
+        --api-token "${JIRA_USER_API_TOKEN}" \
+        --project "${JIRA_PROJECT:-SP}" \
+        --issue-type Bug \
+        --issue-summary "OUTDATED DEPENDENCIES: ${CI_PROJECT_PATH}" \
+        --issue-description "MR here: ${CI_MERGE_REQUEST_PROJECT_URL}/-/merge_requests/${CI_MERGE_REQUEST_IID}" \
+        --issue-label "${CI_PROJECT_PATH_SLUG}-outdated-dependencies" \
+        --lookup-type label \
+        --lookup-value "${CI_PROJECT_PATH_SLUG}-outdated-dependencies" \
+        ${JIRA_PRIORITY:+--issue-priority ${JIRA_PRIORITY}} \
+        ${JIRA_BOARD_ID:+--issue-current-sprint-board-id ${JIRA_BOARD_ID}} \
+        ${JIRA_TEAM_ID:+--issue-team ${JIRA_TEAM_ID}}
+  tags:
+    - docker
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $GITLAB_USER_NAME == "Platform Build"
