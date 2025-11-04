@@ -1,14 +1,14 @@
 {
   "name": "@sudoplatform/sudo-common",
-  "version": "5.2.0",
+  "version": "0.0.0",
   "author": "Anonyome Labs, Inc.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sudoplatform/sudo-common-js.git"
+    "url": "git+https://github.com/sudoplatform/sudo-common-js.git"
   },
   "license": "Apache-2.0",
   "scripts": {
-    "audit-with-suppressions": "./node_modules/.bin/audit-with-suppressions",
+    "audit-with-suppressions": "true",
     "clean": "rimraf ./docs ./cjs ./lib ./types",
     "lint": "yarn lint:eslint && yarn lint:prettier",
     "lint:eslint": "eslint \"{bin,src,test}/**/*.{ts,tsx}\"",
@@ -16,7 +16,7 @@
     "unit-test": "jest test/unit",
     "test": "jest",
     "build": "yarn clean && yarn build:transpile && yarn build:verify && yarn build:doc",
-    "build:verify": "./node_modules/.bin/audit-with-suppressions && yarn lint && yarn test --coverage",
+    "build:verify": "yarn audit-with-suppressions && yarn lint && yarn test --coverage",
     "build:transpile": "concurrently \"yarn build:transpile:declarations\" \"yarn build:transpile:cjs\" \"yarn build:transpile:esm\"",
     "build:transpile:cjs": "tsc --project tsconfig.commonjs.json",
     "build:transpile:esm": "tsc",
@@ -41,14 +41,13 @@
     "types"
   ],
   "dependencies": {
-    "@anonyome/platform-common": "^37.1.1",
     "@aws-sdk/client-s3": "^3.848.0",
     "apollo-client": "^2.6.10",
-    "asn1js": "^3.0.5",
+    "asn1js": "^3.0.6",
     "browser-bunyan": "^1.8.0",
     "fflate": "^0.8.2",
     "graphql": "^15.10.1",
-    "pkijs": "^3.3.1",
+    "pkijs": "^3.3.3",
     "tslib": "^2.8.1"
   },
   "peerDependencies": {
@@ -56,9 +55,9 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.18.12",
-    "@typescript-eslint/eslint-plugin": "^8.46.2",
-    "@typescript-eslint/parser": "^8.46.2",
+    "@types/node": "^22.19.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "concurrently": "^9.2.1",
     "eslint": "8.57.1",
     "eslint-config-prettier": "^10.1.8",
@@ -75,7 +74,7 @@
     "monocle-ts": "^2.3.13",
     "newtype-ts": "^0.3.5",
     "prettier": "^3.6.2",
-    "rimraf": "^6.0.1",
+    "rimraf": "^6.1.0",
     "ts-jest": "^29.4.5",
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.9.2",
@@ -86,7 +85,7 @@
     "tar": "^7.5.2"
   },
   "engines": {
-    "node": ">=22.21.1"
+    "node": ">=20"
   },
   "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f"
 }
