@@ -68,6 +68,21 @@ export enum SignatureAlgorithm {
 export type Subset<T, S> = Pick<T, keyof T & keyof S>
 
 /**
+ * Helper type to require exactly one of the specified keys.
+ *
+ * For example, RequireOnlyOne<{ a: string; b: number; c: boolean; d: string }, 'a' | 'b' | 'c'>
+ * would require either 'a', OR, 'b', OR 'c' to be present.
+ */
+export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
+  T,
+  Exclude<keyof T, Keys>
+> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> &
+      Partial<Record<Exclude<Keys, K>, never>>
+  }[Keys]
+
+/**
  * Status of the list operation result.
  */
 export enum ListOperationResultStatus {

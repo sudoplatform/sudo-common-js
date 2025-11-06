@@ -64,6 +64,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-tree-shaking": "^1.12.2",
+    "expect-type": "^1.2.2",
     "fp-ts": "^2.16.11",
     "io-ts": "^2.2.22",
     "io-ts-types": "^0.5.19",
