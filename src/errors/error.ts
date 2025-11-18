@@ -5,7 +5,6 @@
  */
 
 import { GraphQLError } from 'graphql'
-import { ApolloError } from 'apollo-client'
 import { JsonValue } from '../types/types'
 import { isJsonRecord } from '../utils/json'
 
@@ -19,9 +18,25 @@ export type AppSyncNetworkError = Error & {
   }
 }
 
+export type GraphQLNetworkError = Error & {
+  originalError: Error & {
+    _response?: {
+      statusCode: number
+    }
+  }
+}
+
 export function isAppSyncNetworkError(u: Error): u is AppSyncNetworkError {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return !!(u as ApolloError).networkError
+  return 'networkError' in u && !!u.networkError
+}
+
+export function isGraphQLNetworkError(u: Error): u is GraphQLNetworkError {
+  return (
+    'originalError' in u &&
+    !!(u as GraphQLNetworkError).originalError &&
+    '_response' in (u as GraphQLNetworkError).originalError &&
+    !!(u as GraphQLNetworkError).originalError._response
+  )
 }
 
 /**
@@ -137,7 +152,9 @@ export class NotRegisteredError extends Error {
  */
 export class NotAuthorizedError extends Error {
   constructor(message?: string) {
-    super(message ?? 'User is not authorized perform the requested operation.')
+    super(
+      message ?? 'User is not authorized to perform the requested operation.',
+    )
     this.name = 'NotAuthorizedError'
   }
 }
@@ -461,6 +478,9 @@ export function mapGraphQLToClientError(
     case 'sudoplatform.ServiceError':
       return new ServiceError(error.message)
     default:
+      if ('name' in error && error.name === 'NoAuthorizationHeader') {
+        return new NotAuthorizedError()
+      }
       return new UnknownGraphQLError(error)
   }
 }
@@ -474,13 +494,23 @@ export function mapGraphQLToClientError(
  * @returns Mapped error
  */
 export function mapNetworkErrorToClientError(
-  error: AppSyncNetworkError,
+  error: AppSyncNetworkError | GraphQLNetworkError,
 ): Error {
-  const networkError = error.networkError
-  switch (networkError.statusCode) {
+  let statusCode: number | undefined = undefined
+  let requestFailedError: Error = error
+
+  if (isGraphQLNetworkError(error)) {
+    statusCode = error.originalError._response?.statusCode
+    requestFailedError = error.originalError
+  }
+  if (isAppSyncNetworkError(error)) {
+    statusCode = error.networkError?.statusCode ?? statusCode
+    requestFailedError = error.networkError
+  }
+  switch (statusCode) {
     case 401:
       return new NotAuthorizedError()
     default:
-      return new RequestFailedError(networkError, networkError.statusCode)
+      return new RequestFailedError(requestFailedError, statusCode)
   }
 }
