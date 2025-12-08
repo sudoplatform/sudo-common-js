@@ -19,9 +19,7 @@ function toReadable(s: string): Readable {
   return readable
 }
 
-class StringReadableStreamDefaultReader
-  implements ReadableStreamDefaultReader<any>
-{
+class StringReadableStreamDefaultReader implements ReadableStreamDefaultReader<any> {
   private done = false
   private closeCallback:
     | ((value: PromiseLike<undefined> | undefined) => void)
