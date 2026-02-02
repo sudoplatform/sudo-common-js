@@ -40,7 +40,7 @@ const keyArchiveKeyTypeAlternatives: Record<string, KeyArchiveKeyType> = {
 
 const failureMessage = `Key type is not one of: ${Object.keys(
   keyArchiveKeyTypeAlternatives,
-).join(',')}` // eslint-disable-line tree-shaking/no-side-effects-in-initialization
+).join(',')}`
 
 const isKeyArchiveKeyType = (u: unknown): u is KeyArchiveKeyType =>
   t.string.is(u) && keyArchiveKeyTypeAlternatives[u.toLowerCase()] !== undefined

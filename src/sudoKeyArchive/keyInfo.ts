@@ -20,7 +20,6 @@ const KeyArchiveKeyInfoOptionalProps = {
   Exportable: t.boolean,
 }
 
-// eslint-disable-next-line tree-shaking/no-side-effects-in-initialization
 export const KeyArchiveKeyInfoCodec = t.intersection(
   [
     t.type(KeyArchiveKeyInfoRequiredProps),
