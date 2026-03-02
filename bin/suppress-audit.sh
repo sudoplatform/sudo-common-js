@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Insert a audit identifier to suppress in verification proccess.
 #
