@@ -94,5 +94,26 @@
     "node": ">=22"
   },
   "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7",
-  "auditSuppressions": {}
+  "auditSuppressions": {
+    "1115538": {
+      "until": 1780015841,
+      "untilISO": "2026-05-29T00:50:41Z",
+      "reason": "handlebars transitive via ts-jest, no fix available"
+    },
+    "1115539": {
+      "until": 1780015841,
+      "untilISO": "2026-05-29T00:50:41Z",
+      "reason": "handlebars transitive via ts-jest, no fix available"
+    },
+    "1115544": {
+      "until": 1780015841,
+      "untilISO": "2026-05-29T00:50:41Z",
+      "reason": "handlebars transitive via ts-jest, no fix available"
+    },
+    "1115588": {
+      "until": 1780015841,
+      "untilISO": "2026-05-29T00:50:41Z",
+      "reason": "handlebars transitive via ts-jest, no fix available"
+    }
+  }
 }
