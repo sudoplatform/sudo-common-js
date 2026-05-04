@@ -57,13 +57,13 @@
     "io-ts": "^2.2.22"
   },
   "devDependencies": {
-    "@eslint/compat": "^2.0.3",
+    "@eslint/compat": "^2.0.5",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.19.15",
-    "@typescript-eslint/eslint-plugin": "^8.58.0",
-    "@typescript-eslint/parser": "^8.58.0",
+    "@types/node": "^22.19.17",
+    "@typescript-eslint/eslint-plugin": "^8.59.0",
+    "@typescript-eslint/parser": "^8.59.0",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -79,21 +79,21 @@
     "jest-environment-jsdom": "^30.3.0",
     "monocle-ts": "^2.3.13",
     "newtype-ts": "^0.3.5",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.3",
     "rimraf": "^6.1.3",
-    "ts-jest": "^29.4.6",
+    "ts-jest": "^29.4.9",
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.9.2",
-    "typedoc": "^0.28.18",
+    "typedoc": "^0.28.19",
     "typescript": "~5.9.3"
   },
   "resolutions": {
-    "fast-xml-parser": "^5.5.9"
+    "fast-xml-parser": "^5.5.12"
   },
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7",
+  "packageManager": "yarn@4.14.1+sha512.64df448055b2d37ba269d7db535a469b8da93f8ef1140c25fd7a83c00a8fbaacb214ca0e02553b92a2c54cef78bb67d0b4817fab02001df0e24fac0faccc3b42",
   "auditSuppressions": {
     "1115538": {
       "until": 1780015841,

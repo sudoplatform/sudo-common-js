@@ -48,7 +48,7 @@ import { TextEncoder, TextDecoder } from 'node:util'
 import '../matchers'
 import { Gzip } from '../../src/utils/gzip'
 
-global.TextEncoder = TextEncoder as typeof global.TextEncoder
+global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 describe('DefaultSudoKeyArchive tests', () => {

@@ -9,7 +9,7 @@ import { Readable } from 'node:stream'
 import { TextEncoder, TextDecoder } from 'node:util'
 import { Buffer as BufferUtil } from '../../../src/utils/buffer'
 
-global.TextEncoder = TextEncoder as typeof global.TextEncoder
+global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 function toReadable(s: string): Readable {

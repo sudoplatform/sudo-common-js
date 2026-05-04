@@ -2,7 +2,7 @@ import { Buffer as BufferUtil } from '../../../src/utils/buffer'
 import { TextEncoder, TextDecoder } from 'node:util'
 import '../../matchers'
 
-global.TextEncoder = TextEncoder as typeof global.TextEncoder
+global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 describe('Buffer', () => {

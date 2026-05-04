@@ -21,7 +21,7 @@ import * as crypto from 'crypto'
 import { TextEncoder, TextDecoder } from 'node:util'
 import { Base64 } from '../../src/utils/base64'
 
-global.TextEncoder = TextEncoder as typeof global.TextEncoder
+global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 function toPEM(key: ArrayBuffer, type: 'PRIVATE' | 'PUBLIC'): string {

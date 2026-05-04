@@ -3,7 +3,7 @@ import { Base64 } from '../../../src/utils/base64'
 import { Buffer as BufferUtil } from '../../../src/utils/buffer'
 import '../../matchers'
 
-global.TextEncoder = TextEncoder as typeof global.TextEncoder
+global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder as typeof global.TextDecoder
 
 describe('Base64', () => {
