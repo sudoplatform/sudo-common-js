@@ -177,10 +177,7 @@ export class DefaultSudoKeyArchive implements SudoKeyArchive {
   private readonly defaultKeyManager: SudoKeyManager
   private readonly keyManagers: Record<string, SudoKeyManager> = {}
   private keyArchive:
-    | SecureKeyArchive
-    | InsecureKeyArchive
-    | InsecureKeyArchiveV2
-    | undefined
+    SecureKeyArchive | InsecureKeyArchive | InsecureKeyArchiveV2 | undefined
   private readonly excludedKeys: Set<string> = new Set<string>()
   private readonly excludedKeyTypes: Set<KeyArchiveKeyType> =
     new Set<KeyArchiveKeyType>()

@@ -22,8 +22,8 @@ function toReadable(s: string): Readable {
 class StringReadableStreamDefaultReader implements ReadableStreamDefaultReader<any> {
   private done = false
   private closeCallback:
-    | ((value: PromiseLike<undefined> | undefined) => void)
-    | undefined = undefined
+    ((value: PromiseLike<undefined> | undefined) => void) | undefined =
+    undefined
 
   private close() {
     if (!this.done) {
