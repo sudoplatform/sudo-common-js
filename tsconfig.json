@@ -15,8 +15,8 @@
     "strict": true,
     "target": "ES2020",
     "skipLibCheck": true,
-    "types": ["jest", "node"]
+    "types": ["node"]
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
