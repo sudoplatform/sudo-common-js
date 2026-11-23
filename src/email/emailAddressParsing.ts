@@ -4,7 +4,7 @@ import { getHostname } from 'tldts'
  *  Regex that is used to check if a string is an email address that is valid to be provisioned as a
  * Sudo Platform email address. Stricter than the {@link generalRegex}
  */
-const provisioningRegex =
+export const provisioningRegex =
   /^[a-zA-Z0-9_-](?:\.?[-_a-zA-Z0-9])*@[a-zA-Z0-9](?:-*\.?[a-zA-Z0-9])*\.[a-zA-Z](?:-?[a-zA-Z0-9])+$/
 
 /**
@@ -18,9 +18,14 @@ const provisioningRegex =
  * All with no whitespace and only one '@'
  * Less strict than {@link provisioningRegex}
  */
-const generalRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+export const generalRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-interface EmailAddressParts {
+/**
+ * The parts of a valid email address
+ * @property {string} localPart The part of the address before the `@`
+ * @property {string} domain The part of the address after the `@`
+ */
+export interface EmailAddressParts {
   localPart: string
   domain: string
 }
@@ -92,7 +97,6 @@ export function normalize(email: string): string | undefined {
  *
  * @param {string} address the email address string which may contain a display name, expected to be of the form 'phrase <localpart@domain>'
  * @returns {string} localpart@domain, or the original string if no display name present or string is not the correct format
- * @memberof EmailAddressParser
  */
 export function removeDisplayName(address: string): string {
   const addressOnlyRegex = /<(.*)>/
@@ -104,7 +108,6 @@ export function removeDisplayName(address: string): string {
  * Get the domain from an email address.
  * @param {string} address The email address.
  * @returns {string | undefined} The domain, or undefined if not present.
- * @memberof EmailAddressParser
  */
 export function getDomain(address: string): string | undefined {
   return getHostname(address) ?? undefined
